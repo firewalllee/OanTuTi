@@ -1,0 +1,6 @@
+framework module Pods_OanTuTi {
+  umbrella header "Pods-OanTuTi-umbrella.h"
+
+  export *
+  module * { export * }
+}

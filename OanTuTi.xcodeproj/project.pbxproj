@@ -7,21 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		615155C9EC993EBE59821E9A /* Pods_OanTuTi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 644EC73B299D1D68FB58DE02 /* Pods_OanTuTi.framework */; };
 		7E1C794E1D87DE2F00AE63B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C794D1D87DE2F00AE63B2 /* AppDelegate.swift */; };
 		7E1C79501D87DE2F00AE63B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C794F1D87DE2F00AE63B2 /* ViewController.swift */; };
 		7E1C79531D87DE2F00AE63B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E1C79511D87DE2F00AE63B2 /* Main.storyboard */; };
-		7E1C79551D87DE2F00AE63B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E1C79541D87DE2F00AE63B2 /* Assets.xcassets */; };
 		7E1C79581D87DE2F00AE63B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E1C79561D87DE2F00AE63B2 /* LaunchScreen.storyboard */; };
+		7E3F74531D8D1FF8006AB01A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */; };
+		7EAB89861D8B934B007D4EDC /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAB89851D8B934B007D4EDC /* RegisterViewController.swift */; };
+		7EAB89881D8B9377007D4EDC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EAB89871D8B9377007D4EDC /* GoogleService-Info.plist */; };
+		7EC873291D897F0500CE5F71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EC873281D897F0500CE5F71 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		644EC73B299D1D68FB58DE02 /* Pods_OanTuTi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OanTuTi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E1C794A1D87DE2F00AE63B2 /* OanTuTi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OanTuTi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E1C794D1D87DE2F00AE63B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E1C794F1D87DE2F00AE63B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7E1C79521D87DE2F00AE63B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7E1C79541D87DE2F00AE63B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E1C79571D87DE2F00AE63B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E1C79591D87DE2F00AE63B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		7EAB89851D8B934B007D4EDC /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		7EAB89871D8B9377007D4EDC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7EC873281D897F0500CE5F71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DB20034FEEC5183B509C165D /* Pods-OanTuTi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OanTuTi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OanTuTi/Pods-OanTuTi.debug.xcconfig"; sourceTree = "<group>"; };
+		FF48A5E4B2508DB7B54C98D8 /* Pods-OanTuTi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OanTuTi.release.xcconfig"; path = "Pods/Target Support Files/Pods-OanTuTi/Pods-OanTuTi.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				615155C9EC993EBE59821E9A /* Pods_OanTuTi.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26C9F9FDBA0D269A97FAEB94 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DB20034FEEC5183B509C165D /* Pods-OanTuTi.debug.xcconfig */,
+				FF48A5E4B2508DB7B54C98D8 /* Pods-OanTuTi.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7E1C79411D87DE2F00AE63B2 = {
 			isa = PBXGroup;
 			children = (
 				7E1C794C1D87DE2F00AE63B2 /* OanTuTi */,
 				7E1C794B1D87DE2F00AE63B2 /* Products */,
+				26C9F9FDBA0D269A97FAEB94 /* Pods */,
+				9969580432BEA8B1F57D2C45 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +76,33 @@
 		7E1C794C1D87DE2F00AE63B2 /* OanTuTi */ = {
 			isa = PBXGroup;
 			children = (
-				7E1C794D1D87DE2F00AE63B2 /* AppDelegate.swift */,
 				7E1C794F1D87DE2F00AE63B2 /* ViewController.swift */,
+				7EAB89851D8B934B007D4EDC /* RegisterViewController.swift */,
+				7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */,
 				7E1C79511D87DE2F00AE63B2 /* Main.storyboard */,
-				7E1C79541D87DE2F00AE63B2 /* Assets.xcassets */,
-				7E1C79561D87DE2F00AE63B2 /* LaunchScreen.storyboard */,
-				7E1C79591D87DE2F00AE63B2 /* Info.plist */,
+				7E72AEE51D88F57900AC997A /* Support file */,
 			);
 			path = OanTuTi;
+			sourceTree = "<group>";
+		};
+		7E72AEE51D88F57900AC997A /* Support file */ = {
+			isa = PBXGroup;
+			children = (
+				7EC873281D897F0500CE5F71 /* Assets.xcassets */,
+				7E1C794D1D87DE2F00AE63B2 /* AppDelegate.swift */,
+				7E1C79561D87DE2F00AE63B2 /* LaunchScreen.storyboard */,
+				7E1C79591D87DE2F00AE63B2 /* Info.plist */,
+				7EAB89871D8B9377007D4EDC /* GoogleService-Info.plist */,
+			);
+			name = "Support file";
+			sourceTree = "<group>";
+		};
+		9969580432BEA8B1F57D2C45 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				644EC73B299D1D68FB58DE02 /* Pods_OanTuTi.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +112,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7E1C795C1D87DE2F00AE63B2 /* Build configuration list for PBXNativeTarget "OanTuTi" */;
 			buildPhases = (
+				960F78631075890C271FF35C /* [CP] Check Pods Manifest.lock */,
 				7E1C79461D87DE2F00AE63B2 /* Sources */,
 				7E1C79471D87DE2F00AE63B2 /* Frameworks */,
 				7E1C79481D87DE2F00AE63B2 /* Resources */,
+				F36B2F452CAEF33E7B58E342 /* [CP] Embed Pods Frameworks */,
+				5684C91C145BA0F5BC6C04B7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -123,12 +167,61 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E1C79581D87DE2F00AE63B2 /* LaunchScreen.storyboard in Resources */,
-				7E1C79551D87DE2F00AE63B2 /* Assets.xcassets in Resources */,
+				7EAB89881D8B9377007D4EDC /* GoogleService-Info.plist in Resources */,
+				7EC873291D897F0500CE5F71 /* Assets.xcassets in Resources */,
 				7E1C79531D87DE2F00AE63B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5684C91C145BA0F5BC6C04B7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OanTuTi/Pods-OanTuTi-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		960F78631075890C271FF35C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F36B2F452CAEF33E7B58E342 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OanTuTi/Pods-OanTuTi-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7E1C79461D87DE2F00AE63B2 /* Sources */ = {
@@ -137,6 +230,8 @@
 			files = (
 				7E1C79501D87DE2F00AE63B2 /* ViewController.swift in Sources */,
 				7E1C794E1D87DE2F00AE63B2 /* AppDelegate.swift in Sources */,
+				7EAB89861D8B934B007D4EDC /* RegisterViewController.swift in Sources */,
+				7E3F74531D8D1FF8006AB01A /* MenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +342,7 @@
 		};
 		7E1C795D1D87DE2F00AE63B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB20034FEEC5183B509C165D /* Pods-OanTuTi.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OanTuTi/Info.plist;
@@ -258,6 +354,7 @@
 		};
 		7E1C795E1D87DE2F00AE63B2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF48A5E4B2508DB7B54C98D8 /* Pods-OanTuTi.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OanTuTi/Info.plist;
@@ -286,6 +383,7 @@
 				7E1C795E1D87DE2F00AE63B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
