@@ -5,4 +5,5 @@ target 'OanTuTi' do
   pod 'Firebase'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  pod 'Firebase/Database'
 end
