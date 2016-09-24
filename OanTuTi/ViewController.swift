@@ -17,8 +17,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        logining()
+        //logining()
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,12 +56,14 @@ extension UIViewController {
     
     // Kiểm tra đang tài khoản có đang login hay không.
     func logining() {
+        
         FIRAuth.auth()?.addAuthStateDidChangeListener { (auth, user) in
-            if user != nil {
+            if auth.currentUser == user {
                 self.switchSence()
             }
             else {
             }
         }
     }
+    
 }

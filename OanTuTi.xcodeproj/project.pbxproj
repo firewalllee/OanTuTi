@@ -19,6 +19,7 @@
 		7E3F74531D8D1FF8006AB01A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */; };
 		7E798D1C1D90E338000221C0 /* ListPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E798D1B1D90E338000221C0 /* ListPlayerViewController.swift */; };
 		7E798D201D90E379000221C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E798D1F1D90E379000221C0 /* User.swift */; };
+		7EA4DAFC1D92930900C5887A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA4DAFB1D92930900C5887A /* MainViewController.swift */; };
 		7EAB89881D8B9377007D4EDC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EAB89871D8B9377007D4EDC /* GoogleService-Info.plist */; };
 		7EC873291D897F0500CE5F71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EC873281D897F0500CE5F71 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 		7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		7E798D1B1D90E338000221C0 /* ListPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPlayerViewController.swift; sourceTree = "<group>"; };
 		7E798D1F1D90E379000221C0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7EA4DAFB1D92930900C5887A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		7EAB89871D8B9377007D4EDC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7EC873281D897F0500CE5F71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DB20034FEEC5183B509C165D /* Pods-OanTuTi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OanTuTi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OanTuTi/Pods-OanTuTi.debug.xcconfig"; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				7E798D1B1D90E338000221C0 /* ListPlayerViewController.swift */,
 				7E1A9C8A1D912C6E00A71334 /* ProfileViewController.swift */,
 				7E3E288B1D92305D000E804B /* ListPlayerTableViewCell.swift */,
+				7EA4DAFB1D92930900C5887A /* MainViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				7E1A9C8B1D912C6E00A71334 /* ProfileViewController.swift in Sources */,
 				7E1C794E1D87DE2F00AE63B2 /* AppDelegate.swift in Sources */,
 				7E3F74531D8D1FF8006AB01A /* MenuViewController.swift in Sources */,
+				7EA4DAFC1D92930900C5887A /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

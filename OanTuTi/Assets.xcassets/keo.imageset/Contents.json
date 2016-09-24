@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "two-fingers-up.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "two-fingers-up.png",
       "scale" : "2x"
     },
     {

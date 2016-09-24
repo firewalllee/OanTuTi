@@ -25,15 +25,13 @@ class RegisterViewController: UIViewController{
         super.viewDidLoad()
 
         imageData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
-        logining()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func registerButton(sender: AnyObject) {
+    @IBAction func registerButton(sender: UIButton) {
         let email = txtEmail.text!
         let password = txtPassword.text!
         
@@ -74,7 +72,12 @@ class RegisterViewController: UIViewController{
                                 changeRequest.photoURL = downloadURL
                                 changeRequest.commitChangesWithCompletion({ (error) in
                                     if error == nil {
-                                        self.switchSence()
+                                        let alertRegisterSuccessful = UIAlertController(title: "Successfull :)", message: "Your account has been create", preferredStyle: .Alert)
+                                        let ok = UIAlertAction(title: "Ok", style: .Cancel, handler: { (UIAlertAction) in
+                                            self.switchSence()
+                                        })
+                                        alertRegisterSuccessful.addAction(ok)
+                                        self.presentViewController(alertRegisterSuccessful, animated: true, completion: nil)
                                     }
                                 })
                             }
@@ -94,6 +97,7 @@ class RegisterViewController: UIViewController{
             }
         }
     }
+    
     
     @IBAction func tapToSelectImage(sender: UITapGestureRecognizer) {
         resignFirstResponder()
