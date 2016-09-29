@@ -42,7 +42,7 @@ class ListPlayerViewController: UIViewController {
             userId.setValue(user)
             
             // Kiểm tra player online hay offline.
-//            userId.onDisconnectRemoveValue()
+//            .userId.onDisconnectRemoveValue()
             
             // Lấy thông tin user xuống lại máy từ Database.
             tableName.observeEventType(.ChildAdded, withBlock: { (snapshot) in
@@ -55,6 +55,7 @@ class ListPlayerViewController: UIViewController {
                     
                     let user:User = User(id: snapshot.key, email: email, nickName: nickName, avatarUrl: avatarUrl)
                     
+                    print("--------------------\(snapshot.value)")
                     // Kiểm tra nếu user
                     if user.id != activeUser.id {
                         self.listPlayer.append(user)
@@ -88,6 +89,9 @@ class ListPlayerViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func backButton(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
 }
