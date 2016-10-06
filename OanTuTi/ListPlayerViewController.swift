@@ -34,7 +34,7 @@ class ListPlayerViewController: UIViewController {
             let uid = user.uid
             
             // Lưu thông tin user lên Database.
-            activeUser = User(id: uid, email: email!, nickName: name!, avatarUrl: String(photoUrl!))
+            activeUser = User(id: uid, email: email!, nickName: name!, avatarUrl: String(describing: photoUrl!))
             
             let tableName = ref.child("ListOnlinePlayer")
             let userId = tableName.child(activeUser.id)
@@ -42,10 +42,10 @@ class ListPlayerViewController: UIViewController {
             userId.setValue(user)
             
             // Kiểm tra player online hay offline.
-//            .userId.onDisconnectRemoveValue()
+            userId.onDisconnectRemoveValue()
             
             // Lấy thông tin user xuống lại máy từ Database.
-            tableName.observeEventType(.ChildAdded, withBlock: { (snapshot) in
+            tableName.observe(.childAdded, with: { (snapshot) in
                 let postDict = snapshot.value as? [String:AnyObject]
                 
                 if postDict != nil {
@@ -65,22 +65,25 @@ class ListPlayerViewController: UIViewController {
                 }
             })
             
-//            tableName.observeEventType(.ChildRemoved, withBlock: { (Snapshot) in
-//                let postDict = Snapshot.value as? [String:AnyObject]
-//                let emailToFind:String = (postDict?["email"])! as! String
-//                let nickNameToFind:String = (postDict?["nickName"])! as!  String
-//                let avatarUrlToFind:String = (postDict?["avatarUrl"])! as!  String
-//                
-//                let user:User = User(id: Snapshot.key, email: emailToFind, nickName: nickNameToFind, avatarUrl: avatarUrlToFind)
-//                
-//                for(index, email) in self.listPlayer.enumerate() {
-//                    if activeUser.email == emailToFind {
-//                        let indexPath = NSIndexPath(forRow: index, inSection: 0)
-//                        self.listPlayer.removeAtIndex(index)
-//                        
+//            tableName.observe(.childRemoved, with: { snap in
+//                guard let emailToFind = snap.value as? String else { return }
+//                for (index, email) in self.listPlayer.enumerated() {
+//                    if email.email == emailToFind {
+//                        let indexPath = IndexPath(row: index, section: 0)
+//                        self.listPlayer.remove(at: index)
+//                        self.deleteRows(at: [indexPath], with: .fade)
 //                    }
 //                }
 //            })
+            
+//            FIRAuth.auth()!.addStateDidChangeListener { auth, user in
+//                guard let user = user else { return }
+//                activeUser = User(authData: activeUser)
+//                let currentUserRef = self.usersRef.child(self.user.uid)
+//                currentUserRef.setValue(self.user.email)
+//                currentUserRef.onDisconnectRemoveValue()
+//            }
+//            
             
         } else {
         }
@@ -90,38 +93,39 @@ class ListPlayerViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func backButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func backButton(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
 extension ListPlayerViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listPlayer.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! ListPlayerTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ListPlayerTableViewCell
         
-        cell.lblNickName.text = listPlayer[indexPath.row].nickName
-        cell.avatarImage.loadAvatar(listPlayer[indexPath.row].avatarUrl)
+        cell.lblNickName.text = listPlayer[(indexPath as NSIndexPath).row].nickName
+        cell.avatarImage.loadAvatar(listPlayer[(indexPath as NSIndexPath).row].avatarUrl)
         return cell
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        opponent = listPlayer[indexPath.row]
+        opponent = listPlayer[(indexPath as NSIndexPath).row]
         
-        let url:NSURL = NSURL(string:  opponent.avatarUrl)!
-        let data:NSData = NSData(contentsOfURL: url)!
+        let url:URL = URL(string:  opponent.avatarUrl)!
+        let data:Data = try! Data(contentsOf: url)
         opponent.avatarImage = UIImage(data: data)
         print(opponent)
         
-        let sence = self.storyboard?.instantiateViewControllerWithIdentifier("Main")
+        let sence = self.storyboard?.instantiateViewController(withIdentifier: "Main")
         if sence != nil {
-            presentViewController(sence!, animated: true, completion: nil)
+            present(sence!, animated: true, completion: nil)
         }
     }
 }

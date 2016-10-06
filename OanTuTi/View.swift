@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 extension UIImageView {
-    func loadAvatar (link:String) {
-        let url:NSURL = NSURL(string: link)!
-        let data:NSData = NSData(contentsOfURL: url)!
+    func loadAvatar (_ link:String) {
+        let url:URL = URL(string: link)!
+        let data:Data = try! Data(contentsOf: url)
         self.image = UIImage(data: data)
     }
 }

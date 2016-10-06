@@ -13,7 +13,7 @@ class MenuViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -22,9 +22,9 @@ class MenuViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func signOutButton(sender: AnyObject) {
+    @IBAction func signOutButton(_ sender: AnyObject) {
         try! FIRAuth.auth()!.signOut()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
 
     }
 

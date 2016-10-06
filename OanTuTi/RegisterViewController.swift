@@ -10,11 +10,11 @@ import UIKit
 import Firebase
 
 let storage = FIRStorage.storage()
-let storageRef = storage.referenceForURL("gs://oan-tu-ti.appspot.com")
+let storageRef = storage.reference(forURL: "gs://oan-tu-ti.appspot.com")
 
 class RegisterViewController: UIViewController{
 
-    var imageData:NSData!
+    var imageData:Data!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtNickname: UITextField!
@@ -23,7 +23,8 @@ class RegisterViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.hideKeyboardWhenTappedAround() 
+        
         imageData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
     }
 
@@ -31,34 +32,37 @@ class RegisterViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func registerButton(sender: UIButton) {
+    
+
+    
+    @IBAction func registerButton(_ sender: UIButton) {
         let email = txtEmail.text!
         let password = txtPassword.text!
         
         // kiem tra nhap mat khau tren 6 ki tu va nickname tren 4 ki tu.
-        if txtPassword.text?.characters.count < 6 && txtNickname.text?.characters.count < 4 {
-            let alertPasswordTooShort = UIAlertController(title: "Come on!", message: "Your password(<6) or Nickname(<4) so short, let's try again!", preferredStyle: .Alert)
-            let ok = UIAlertAction(title: "Try again", style: .Cancel, handler: { (UIAlertAction) in
+        if (txtPassword.text?.characters.count)! < 6 && (txtNickname.text?.characters.count)! < 4 {
+            let alertPasswordTooShort = UIAlertController(title: "Come on!", message: "Your password(<6) or Nickname(<4) so short, let's try again!", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Try again", style: .cancel, handler: { (UIAlertAction) in
             })
             alertPasswordTooShort.addAction(ok)
-            presentViewController(alertPasswordTooShort, animated: true, completion: nil)
+            present(alertPasswordTooShort, animated: true, completion: nil)
             
         }
         else {
-            FIRAuth.auth()?.createUserWithEmail(email, password: password) { (user, error) in
+            FIRAuth.auth()?.createUser(withEmail: email, password: password) { (user, error) in
                 if error == nil {
-                    FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user, error) in
+                    FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                     })
                     // Upload avatar lên storage.
                     let avatarRef = storageRef.child("AvatarImage/\(email).jpg")
-                    let uploadTask = avatarRef.putData(self.imageData, metadata: nil){ (metadata, error) in
+                    let uploadTask = avatarRef.put(self.imageData, metadata: nil){ (metadata, error) in
                         if error != nil {
                             // Thông báo upload avatar thất bại.
-                            let alertFailToUploadAvatar = UIAlertController(title: ":'(", message: "Upload avatar fail, can try later!", preferredStyle: .Alert)
-                            let okButton2 = UIAlertAction(title: "Ok", style: .Cancel, handler: { (UIAlertAction) in
+                            let alertFailToUploadAvatar = UIAlertController(title: ":'(", message: "Upload avatar fail, can try later!", preferredStyle: .alert)
+                            let okButton2 = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
                             })
                             alertFailToUploadAvatar.addAction(okButton2)
-                            self.presentViewController(alertFailToUploadAvatar, animated: true, completion: nil)
+                            self.present(alertFailToUploadAvatar, animated: true, completion: nil)
                             
                         }
                         else {
@@ -70,14 +74,14 @@ class RegisterViewController: UIViewController{
                                 let changeRequest = user.profileChangeRequest()
                                 changeRequest.displayName = self.txtNickname.text!
                                 changeRequest.photoURL = downloadURL
-                                changeRequest.commitChangesWithCompletion({ (error) in
+                                changeRequest.commitChanges(completion: { (error) in
                                     if error == nil {
-                                        let alertRegisterSuccessful = UIAlertController(title: "Successfull :)", message: "Your account has been create", preferredStyle: .Alert)
-                                        let ok = UIAlertAction(title: "Ok", style: .Cancel, handler: { (UIAlertAction) in
+                                        let alertRegisterSuccessful = UIAlertController(title: "Successfull :)", message: "Your account has been create", preferredStyle: .alert)
+                                        let ok = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
                                             self.switchSence()
                                         })
                                         alertRegisterSuccessful.addAction(ok)
-                                        self.presentViewController(alertRegisterSuccessful, animated: true, completion: nil)
+                                        self.present(alertRegisterSuccessful, animated: true, completion: nil)
                                     }
                                 })
                             }
@@ -88,45 +92,45 @@ class RegisterViewController: UIViewController{
                 }
                 else {
                     // Thông báo đăng kí tài khoản thất bại.
-                    let alertFailToCreateAccount = UIAlertController(title: "Email", message: "Your email has been existing", preferredStyle: .Alert)
-                    let okButton3 = UIAlertAction(title: "Ok", style: .Cancel, handler: { (UIAlertAction) in
+                    let alertFailToCreateAccount = UIAlertController(title: "Email", message: "Your email has been existing", preferredStyle: .alert)
+                    let okButton3 = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
                     })
                     alertFailToCreateAccount.addAction(okButton3)
-                    self.presentViewController(alertFailToCreateAccount, animated: true, completion: nil)
+                    self.present(alertFailToCreateAccount, animated: true, completion: nil)
                 }
             }
         }
     }
     
     
-    @IBAction func tapToSelectImage(sender: UITapGestureRecognizer) {
+    @IBAction func tapToSelectImage(_ sender: UITapGestureRecognizer) {
         resignFirstResponder()
         
         let imagePicker = UIImagePickerController()
         
         // Action sheeet để chọn nguồn ảnh.
-        let listSelectSource = UIAlertController(title: "Choose source", message: "Phot Library or Camera", preferredStyle: .ActionSheet)
+        let listSelectSource = UIAlertController(title: "Choose source", message: "Phot Library or Camera", preferredStyle: .actionSheet)
         
-        let photoLibrary = UIAlertAction(title: "Photo Library", style: .Default) { (UIAlertAction) in
-            imagePicker.sourceType = .PhotoLibrary
+        let photoLibrary = UIAlertAction(title: "Photo Library", style: .default) { (UIAlertAction) in
+            imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         }
         
-        let camera = UIAlertAction(title: "Camera", style: .Default) { (UIAlertAction) in
-            imagePicker.sourceType = .Camera
+        let camera = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
+            imagePicker.sourceType = .camera
             imagePicker.delegate = self
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         }
         
-        let cancel = UIAlertAction(title: "Cancel", style: .Cancel) { (UIAlertAction) in
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (UIAlertAction) in
         }
         
         listSelectSource.addAction(photoLibrary)
         listSelectSource.addAction(camera)
         listSelectSource.addAction(cancel)
         
-        presentViewController(listSelectSource, animated: true, completion: nil)
+        present(listSelectSource, animated: true, completion: nil)
     }
 
 }
@@ -134,7 +138,7 @@ class RegisterViewController: UIViewController{
 
 extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     // Giảm kích thước ảnh trước khi upload.
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let imageSelected = info [UIImagePickerControllerOriginalImage] as! UIImage
         
         let imageValue = max(imageSelected.size.height, imageSelected.size.width)
@@ -151,7 +155,7 @@ extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerC
         
         avatarImage.image = UIImage(data: imageData)
         
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }

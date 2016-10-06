@@ -9,41 +9,51 @@
 import UIKit
 import Firebase
 
+
 class MainViewController: UIViewController {
+    
     
     var tableMatchData:FIRDatabaseReference!
     var tableUserStatus:FIRDatabaseReference!
     
     var arrayId:Array<String> = Array<String>()
-    var arrayValue:Array<String> = Array<String>()
-    var arrayUser:Array<String> = Array<String>()
+    var timer = Timer()
+    var numberCount:Int! = 10
+    
+    
     var status:Array<String> = Array<String>()
-    var statusOpponent:Array<String> = Array<String>()
-    var timer: NSTimer!
-    var numberCount: Int! = 10
+    var value:Array<String> = Array<String>()
+    var score:Int! = 0
+    var opponentStatus:Array<String> = Array<String>()
+    var opponentValue:Array<String> = Array<String>()
+    var opponentScore:Int! = 0
     
-    
-    @IBOutlet weak var numberCountLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
-    @IBOutlet weak var statusOpponentLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var readyButton: UIButton!
     @IBOutlet weak var unreadyButton: UIButton!
+    @IBOutlet weak var matchStatusLabel: UILabel!
+    @IBOutlet weak var baoButton: UIButton!
+    @IBOutlet weak var buaButton: UIButton!
+    @IBOutlet weak var keoButton: UIButton!
     
+    @IBOutlet weak var opponentStatusLabel: UILabel!
     @IBOutlet weak var opponentAvatarImage: UIImageView!
     @IBOutlet weak var opponentName: UILabel!
     @IBOutlet weak var opponentChooseImage: UIImageView!
+    @IBOutlet weak var opponentScoreLabel: UILabel!
     
     
-    
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var chooseImage: UIImageView!
-    
+    @IBOutlet weak var scorelabel: UILabel!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         opponentAvatarImage.image = opponent.avatarImage
         opponentName.text = opponent.nickName
         
@@ -52,50 +62,142 @@ class MainViewController: UIViewController {
         
         arrayId.append(activeUser.id)
         arrayId.append(opponent.id)
-        arrayId.sortInPlace()
+        arrayId.sort()
         let matchId:String = "\(arrayId[0])\(arrayId[1])"
         
-        tableMatchData = ref.child("Match").child(matchId).child(activeUser.id)
-        tableUserStatus = ref.child("UserStatus").child(matchId).child(activeUser.id)
+        tableMatchData = ref.child("Match").child(activeUser.id).child(matchId).child("MatchData")
+        tableUserStatus =  ref.child("Match").child(activeUser.id).child(matchId).child("UserStatus")
+
+        
         
         // Mặc định nếu không ra kết quả là 4.
         matchData(activeUser.id,value: "4")
         userStatus(activeUser.id,status: "Unready")
-        self.statusOpponent.append("Unready")
+        self.opponentStatus.append("Unready")
         
-        tableMatchData.observeEventType(.Value, withBlock: { (snapshot) in
+        tableMatchData.onDisconnectRemoveValue()
+        tableUserStatus.onDisconnectRemoveValue()
+        
+        // Lấy về dữ liệu trận đấu của User.
+        ref.child("Match").child(activeUser.id).child(matchId).child("UserStatus").observe(.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String:AnyObject]
-            
-            print("---------\(postDict)")
+           
             if postDict != nil {
-                
-            }
-        })
-        
-        tableUserStatus.observeEventType(.Value, withBlock: { (snapshot) in
-            let postDict = snapshot.value as? [String:AnyObject]
-            print(snapshot.value)
-            print(snapshot.key)
-            
-            if (postDict != nil){
-                
-                if snapshot.key == activeUser.id {
+                if postDict?["id"] as! String == activeUser.id {
                     self.status = []
                     self.status.append(postDict?["status"] as! String)
                     print("----------\(self.status[0])")
                 }
-                else {
-                    self.statusOpponent = []
-                    self.statusOpponent.append(postDict?["status"] as! String)
-                    print(self.statusOpponent[0])
-                }
             }
-
+            
         })
         
-        // Cập nhật trạng thái ban đầu của người chơi là chưa sẵn sàng.
-        statusLabel.text = "Unready"
-        unreadyButton.hidden = true
+        ref.child("Match").child(activeUser.id).child(matchId).child("MatchData").observe(.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String:AnyObject]
+
+            if postDict != nil {
+                if postDict?["id"] as! String == activeUser.id {
+                    self.value = []
+                    self.value.append(postDict?["value"] as! String)
+                    print("----------\(self.value[0])")
+                }
+            }
+            
+        })
+        
+        
+        // Lấy về dữ liệu trận đấu của đối thủ.
+        
+        ref.child("Match").child(opponent.id).child(matchId).child("MatchData").observe(.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String:AnyObject]
+            
+            if postDict != nil {
+                if postDict?["id"] as! String == opponent.id {
+                    self.opponentValue = []
+                    self.opponentValue.append(postDict?["value"] as! String)
+                    print(self.opponentValue[0])
+                }
+            }
+        })
+        
+        ref.child("Match").child(opponent.id).child(matchId).child("UserStatus").observe(.value, with: { (snapshot) in
+            let postDict = snapshot.value as? [String:AnyObject]
+        
+            if postDict != nil {
+                if postDict?["id"] as! String == opponent.id {
+                    self.opponentStatus = []
+                    self.opponentStatus.append(postDict?["status"] as! String)
+                    print("----------++++\(self.opponentStatus[0])")
+                }
+            }
+        })
+        
+
+        ref.child("Match").observe(.value, with: {(snapshot) in
+            let postDict = snapshot.value as? [String:AnyObject]
+            if postDict != nil {
+
+                if self.status[0] == "Ready" {
+                    self.unreadyButton.isHidden = false
+                    self.readyButton.isHidden = true
+                    self.statusLabel.textColor = UIColor(Hex: 0x05d327)
+                    self.statusLabel.text = "Ready"
+                    if self.opponentStatus[0] == "Ready" {
+                        self.opponentStatusLabel.textColor = UIColor(Hex: 0x05d327)
+                        self.opponentStatusLabel.text = "Ready"
+                        self.opponentChooseImage.image = UIImage()
+                        self.baoButton.isEnabled = true
+                        self.buaButton.isEnabled = true
+                        self.keoButton.isEnabled = true
+                        
+                        if self.value[0] == "4" && self.opponentValue[0] == "4" {
+                            if self.numberCount != 10 {
+                                self.numberCount = 10
+                            }
+                            self.timer.invalidate()
+                            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MainViewController.count), userInfo: nil, repeats: true)
+                        }
+                    }
+                    else {
+                        self.opponentStatusLabel.textColor = UIColor(Hex: 0xff0202)
+                        self.opponentStatusLabel.text = "Unready"
+                        self.opponentChooseImage.image = UIImage()
+                        self.baoButton.isEnabled = false
+                        self.buaButton.isEnabled = false
+                        self.keoButton.isEnabled = false
+                        
+                        self.timer.invalidate()
+                        self.timeLabel.text = "Time: 10"
+                        self.matchData(activeUser.id, value: "4")
+                        
+                        
+                        
+                    }
+                }
+                else {
+                    if self.opponentStatus[0] == "Ready"{
+                        self.opponentStatusLabel.textColor = UIColor(Hex: 0x05d327)
+                        self.opponentStatusLabel.text = "Ready"
+                    }
+                    else {
+                        self.opponentStatusLabel.textColor = UIColor(Hex: 0xff0202)
+                        self.opponentStatusLabel.text = "Unready"
+                    }
+                    self.statusLabel.text = "Unready"
+                    self.statusLabel.textColor = UIColor(Hex: 0xff0202)
+                    self.unreadyButton.isHidden = true
+                    self.readyButton.isHidden = false
+                    self.baoButton.isEnabled = false
+                    self.buaButton.isEnabled = false
+                    self.keoButton.isEnabled = false
+                    
+                    self.timer.invalidate()
+                    self.timeLabel.text = "Time: 10"
+                    self.matchData(activeUser.id, value: "4")
+                }
+                
+            }
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,56 +206,131 @@ class MainViewController: UIViewController {
     }
     
     
-    func matchData(id:String, value:String) {
-        let data:Dictionary<String, String> = ["value": value]
+    
+    func matchData(_ id:String, value:String) {
+        let data:Dictionary<String, String> = ["id": id, "value": value]
         tableMatchData.setValue(data)
         
     }
-    func userStatus(id:String, status:String){
-        let data:Dictionary<String, String> = ["status": status]
+    func userStatus(_ id:String, status:String){
+        let data:Dictionary<String, String> = ["id": id, "status": status]
         tableUserStatus.setValue(data)
     }
+
+    func processMatch(_ value1: String, value2: String) {
+        let a:Int? = Int(value1)
+        let b:Int? = Int(value2)
+        let c:Int? = a! - b!
+        if a == 4 && b == 4 {
+            matchStatusLabel.textColor = UIColor(Hex: 0xfff600)
+            matchStatusLabel.text = "Draw"
+        }
+        if a == 4 || b == 4 {
+            if a == 4 && b != 4 {
+                opponentScore = opponentScore + 1
+                opponentScoreLabel.text = "\(opponentScore!)"
+                
+                matchStatusLabel.textColor = UIColor(Hex: 0xff0202)
+                matchStatusLabel.text = "Lose"
+            }
+            if a != 4 && b == 4 {
+                score = score + 1
+                scorelabel.text = "\(score!)"
+                
+                matchStatusLabel.textColor = UIColor(Hex: 0x05d327)
+                matchStatusLabel.text = "Win"
+            }
+        }
+        else {
+        
+
+            if c == 0 {
+                matchStatusLabel.textColor = UIColor(Hex: 0xfff600)
+                matchStatusLabel.text = "Draw"
+            }
+            if c == -1 || c == 2 {
+                score = score + 1
+                scorelabel.text = "\(score!)"
+                
+                matchStatusLabel.textColor = UIColor(Hex: 0x05d327)
+                matchStatusLabel.text = "Win"
+            }
+            if c == 1 || c == -2 {
+                opponentScore = opponentScore + 1
+                opponentScoreLabel.text = "\(opponentScore!)"
+                
+                matchStatusLabel.textColor = UIColor(Hex: 0xff0202)
+                matchStatusLabel.text = "Lose"
+            }
+        }
+    }
     
-    
-    @IBAction func baoButton(sender: AnyObject) {
+    @IBAction func baoButton(_ sender: AnyObject) {
         matchData(activeUser.id, value: "1")
         chooseImage.image = UIImage(named: "bao")
     }
-    @IBAction func buaButton(sender: AnyObject) {
+    @IBAction func buaButton(_ sender: AnyObject) {
         matchData(activeUser.id, value: "2")
         chooseImage.image = UIImage(named: "bua")
     }
-    @IBAction func keoButton(sender: AnyObject) {
+    @IBAction func keoButton(_ sender: AnyObject) {
         matchData(activeUser.id, value: "3")
         chooseImage.image = UIImage(named: "keo")
     }
     
     // Nút sẵn sàng.
-    @IBAction func readyButton(sender: AnyObject) {
-        statusLabel.text = "Ready"
-        statusLabel.textColor = UIColor(Hex: 0x05d327)
-        readyButton.hidden = true
-        unreadyButton.hidden = false
-        
+    @IBAction func readyButton(_ sender: AnyObject) {
+//        statusLabel.text = "Ready"
+//        statusLabel.textColor = UIColor(Hex: 0x05d327)
+//        readyButton.hidden = true
+//        unreadyButton.hidden = false
+        self.chooseImage.image = UIImage()
         userStatus(activeUser.id, status: "Ready")
     }
     // Nút chưa sẵn sàng.
-    @IBAction func unreadyButton(sender: AnyObject) {
-        statusLabel.text = "Unready"
-        statusLabel.textColor = UIColor(Hex: 0xff0202)
-        unreadyButton.hidden = true
-        readyButton.hidden = false
+    @IBAction func unreadyButton(_ sender: AnyObject) {
+//        statusLabel.text = "Unready"
+//        statusLabel.textColor = UIColor(Hex: 0xff0202)
+//        unreadyButton.hidden = true
+//        readyButton.hidden = false
         
-        userStatus("\(activeUser.id)", status: "Unready")
+        userStatus(activeUser.id, status: "Unready")
+        matchData(activeUser.id, value: "4")
     }
     
     func count() {
         numberCount = numberCount - 1
-        numberCountLabel.text = "Time: \(numberCount)"
+        if numberCount >= 0 {
+            timeLabel.text = "Time: \(numberCount!)"
+        }
+        if self.numberCount == 0 {
+            self.processMatch(self.value[0], value2: self.opponentValue[0])
+            
+            if self.opponentValue[0] == "1" {
+                self.opponentChooseImage.image = UIImage(named: "bao")
+            }
+            if self.opponentValue[0] == "2" {
+                self.opponentChooseImage.image = UIImage(named: "bua")
+            }
+            if self.opponentValue[0] == "3" {
+                self.opponentChooseImage.image = UIImage(named: "keo")
+            }
+            if self.opponentValue[0] == "4" {
+                self.opponentChooseImage.image = UIImage()
+            }
+            
+        }
+        if self.numberCount == -3 {
+            matchData(activeUser.id, value: "4")
+            userStatus(activeUser.id, status: "Unready")
+
+        }
     }
-    @IBAction func exitButton(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func exitButton(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
+        
     }
+    
 }
 
 extension UIColor {
