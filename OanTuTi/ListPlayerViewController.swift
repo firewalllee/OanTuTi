@@ -41,7 +41,7 @@ class ListPlayerViewController: UIViewController {
             let user:Dictionary<String, String> = ["email": activeUser.email, "nickName": activeUser.nickName, "avatarUrl": activeUser.avatarUrl]
             userId.setValue(user)
             
-            // Kiểm tra player online hay offline.
+            // Xóa thông tin trên Databse khi user ngừng kết nối với Databse.
             userId.onDisconnectRemoveValue()
             
             // Lấy thông tin user xuống lại máy từ Database.
@@ -52,10 +52,8 @@ class ListPlayerViewController: UIViewController {
                     let email:String = (postDict?["email"])! as!  String
                     let nickName:String = (postDict?["nickName"])! as!  String
                     let avatarUrl:String = (postDict?["avatarUrl"])! as!  String
-                    
                     let user:User = User(id: snapshot.key, email: email, nickName: nickName, avatarUrl: avatarUrl)
                     
-                    print("--------------------\(snapshot.value)")
                     // Kiểm tra nếu user
                     if user.id != activeUser.id {
                         self.listPlayer.append(user)
@@ -64,28 +62,6 @@ class ListPlayerViewController: UIViewController {
                     self.tbvListPlayer.reloadData()
                 }
             })
-            
-//            tableName.observe(.childRemoved, with: { snap in
-//                guard let emailToFind = snap.value as? String else { return }
-//                for (index, email) in self.listPlayer.enumerated() {
-//                    if email.email == emailToFind {
-//                        let indexPath = IndexPath(row: index, section: 0)
-//                        self.listPlayer.remove(at: index)
-//                        self.deleteRows(at: [indexPath], with: .fade)
-//                    }
-//                }
-//            })
-            
-//            FIRAuth.auth()!.addStateDidChangeListener { auth, user in
-//                guard let user = user else { return }
-//                activeUser = User(authData: activeUser)
-//                let currentUserRef = self.usersRef.child(self.user.uid)
-//                currentUserRef.setValue(self.user.email)
-//                currentUserRef.onDisconnectRemoveValue()
-//            }
-//            
-            
-        } else {
         }
     }
 

@@ -70,11 +70,12 @@ class MainViewController: UIViewController {
 
         
         
-        // Mặc định nếu không ra kết quả là 4.
+        // Thiết lập một số giá trị mặc định trước khi vào trận đấu
         matchData(activeUser.id,value: "4")
         userStatus(activeUser.id,status: "Unready")
         self.opponentStatus.append("Unready")
         
+        // Xóa thông tin trận đấu của User khi thoát khỏi trận đấu.
         tableMatchData.onDisconnectRemoveValue()
         tableUserStatus.onDisconnectRemoveValue()
         
@@ -86,7 +87,7 @@ class MainViewController: UIViewController {
                 if postDict?["id"] as! String == activeUser.id {
                     self.status = []
                     self.status.append(postDict?["status"] as! String)
-                    print("----------\(self.status[0])")
+//                    print("----------\(self.status[0])")
                 }
             }
             
@@ -99,7 +100,7 @@ class MainViewController: UIViewController {
                 if postDict?["id"] as! String == activeUser.id {
                     self.value = []
                     self.value.append(postDict?["value"] as! String)
-                    print("----------\(self.value[0])")
+//                    print("----------\(self.value[0])")
                 }
             }
             
@@ -107,7 +108,6 @@ class MainViewController: UIViewController {
         
         
         // Lấy về dữ liệu trận đấu của đối thủ.
-        
         ref.child("Match").child(opponent.id).child(matchId).child("MatchData").observe(.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String:AnyObject]
             
@@ -115,11 +115,10 @@ class MainViewController: UIViewController {
                 if postDict?["id"] as! String == opponent.id {
                     self.opponentValue = []
                     self.opponentValue.append(postDict?["value"] as! String)
-                    print(self.opponentValue[0])
+//                    print(self.opponentValue[0])
                 }
             }
         })
-        
         ref.child("Match").child(opponent.id).child(matchId).child("UserStatus").observe(.value, with: { (snapshot) in
             let postDict = snapshot.value as? [String:AnyObject]
         
@@ -127,12 +126,13 @@ class MainViewController: UIViewController {
                 if postDict?["id"] as! String == opponent.id {
                     self.opponentStatus = []
                     self.opponentStatus.append(postDict?["status"] as! String)
-                    print("----------++++\(self.opponentStatus[0])")
+//                    print("----------++++\(self.opponentStatus[0])")
                 }
             }
         })
         
 
+        // Hàm cập nhật xử lý những thay đổi thông tin trận đấu.
         ref.child("Match").observe(.value, with: {(snapshot) in
             let postDict = snapshot.value as? [String:AnyObject]
             if postDict != nil {
@@ -206,7 +206,6 @@ class MainViewController: UIViewController {
     }
     
     
-    
     func matchData(_ id:String, value:String) {
         let data:Dictionary<String, String> = ["id": id, "value": value]
         tableMatchData.setValue(data)
@@ -217,6 +216,7 @@ class MainViewController: UIViewController {
         tableUserStatus.setValue(data)
     }
 
+    // Hàm xử lý thông tin giá tri trận đấu.
     func processMatch(_ value1: String, value2: String) {
         let a:Int? = Int(value1)
         let b:Int? = Int(value2)
@@ -280,24 +280,17 @@ class MainViewController: UIViewController {
     
     // Nút sẵn sàng.
     @IBAction func readyButton(_ sender: AnyObject) {
-//        statusLabel.text = "Ready"
-//        statusLabel.textColor = UIColor(Hex: 0x05d327)
-//        readyButton.hidden = true
-//        unreadyButton.hidden = false
         self.chooseImage.image = UIImage()
         userStatus(activeUser.id, status: "Ready")
     }
+    
     // Nút chưa sẵn sàng.
     @IBAction func unreadyButton(_ sender: AnyObject) {
-//        statusLabel.text = "Unready"
-//        statusLabel.textColor = UIColor(Hex: 0xff0202)
-//        unreadyButton.hidden = true
-//        readyButton.hidden = false
-        
         userStatus(activeUser.id, status: "Unready")
         matchData(activeUser.id, value: "4")
     }
     
+    // Hàm đếm ngược thời gian chơi.
     func count() {
         numberCount = numberCount - 1
         if numberCount >= 0 {
@@ -333,6 +326,7 @@ class MainViewController: UIViewController {
     
 }
 
+// Mark: Chuyển màu theo mã hexa.
 extension UIColor {
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && red <= 255, "Invalid red component")

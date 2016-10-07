@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround() 
-        logining()
+        //logining()
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,6 +67,7 @@ extension UIViewController {
         }
     }
     
+    // Hàm ẩn keyboard.
     func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
