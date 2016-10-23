@@ -11,10 +11,15 @@ import Firebase
 
 class MenuViewController: UIViewController {
 
+    @IBOutlet weak var noticeVerifyEmail: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        if FIRAuth.auth()?.currentUser?.isEmailVerified == true {
+            noticeVerifyEmail.isHidden = true
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,8 +29,9 @@ class MenuViewController: UIViewController {
     
     @IBAction func signOutButton(_ sender: AnyObject) {
         try! FIRAuth.auth()!.signOut()
-        self.dismiss(animated: true, completion: nil)
-
+        if FIRAuth.auth()?.currentUser == nil {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 
     /*

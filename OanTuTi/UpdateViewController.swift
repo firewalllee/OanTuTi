@@ -1,45 +1,54 @@
 //
-//  RegisterViewController.swift
+//  UpdateViewController.swift
 //  OanTuTi
 //
-//  Created by Lee Nguyen on 9/16/16.
+//  Created by Lee Nguyen on 10/15/16.
 //  Copyright © 2016 Lee Nguyen. All rights reserved.
 //
 
 import UIKit
 import Firebase
 
-let storage = FIRStorage.storage()
-let storageRef = storage.reference(forURL: "gs://oan-tu-ti.appspot.com")
-
-class RegisterViewController: UIViewController, UITextFieldDelegate {
-    @IBOutlet weak var registerButton: UIButton!
+class UpdateViewController: UIViewController, UITextFieldDelegate {
 
     var imageData:Data!
+    @IBOutlet weak var updateButton: UIButton!
+    @IBOutlet weak var editButton: UIButton!
+    
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtNewPassword: UITextField!
     @IBOutlet weak var txtNickname: UITextField!
     @IBOutlet weak var avatarImage: UIImageView!
-    
+    @IBOutlet var tapImage: UITapGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround() 
-        
-        imageData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
-    }
+        self.hideKeyboardWhenTappedAround()
+            updateButton.isHidden = true
+            txtEmail.isEnabled = false
+            txtEmail.backgroundColor = UIColor(Hex: 0xe3e3e3)
+            txtPassword.isEnabled = false
+            txtPassword.backgroundColor = UIColor(Hex: 0xe3e3e3)
+            txtNewPassword.isEnabled = false
+            txtNewPassword.backgroundColor = UIColor(Hex: 0xe3e3e3)
+            txtNickname.isEnabled = false
+            txtNickname.backgroundColor = UIColor(Hex: 0xe3e3e3)
+            tapImage.isEnabled = false
+            
+            txtEmail.text = FIRAuth.auth()?.currentUser?.email
+            txtNickname.text = FIRAuth.auth()?.currentUser?.displayName
+            avatarImage.loadUpdateAvatar((FIRAuth.auth()?.currentUser?.photoURL)!)
+
+            }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    
-    @IBAction func registerButton(_ sender: UIButton) {
-        registerButton.isEnabled = false
-        let email = txtEmail.text!
-        let password = txtPassword.text!
+    @IBAction func updateButton(_ sender: AnyObject) {
+        
+        updateButton.isEnabled = false
         
         let alertActivity = UIAlertController(title: "\n\n" + "Loading", message: "", preferredStyle: .alert)
         let activity = UIActivityIndicatorView(frame: alertActivity.view.bounds)
@@ -48,35 +57,36 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         activity.color = UIColor.gray
         alertActivity.view.addSubview(activity)
         
-        // kiem tra nhap mat khau tren 6 ki tu va nickname tren 4 ki tu.
-        if (txtPassword.text?.characters.count)! < 6 || (txtNickname.text?.characters.count)! < 4 {
+        if ((txtNewPassword.text?.characters.count)! > 0 && (txtNewPassword.text?.characters.count)! < 6) || (txtNickname.text?.characters.count)! < 4 {
             let alertPasswordTooShort = UIAlertController(title: "Come on!", message: "Your password(<6) or Nickname(<4) so short, let's try again!", preferredStyle: .alert)
             let ok = UIAlertAction(title: "Try again", style: .cancel, handler: { (UIAlertAction) in
-                self.registerButton.isEnabled = true
+                self.updateButton.isEnabled = true
             })
             alertPasswordTooShort.addAction(ok)
             present(alertPasswordTooShort, animated: true, completion: nil)
-        }
-        else {
-            FIRAuth.auth()?.createUser(withEmail: email, password: password) { (user, error) in
+
+            
+        } else {
+ 
+            FIRAuth.auth()?.signIn(withEmail: txtEmail.text!, password: txtPassword.text!, completion: { (user, error) in
                 if error == nil {
                     activity.startAnimating()
                     self.present(alertActivity, animated: true, completion: nil)
                     
-                    FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
-                        user?.sendEmailVerification(completion: { (Error) in
+                    // Thay đổi password.
+                    if self.txtNewPassword.text?.characters.count != 0 {
+                        user?.updatePassword(self.txtNewPassword.text!, completion: { (Error) in
                         })
-                    })
+                    }
                     
-                    // Upload avatar lên storage.
-                    let avatarRef = storageRef.child("AvatarImage/\(email).jpg")
+                    let avatarRef = storageRef.child("AvatarImage/\(self.txtEmail.text).jpg")
                     let uploadTask = avatarRef.put(self.imageData, metadata: nil){ (metadata, error) in
                         if error != nil {
                             // Thông báo upload avatar thất bại.
                             let alertFailToUploadAvatar = UIAlertController(title: ":'(", message: "Upload avatar fail, can try later!", preferredStyle: .alert)
-                            let okButton2 = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
+                            let ok = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
                             })
-                            alertFailToUploadAvatar.addAction(okButton2)
+                            alertFailToUploadAvatar.addAction(ok)
                             self.present(alertFailToUploadAvatar, animated: true, completion: nil)
                             
                         }
@@ -94,10 +104,22 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                                         activity.stopAnimating()
                                         alertActivity.dismiss(animated: true, completion: nil)
                                         
-                                        let alertRegisterSuccessful = UIAlertController(title: "Successfull :)", message: "Your account has been create. We have an email for you, please go to your email and verify your email to login next time.", preferredStyle: .alert)
+                                        let alertRegisterSuccessful = UIAlertController(title: "Successfull :)", message: "Your account has been updated", preferredStyle: .alert)
                                         let ok = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
-                                            self.switchSence()
-                                            self.registerButton.isEnabled = true
+                                            
+                                            self.updateButton.isEnabled = true
+                                            self.updateButton.isHidden = true
+                                            self.editButton.isHidden = false
+                                            self.txtPassword.isEnabled = false
+                                            self.txtPassword.text = ""
+                                            self.txtPassword.backgroundColor = UIColor(Hex: 0xe3e3e3)
+                                            self.txtNewPassword.isEnabled = false
+                                            self.txtNewPassword.text = ""
+                                            self.txtNewPassword.backgroundColor = UIColor(Hex: 0xe3e3e3)
+                                            self.txtNickname.isEnabled = false
+                                            self.txtNickname.backgroundColor = UIColor(Hex: 0xe3e3e3)
+                                            
+                                            
                                         })
                                         alertRegisterSuccessful.addAction(ok)
                                         self.present(alertRegisterSuccessful, animated: true, completion: nil)
@@ -107,23 +129,40 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         }
                     }
                     uploadTask.resume()
+
+                    
                 }
                 else {
-                    self.registerButton.isEnabled = true
-                    // Thông báo đăng kí tài khoản thất bại.
-                    let alertFailToCreateAccount = UIAlertController(title: "Email", message: "Your email has been existing", preferredStyle: .alert)
-                    let okButton3 = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
-                        self.registerButton.isEnabled = true
+                    let alertPasswordNotMatch = UIAlertController(title: "Sorry!", message: "Your password incorrect", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
+                        self.updateButton.isEnabled = true
                     })
-                    alertFailToCreateAccount.addAction(okButton3)
-                    self.present(alertFailToCreateAccount, animated: true, completion: nil)
+                    alertPasswordNotMatch.addAction(ok)
+                    self.present(alertPasswordNotMatch, animated: true, completion: nil)
+
                 }
-            }
+            })
+            
+
+            
         }
+        
     }
     
-    
-    @IBAction func tapToSelectImage(_ sender: UITapGestureRecognizer) {
+    @IBAction func editButton(_ sender: AnyObject) {
+        updateButton.isHidden = false
+        editButton.isHidden = true
+        txtPassword.isEnabled = true
+        txtPassword.backgroundColor = UIColor(Hex: 0xffffff)
+        txtNewPassword.isEnabled = true
+        txtNewPassword.backgroundColor = UIColor(Hex: 0xffffff)
+        txtNickname.isEnabled = true
+        txtNickname.backgroundColor = UIColor(Hex: 0xffffff)
+        tapImage.isEnabled = true
+        imageData = UIImagePNGRepresentation(avatarImage.image!)
+    }
+
+    @IBAction func tapToSelectImage(_ sender: AnyObject) {
         resignFirstResponder()
         
         let imagePicker = UIImagePickerController()
@@ -152,30 +191,35 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         present(listSelectSource, animated: true, completion: nil)
     }
-
+    
+    // Back button
+    @IBAction func backButton(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     // Keyboard show.
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == txtEmail {
+        if textField == txtNickname {
             moveTextField(textField: textField, moveDistance: -70, up: true)
         }
         if textField == txtPassword {
-            moveTextField(textField: textField, moveDistance: -70, up: true)
+            moveTextField(textField: textField, moveDistance: -85, up: true)
         }
-        if textField == txtNickname {
-            moveTextField(textField: textField, moveDistance: -150, up: true)
+        if textField == txtNewPassword {
+            moveTextField(textField: textField, moveDistance: -155, up: true)
         }
     }
     
     // Keyboard hide.
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == txtEmail {
+        if textField == txtNickname {
             moveTextField(textField: textField, moveDistance: -70, up: false)
         }
         if textField == txtPassword {
-            moveTextField(textField: textField, moveDistance: -70, up: false)
+            moveTextField(textField: textField, moveDistance: -85, up: false)
         }
-        if textField == txtNickname {
-            moveTextField(textField: textField, moveDistance: -150, up: false)
+        if textField == txtNewPassword {
+            moveTextField(textField: textField, moveDistance: -155, up: false)
         }
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -185,7 +229,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 }
 
 
-extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+extension UpdateViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     // Giảm kích thước ảnh trước khi upload.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let imageSelected = info [UIImagePickerControllerOriginalImage] as! UIImage

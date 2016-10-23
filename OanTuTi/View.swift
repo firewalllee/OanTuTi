@@ -11,8 +11,51 @@ import UIKit
 
 extension UIImageView {
     func loadAvatar (_ link:String) {
-        let url:URL = URL(string: link)!
-        let data:Data = try! Data(contentsOf: url)
-        self.image = UIImage(data: data)
+
+
+        
+        let queue = DispatchQueue(label: "LoadImage", attributes: DispatchQueue.Attributes.concurrent, target: nil)
+        let activity:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activity.frame = CGRect(x: self.frame.size.width/2, y: self.frame.size.height/2, width: 0, height: 0)
+        activity.color = UIColor.gray
+        self.addSubview(activity)
+        activity.startAnimating()
+        
+        queue.async {
+            let url:URL = URL(string: link)!
+            do {
+                let data:Data = try Data(contentsOf: url)
+                DispatchQueue.main.async(execute: {
+                    activity.stopAnimating()
+                    self.image = UIImage(data: data)
+                })
+            } catch {
+                activity.stopAnimating()
+            }
+        }
     }
+    func loadUpdateAvatar (_ linkPhoto:URL) {
+
+
+        let queue = DispatchQueue(label: "LoadImage", attributes: DispatchQueue.Attributes.concurrent, target: nil)
+        let activity:UIActivityIndicatorView = UIActivityIndicatorView()
+        activity.frame = CGRect(x: self.frame.size.width/2, y: self.frame.size.height/2, width: 0, height: 0)
+        activity.color = UIColor.gray
+        self.addSubview(activity)
+        activity.startAnimating()
+        
+        queue.async {
+            do {
+                let data:Data = try Data(contentsOf: linkPhoto)
+                DispatchQueue.main.async(execute: {
+                    activity.stopAnimating()
+                    self.image = UIImage(data: data)
+                })
+            } catch {
+                activity.stopAnimating()
+            }
+        }
+    }
+    
+    
 }

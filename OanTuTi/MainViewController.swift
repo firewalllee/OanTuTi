@@ -23,11 +23,14 @@ class MainViewController: UIViewController {
     
     var status:Array<String> = Array<String>()
     var value:Array<String> = Array<String>()
+    var submitted:Array<String> = Array<String>()
     var score:Int! = 0
     var opponentStatus:Array<String> = Array<String>()
     var opponentValue:Array<String> = Array<String>()
+    var opponentsubmitted:Array<String> = Array<String>()
     var opponentScore:Int! = 0
     
+    @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var readyButton: UIButton!
     @IBOutlet weak var unreadyButton: UIButton!
@@ -71,9 +74,10 @@ class MainViewController: UIViewController {
         
         
         // Thiết lập một số giá trị mặc định trước khi vào trận đấu
-        matchData(activeUser.id,value: "4")
+        matchData(activeUser.id, value: "4", submitted: "no")
         userStatus(activeUser.id,status: "Unready")
         self.opponentStatus.append("Unready")
+        submitButton.isEnabled = false
         
         // Xóa thông tin trận đấu của User khi thoát khỏi trận đấu.
         tableMatchData.onDisconnectRemoveValue()
@@ -99,7 +103,9 @@ class MainViewController: UIViewController {
             if postDict != nil {
                 if postDict?["id"] as! String == activeUser.id {
                     self.value = []
+                    self.submitted = []
                     self.value.append(postDict?["value"] as! String)
+                    self.submitted.append(postDict?["submitted"] as! String)
 //                    print("----------\(self.value[0])")
                 }
             }
@@ -114,7 +120,9 @@ class MainViewController: UIViewController {
             if postDict != nil {
                 if postDict?["id"] as! String == opponent.id {
                     self.opponentValue = []
+                    self.opponentsubmitted = []
                     self.opponentValue.append(postDict?["value"] as! String)
+                    self.opponentsubmitted.append(postDict?["submitted"] as! String)
 //                    print(self.opponentValue[0])
                 }
             }
@@ -136,7 +144,6 @@ class MainViewController: UIViewController {
         ref.child("Match").observe(.value, with: {(snapshot) in
             let postDict = snapshot.value as? [String:AnyObject]
             if postDict != nil {
-
                 if self.status[0] == "Ready" {
                     self.unreadyButton.isHidden = false
                     self.readyButton.isHidden = true
@@ -157,6 +164,16 @@ class MainViewController: UIViewController {
                             self.timer.invalidate()
                             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MainViewController.count), userInfo: nil, repeats: true)
                         }
+                        if self.submitted[0] == "yes" {
+                            self.baoButton.isEnabled = false
+                            self.buaButton.isEnabled = false
+                            self.keoButton.isEnabled = false
+                            if self.opponentsubmitted[0] == "yes" {
+                                self.numberCount = 1
+                                self.timer.invalidate()
+                                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MainViewController.count), userInfo: nil, repeats: true)
+                            }
+                        }
                     }
                     else {
                         self.opponentStatusLabel.textColor = UIColor(Hex: 0xff0202)
@@ -168,7 +185,7 @@ class MainViewController: UIViewController {
                         
                         self.timer.invalidate()
                         self.timeLabel.text = "Time: 10"
-                        self.matchData(activeUser.id, value: "4")
+                        self.matchData(activeUser.id, value: "4", submitted: "no")
                         
                         
                         
@@ -193,7 +210,7 @@ class MainViewController: UIViewController {
                     
                     self.timer.invalidate()
                     self.timeLabel.text = "Time: 10"
-                    self.matchData(activeUser.id, value: "4")
+                    self.matchData(activeUser.id, value: "4", submitted: "no")
                 }
                 
             }
@@ -206,8 +223,8 @@ class MainViewController: UIViewController {
     }
     
     
-    func matchData(_ id:String, value:String) {
-        let data:Dictionary<String, String> = ["id": id, "value": value]
+    func matchData(_ id:String, value:String, submitted:String) {
+        let data:Dictionary<String, String> = ["id": id, "value": value, "submitted": submitted]
         tableMatchData.setValue(data)
         
     }
@@ -266,16 +283,19 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func baoButton(_ sender: AnyObject) {
-        matchData(activeUser.id, value: "1")
+        matchData(activeUser.id, value: "1", submitted: "no")
         chooseImage.image = UIImage(named: "bao")
+        self.submitButton.isEnabled = true
     }
     @IBAction func buaButton(_ sender: AnyObject) {
-        matchData(activeUser.id, value: "2")
+        matchData(activeUser.id, value: "2", submitted: "no")
         chooseImage.image = UIImage(named: "bua")
+        self.submitButton.isEnabled = true
     }
     @IBAction func keoButton(_ sender: AnyObject) {
-        matchData(activeUser.id, value: "3")
+        matchData(activeUser.id, value: "3", submitted: "no")
         chooseImage.image = UIImage(named: "keo")
+        self.submitButton.isEnabled = true
     }
     
     // Nút sẵn sàng.
@@ -287,8 +307,14 @@ class MainViewController: UIViewController {
     // Nút chưa sẵn sàng.
     @IBAction func unreadyButton(_ sender: AnyObject) {
         userStatus(activeUser.id, status: "Unready")
-        matchData(activeUser.id, value: "4")
+        matchData(activeUser.id, value: "4", submitted: "no")
     }
+    
+    @IBAction func submitButton(_ sender: AnyObject) {
+        submitButton.isEnabled = false
+        matchData(activeUser.id, value: value[0], submitted: "yes")
+    }
+    
     
     // Hàm đếm ngược thời gian chơi.
     func count() {
@@ -312,9 +338,10 @@ class MainViewController: UIViewController {
                 self.opponentChooseImage.image = UIImage()
             }
             
+            self.submitButton.isEnabled = false
         }
         if self.numberCount == -3 {
-            matchData(activeUser.id, value: "4")
+            matchData(activeUser.id, value: "4", submitted: "no")
             userStatus(activeUser.id, status: "Unready")
 
         }

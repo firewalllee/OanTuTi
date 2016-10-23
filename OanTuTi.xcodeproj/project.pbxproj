@@ -13,10 +13,12 @@
 		7E1C79501D87DE2F00AE63B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1C794F1D87DE2F00AE63B2 /* ViewController.swift */; };
 		7E1C79531D87DE2F00AE63B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E1C79511D87DE2F00AE63B2 /* Main.storyboard */; };
 		7E1C79581D87DE2F00AE63B2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E1C79561D87DE2F00AE63B2 /* LaunchScreen.storyboard */; };
+		7E3E19591DACDA6800468E37 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E19581DACDA6800468E37 /* ProfileViewController.swift */; };
 		7E3E288C1D92305D000E804B /* ListPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E288B1D92305D000E804B /* ListPlayerTableViewCell.swift */; };
 		7E3E288E1D9237FD000E804B /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3E288D1D9237FD000E804B /* View.swift */; };
 		7E3F74531D8D1FF8006AB01A /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */; };
 		7E506DC81DA3A0BD006A9D68 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E506DC71DA3A0BD006A9D68 /* AboutViewController.swift */; };
+		7E537A561DB1FE3B002E85FD /* UpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E537A551DB1FE3B002E85FD /* UpdateViewController.swift */; };
 		7E798D1C1D90E338000221C0 /* ListPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E798D1B1D90E338000221C0 /* ListPlayerViewController.swift */; };
 		7E798D201D90E379000221C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E798D1F1D90E379000221C0 /* User.swift */; };
 		7EA4DAFC1D92930900C5887A /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EA4DAFB1D92930900C5887A /* MainViewController.swift */; };
@@ -33,10 +35,12 @@
 		7E1C79521D87DE2F00AE63B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7E1C79571D87DE2F00AE63B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E1C79591D87DE2F00AE63B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E3E19581DACDA6800468E37 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		7E3E288B1D92305D000E804B /* ListPlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPlayerTableViewCell.swift; sourceTree = "<group>"; };
 		7E3E288D1D9237FD000E804B /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		7E506DC71DA3A0BD006A9D68 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		7E537A551DB1FE3B002E85FD /* UpdateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateViewController.swift; sourceTree = "<group>"; };
 		7E798D1B1D90E338000221C0 /* ListPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPlayerViewController.swift; sourceTree = "<group>"; };
 		7E798D1F1D90E379000221C0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7EA4DAFB1D92930900C5887A /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -113,11 +117,13 @@
 			children = (
 				7E1A9C881D912C0300A71334 /* RegisterViewController.swift */,
 				7E1C794F1D87DE2F00AE63B2 /* ViewController.swift */,
+				7E537A551DB1FE3B002E85FD /* UpdateViewController.swift */,
 				7E3F74521D8D1FF8006AB01A /* MenuViewController.swift */,
 				7E506DC71DA3A0BD006A9D68 /* AboutViewController.swift */,
 				7E798D1B1D90E338000221C0 /* ListPlayerViewController.swift */,
 				7E3E288B1D92305D000E804B /* ListPlayerTableViewCell.swift */,
 				7EA4DAFB1D92930900C5887A /* MainViewController.swift */,
+				7E3E19581DACDA6800468E37 /* ProfileViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -169,7 +175,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Lee Nguyen";
 				TargetAttributes = {
 					7E1C79491D87DE2F00AE63B2 = {
@@ -270,10 +276,12 @@
 				7E798D201D90E379000221C0 /* User.swift in Sources */,
 				7E3E288C1D92305D000E804B /* ListPlayerTableViewCell.swift in Sources */,
 				7E3E288E1D9237FD000E804B /* View.swift in Sources */,
+				7E3E19591DACDA6800468E37 /* ProfileViewController.swift in Sources */,
 				7E1C794E1D87DE2F00AE63B2 /* AppDelegate.swift in Sources */,
 				7E3F74531D8D1FF8006AB01A /* MenuViewController.swift in Sources */,
 				7E506DC81DA3A0BD006A9D68 /* AboutViewController.swift in Sources */,
 				7EA4DAFC1D92930900C5887A /* MainViewController.swift in Sources */,
+				7E537A561DB1FE3B002E85FD /* UpdateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,8 +321,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -358,8 +368,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -378,6 +390,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

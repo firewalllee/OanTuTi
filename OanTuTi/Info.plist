@@ -34,5 +34,9 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Set the Background</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Set the Background of the app with your beautiful photography</string>
 </dict>
 </plist>

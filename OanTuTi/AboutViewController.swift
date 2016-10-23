@@ -10,10 +10,11 @@ import UIKit
 
 class AboutViewController: UIViewController {
 
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+     
     }
 
     override func didReceiveMemoryWarning() {
