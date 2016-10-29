@@ -17,7 +17,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround() 
-        //logining()
+
+        // Kiểm tra tài khoản có đang đăng nhập hay không.
+        if (FIRAuth.auth()?.currentUser) != nil {
+            switchSence()
+        }
     }
 
     override func didReceiveMemoryWarning() {

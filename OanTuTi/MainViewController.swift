@@ -80,8 +80,8 @@ class MainViewController: UIViewController {
         submitButton.isEnabled = false
         
         // Xóa thông tin trận đấu của User khi thoát khỏi trận đấu.
-        tableMatchData.onDisconnectRemoveValue()
-        tableUserStatus.onDisconnectRemoveValue()
+//        tableMatchData.onDisconnectRemoveValue()
+//        tableUserStatus.onDisconnectRemoveValue()
         
         // Lấy về dữ liệu trận đấu của User.
         ref.child("Match").child(activeUser.id).child(matchId).child("UserStatus").observe(.value, with: { (snapshot) in

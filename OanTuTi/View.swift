@@ -15,8 +15,10 @@ extension UIImageView {
 
         
         let queue = DispatchQueue(label: "LoadImage", attributes: DispatchQueue.Attributes.concurrent, target: nil)
-        let activity:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        activity.frame = CGRect(x: self.frame.size.width/2, y: self.frame.size.height/2, width: 0, height: 0)
+        let activity:UIActivityIndicatorView = UIActivityIndicatorView(frame: self.bounds)
+        activity.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        activity.activityIndicatorViewStyle = .whiteLarge
+        activity.isUserInteractionEnabled = true
         activity.color = UIColor.gray
         self.addSubview(activity)
         activity.startAnimating()
@@ -37,9 +39,11 @@ extension UIImageView {
     func loadUpdateAvatar (_ linkPhoto:URL) {
 
 
-        let queue = DispatchQueue(label: "LoadImage", attributes: DispatchQueue.Attributes.concurrent, target: nil)
-        let activity:UIActivityIndicatorView = UIActivityIndicatorView()
-        activity.frame = CGRect(x: self.frame.size.width/2, y: self.frame.size.height/2, width: 0, height: 0)
+        let queue = DispatchQueue(label: "LoadImage", attributes: DispatchQueue.Attributes.concurrent)
+        let activity:UIActivityIndicatorView = UIActivityIndicatorView(frame: self.bounds)
+        activity.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
+        activity.activityIndicatorViewStyle = .whiteLarge
+        activity.isUserInteractionEnabled = true
         activity.color = UIColor.gray
         self.addSubview(activity)
         activity.startAnimating()

@@ -30,6 +30,7 @@ class MenuViewController: UIViewController {
     @IBAction func signOutButton(_ sender: AnyObject) {
         try! FIRAuth.auth()!.signOut()
         if FIRAuth.auth()?.currentUser == nil {
+            
             self.dismiss(animated: true, completion: nil)
         }
     }
