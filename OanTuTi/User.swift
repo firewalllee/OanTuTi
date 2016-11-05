@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 struct User {
+    
+    
+    
     let id:String!
     let email:String!
     let nickName:String!

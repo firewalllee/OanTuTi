@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8D0666FFB5421929993D22FF12D5770C569646C2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "73631894F583D7214C51D8A3CBB65AE5B16E8915" : 9223372036854775807,
+    "8D0666FFB5421929993D22FF12D5770C569646C2" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BDC17CF4-FD7B-4098-A9E4-8F438552D80D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "73631894F583D7214C51D8A3CBB65AE5B16E8915" : "",
+    "8D0666FFB5421929993D22FF12D5770C569646C2" : "OanTuTi\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "OanTuTi",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "OanTuTi.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ngocphuc1612\/iOoOsPractises__1__2__3.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "73631894F583D7214C51D8A3CBB65AE5B16E8915"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/firewalllee\/OanTuTi.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8D0666FFB5421929993D22FF12D5770C569646C2"
+    }
+  ]
+}

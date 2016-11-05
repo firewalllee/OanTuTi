@@ -101,9 +101,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
 extension UIViewController {
     // Chuyển màn hình sau khi đăng nhập thành công.
     func switchSence(){
-        let sence = self.storyboard?.instantiateViewController(withIdentifier: "Menu")
-        if sence != nil {
-            self.present(sence!, animated: true, completion: nil)
+        if let sence = self.storyboard?.instantiateViewController(withIdentifier: "Menu")  {
+        //if sence != nil {
+            self.present(sence, animated: true, completion: nil)
         }
     }
     
