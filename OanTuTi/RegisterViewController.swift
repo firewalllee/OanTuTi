@@ -26,8 +26,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: - Declarations
     var spaceTopFree: CGFloat!
-    var imageData: Data!
+    var imgData: Data!
     var delegate:ProtocolUserEmail? = nil
+    let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -36,7 +37,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         self.hideKeyboardWhenTappedAround()
         
         //
-        imageData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
+        imgData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
         
         //Listen register event from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientSignUpRs) { (data, ack) in
@@ -50,11 +51,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                             self.txtEmail.text = Contants.Instance.null
                             self.txtPassword.text = Contants.Instance.null
                             self.txtNickname.text = Contants.Instance.null
+                            //-------Dismiss loading alert-----------------
+                            self.dismiss(animated: true, completion: nil)
                             //---------------------------------------------
                             _ = self.navigationController?.popViewController(animated: true)
                         }
                         
                     } else {
+                        //-------Dismiss loading alert-----------------
+                        self.dismiss(animated: true, completion: nil)
+                        //-------Show message from server alert--------
                         if let message:String = response[Contants.Instance.message] as? String {
                             self.showNotification(title: "Notice", message: message)
                         }
@@ -118,15 +124,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let email: String = self.txtEmail.text!
         let pass: String = self.txtPassword.text!
         let nickname: String = self.txtNickname.text!
-        let base64ArrayAvatar = imageData.base64EncodedString()
-    
+        
         if pass.characters.count < 6 {
             self.showNotification(title: "Password!", message: "Your password must be at least 6 characters")
         } else {
             if nickname == Contants.Instance.null {
                 self.showNotification(title: "Nickname!", message: "Please fill out your Nickname")
             } else {
-                let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.pass: pass, Contants.Instance.nickname: nickname, Contants.Instance.file: base64ArrayAvatar]
+                //Waiting indicator
+                self.waitingIndicator(with: indicator)
+                let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.pass: pass, Contants.Instance.nickname: nickname, Contants.Instance.file: imgData]
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientSignUp, jsonData)
             }
         }
@@ -173,27 +180,28 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    
 }
 
 //MARK: - Make extension RegisterViewController
 extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    //Reduce size photos before uploading
+    // Reduce size photos before uploading
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let imageSelected = info [UIImagePickerControllerOriginalImage] as? UIImage {
             
             let imageValue:CGFloat = max(imageSelected.size.height, imageSelected.size.width)
             
             if imageValue > 3000 {
-                imageData = UIImageJPEGRepresentation(imageSelected, 0.1)
+                imgData = UIImageJPEGRepresentation(imageSelected, 0.1)
             }
             if imageValue > 2000 {
-                imageData = UIImageJPEGRepresentation(imageSelected, 0.5)
+                imgData = UIImageJPEGRepresentation(imageSelected, 0.5)
             } else {
-                imageData = UIImagePNGRepresentation(imageSelected)
+                imgData = UIImagePNGRepresentation(imageSelected)
             }
             
-            imgAvatar.image = UIImage(data: imageData)
+            imgAvatar.image = UIImage(data: imgData)
         }
         self.dismiss(animated: true, completion: nil)
     }

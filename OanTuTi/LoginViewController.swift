@@ -134,7 +134,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func userEmail(_ userEmail: String) {
         self.txtEmail.text = userEmail
     }
-    
     //MARK: - Register tasks
     @IBAction func btnRegister(_ sender: AnyObject) {
         self.performSegue(withIdentifier: Contants.Instance.segueRegister, sender: nil)
@@ -220,14 +219,14 @@ extension UIViewController {
     //Indicator waiting
     func waitingIndicator(with indicator: UIActivityIndicatorView) {
         
-        let alert:UIAlertController = UIAlertController(title: "\n" + "Loading", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let alert:UIAlertController = UIAlertController(title: "Loading\n", message: "", preferredStyle: UIAlertControllerStyle.alert)
         let alertCancel: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         alert.addAction(alertCancel)
         indicator.activityIndicatorViewStyle = .gray
         
         self.present(alert, animated: true) {
             //Properties
-            indicator.frame = CGRect(x: alert.view.frame.width/2 - 25, y: 0, width: 50, height: 50)
+            indicator.frame = CGRect(x: alert.view.frame.width/2, y: alert.view.frame.height/2, width: 0, height: 0)
             alert.view.addSubview(indicator)
             indicator.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
             indicator.startAnimating()
@@ -244,6 +243,6 @@ extension UIViewController {
         self.view.endEditing(true)
     }
     
-    
 }
+
 
