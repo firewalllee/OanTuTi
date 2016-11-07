@@ -33,7 +33,6 @@ class MenuViewController: UIViewController {
         if let myCoin_card:Int = myProfile.coin_card {
             lblCoin.text = String(myCoin_card)
         }
-        print(myProfile.avatar)
         if let myAvatar:String = myProfile.avatar {
             imgAvatar.loadAvatar(myAvatar)
         }
@@ -67,6 +66,12 @@ class MenuViewController: UIViewController {
     
     //MARK: - Play tasks
     @IBAction func btnPlay(_ sender: AnyObject) {
+        
+    }
+    
+    //MARK: - Profile tasks
+    @IBAction func btnProfile(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: Contants.Instance.segueProfile, sender: nil)
         
     }
     

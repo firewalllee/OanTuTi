@@ -98,6 +98,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.txtNickname.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
+            self.btnRegister(self)
         }
         return true
     }

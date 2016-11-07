@@ -34,17 +34,42 @@ class ProfileViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(false)
         
         //Init 3 textfield will hide and scale to 0.1 belong y coordinate
         self.wrapTextfieldHeightConstraint.constant = 0
         self.wrapTextfield.isHidden = true
         self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
+        //Load user infor
+        self.loadInfo()
         //Make scale animation
-        self.wrapView.scaleAnimation()
+        self.wrapView.rotateXAxis()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        
         
     }
     
+    //Load information of user when view have loaded
+    func loadInfo() {
+        if let name: String = myProfile.name {
+            self.lblDisplayName.text = name
+        }
+        if let coins: Int = myProfile.coin_card {
+            self.lblCoins.text = "\(coins)"
+        }
+        if let wins: Int = myProfile.statis?.wins {
+            self.lblWins.text = "\(wins) Wins"
+        }
+        if let losts: Int = myProfile.statis?.wins {
+            self.lblLosts.text = "\(losts) Lost"
+        }
+        self.lblEmail.text = User_mail
+        if let myAvatar:String = myProfile.avatar {
+            imgAvatar.loadAvatar(myAvatar)
+        }
+    }
     
     
     //MARK: - Edit tasks

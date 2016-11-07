@@ -9,6 +9,7 @@
 import UIKit
 
 var myProfile:User = User()
+var User_mail:String = String()
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -35,6 +36,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                     //-------CheckLogin----------------------------
                     if isSuccess {
+                        //-------Get user email-----------------------
+                        User_mail = self.txtEmail.text!
                         //-------Textfield reset-----------------------
                         self.txtEmail.text = Contants.Instance.null
                         self.txtPassword.text = Contants.Instance.null
@@ -107,6 +110,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             txtPassword.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
+            self.btnLogin(UIButton())
         }
         
         return true
@@ -187,6 +191,14 @@ extension UIView {
             UIView.animate(withDuration: 0.3, animations: {
                 self.layer.transform = CATransform3DMakeScale(1, 1, 1)
             })
+        }
+    }
+    
+    func rotateXAxis() {
+        self.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI/2), 0, 1, 0)
+        
+        UIView.animate(withDuration: 0.7) {
+            self.layer.transform = CATransform3DMakeRotation(0, 0, 1, 0)
         }
     }
     

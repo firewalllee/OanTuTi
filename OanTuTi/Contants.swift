@@ -18,6 +18,7 @@ class Contants {
     //----------------Segue------------------------
     let segueRegister: String = "segueRegister"
     let segueMenu: String = "segueMenu"
+    let segueProfile: String = "segueProfile"
     //---------------Contants----------------------
     let null: String = ""
     let avatar: String = "avatar"
