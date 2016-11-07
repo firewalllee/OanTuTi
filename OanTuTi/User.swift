@@ -11,6 +11,10 @@ import Foundation
 struct Statistics {
     var loses: Int?
     var wins: Int?
+    init(_ win: Int, _ lost: Int) {
+        self.wins = win
+        self.loses = lost
+    }
 }
 
 class User {
@@ -47,8 +51,11 @@ class User {
             self.socket_id = socket_id
         }
         if let statis:Dictionary<String, Int> = json[Contants.Instance.statistics] as? Dictionary<String, Int> {
-            self.statis?.loses = statis[Contants.Instance.loses]
-            self.statis?.wins = statis[Contants.Instance.wins]
+            if let loses = statis[Contants.Instance.loses] {
+                if let wins = statis[Contants.Instance.wins] {
+                    self.statis = Statistics(wins, loses)
+                }
+            }
         }
         if let uid: String = json[Contants.Instance.uid] as? String {
             self.uid = uid

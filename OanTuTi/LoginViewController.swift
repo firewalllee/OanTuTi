@@ -9,6 +9,7 @@
 import UIKit
 
 var myProfile:User = User()
+var User_mail:String = String()
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -35,6 +36,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                     //-------CheckLogin----------------------------
                     if isSuccess {
+                        //-------Get user email-----------------------
+                        User_mail = self.txtEmail.text!
                         //-------Textfield reset-----------------------
                         self.txtEmail.text = Contants.Instance.null
                         self.txtPassword.text = Contants.Instance.null
@@ -107,6 +110,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             txtPassword.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
+            self.btnLogin(UIButton())
         }
         
         return true
@@ -134,7 +138,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func userEmail(_ userEmail: String) {
         self.txtEmail.text = userEmail
     }
-    
     //MARK: - Register tasks
     @IBAction func btnRegister(_ sender: AnyObject) {
         self.performSegue(withIdentifier: Contants.Instance.segueRegister, sender: nil)
@@ -191,6 +194,14 @@ extension UIView {
         }
     }
     
+    func rotateXAxis() {
+        self.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI/2), 0, 1, 0)
+        
+        UIView.animate(withDuration: 0.7) {
+            self.layer.transform = CATransform3DMakeRotation(0, 0, 1, 0)
+        }
+    }
+    
 }
 
 
@@ -220,14 +231,14 @@ extension UIViewController {
     //Indicator waiting
     func waitingIndicator(with indicator: UIActivityIndicatorView) {
         
-        let alert:UIAlertController = UIAlertController(title: "\n" + "Loading", message: "", preferredStyle: UIAlertControllerStyle.alert)
+        let alert:UIAlertController = UIAlertController(title: "Loading\n", message: "", preferredStyle: UIAlertControllerStyle.alert)
         let alertCancel: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
         alert.addAction(alertCancel)
         indicator.activityIndicatorViewStyle = .gray
         
         self.present(alert, animated: true) {
             //Properties
-            indicator.frame = CGRect(x: alert.view.frame.width/2 - 25, y: 0, width: 50, height: 50)
+            indicator.frame = CGRect(x: alert.view.frame.width/2, y: alert.view.frame.height/2, width: 0, height: 0)
             alert.view.addSubview(indicator)
             indicator.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
             indicator.startAnimating()
@@ -244,6 +255,6 @@ extension UIViewController {
         self.view.endEditing(true)
     }
     
-    
 }
+
 
