@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60b-P3-YCp">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60b-P3-YCp">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -409,8 +409,12 @@
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="zUY-I4-9Ye" secondAttribute="height" multiplier="1:1" id="21Y-cy-Wmw"/>
-                                            <constraint firstAttribute="height" constant="100" id="ZrJ-e9-8vv"/>
+                                            <constraint firstAttribute="height" constant="100" id="XtV-mu-cqv"/>
+                                            <constraint firstAttribute="width" constant="100" id="kNh-6N-txO"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="QkE-s6-cBD" appends="YES" id="xDE-0m-UPC"/>
+                                        </connections>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="445-70-vdG">
                                         <constraints>
@@ -427,23 +431,32 @@
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dFE-U8-9UL">
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="😎Nick name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XZX-eo-oJD">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="😎Nick name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XZX-eo-oJD">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="VU0-GT-BGr"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="mxS-qh-FQf" id="QWu-KD-QOP"/>
+                                                </connections>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝Confirm" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-zb-WAw">
+                                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝New Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-zb-WAw">
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="mxS-qh-FQf" id="GhI-YN-O8o"/>
+                                                </connections>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CXQ-JD-9kG">
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="mxS-qh-FQf" id="hvv-mf-Uk6"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -550,8 +563,9 @@
                         <outlet property="lblEmail" destination="445-70-vdG" id="WCG-qs-9yL"/>
                         <outlet property="lblLosts" destination="YaD-Pd-GZ2" id="hav-6F-3N2"/>
                         <outlet property="lblWins" destination="D2l-kn-DfD" id="l0P-Il-q8Z"/>
-                        <outlet property="txtConfirm" destination="C9a-zb-WAw" id="pyd-Pg-OVw"/>
-                        <outlet property="txtDisplayName" destination="dFE-U8-9UL" id="0rz-l1-W26"/>
+                        <outlet property="tapImage" destination="QkE-s6-cBD" id="n9K-uS-MUa"/>
+                        <outlet property="txtDisplayName" destination="XZX-eo-oJD" id="tqF-cJ-T08"/>
+                        <outlet property="txtNewPassword" destination="C9a-zb-WAw" id="R8e-HD-dsB"/>
                         <outlet property="txtPassword" destination="CXQ-JD-9kG" id="sWa-N7-dnG"/>
                         <outlet property="wrapTextfield" destination="dFE-U8-9UL" id="WHz-Ep-kav"/>
                         <outlet property="wrapTextfieldHeightConstraint" destination="w4D-fW-0nf" id="dW6-fo-BQE"/>
@@ -559,6 +573,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lHv-nJ-iiR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="QkE-s6-cBD">
+                    <connections>
+                        <action selector="tapToSelectImage:" destination="mxS-qh-FQf" id="L1m-8d-mCq"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2341.5999999999999" y="346.77661169415296"/>
         </scene>

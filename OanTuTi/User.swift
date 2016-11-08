@@ -62,4 +62,9 @@ class User {
         }
     }
     
+    func update(name: String, avatar: String) {
+        self.avatar = avatar
+        self.name = name
+    }
+    
 }
