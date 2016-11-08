@@ -119,10 +119,10 @@
 			isa = PBXGroup;
 			children = (
 				BE8CF4011DCB0F6300F74ECE /* Main.storyboard */,
-				BEF37DFB1DCC5968008780D8 /* SourcesSocketIO */,
-				BEDE989B1DCB2DB100C6806F /* Suppporting Files */,
 				BEDE989C1DCB2DC700C6806F /* Controller */,
 				BEDE98A11DCB2FD400C6806F /* Entity */,
+				BEDE989B1DCB2DB100C6806F /* Suppporting Files */,
+				BEF37DFB1DCC5968008780D8 /* SourcesSocketIO */,
 			);
 			path = OanTuTi;
 			sourceTree = "<group>";

@@ -24,7 +24,6 @@ class SocketIOManager {
         //Static set to myProfile variables
         if let uid: String = myProfile.uid {
             disconnect([Contants.Instance.uid: uid])
-            print("\(uid) Before disconnect")
         }
         //socket.disconnect()
     }

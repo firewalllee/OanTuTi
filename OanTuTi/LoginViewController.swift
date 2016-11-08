@@ -56,7 +56,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             self.txtPassword.text = Contants.Instance.null
                             //-------Show message from server alert--------
                             if let message: String = response[Contants.Instance.message] as? String {
-                                self.showNotification(title: "Notice", message: message)
+                                self.showNotification(title: "Notice!", message: message)
                             }
                         }
                     }
@@ -82,7 +82,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func ViewsProperties() {
         
         self.btnSignUp.lightBorder(with: 8)
-
     }
     
     //MARK: - Delegate keyboard
@@ -255,6 +254,17 @@ extension UIViewController {
         self.view.endEditing(true)
     }
     
+    // View pushed onto the keyboard is turned on
+    func moveTextField(moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance: -moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
+    }
 }
 
 

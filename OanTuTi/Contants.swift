@@ -24,6 +24,7 @@ class Contants {
     //---------------Contants----------------------
     let null: String = ""
     let avatar: String = "avatar"
+    let newAvatarUrl: String = "newAvatarUrl"
     let coin_card: String = "coin_card"
     let nickname: String = "displayName"
     let email: String = "email"
@@ -37,6 +38,8 @@ class Contants {
     let uid: String = "uid"
     let user: String = "user"
     let pass: String = "pass"
+    let oldPass: String = "oldPass"
+    let newPass: String = "newPass"
     let socket_id: String = "socket_id"
     let statistics: String = "statistics"
     let wins: String = "wins"

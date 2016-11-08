@@ -43,16 +43,23 @@ class RoomCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 15
+        return 30
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contants.Instance.cellRoom, for: indexPath)
     
-        if let lbl: UILabel = cell.viewWithTag(1) as? UILabel {
-            lbl.text = "Room \(indexPath.row)"
+        if let lblRoom: UILabel = cell.viewWithTag(1) as? UILabel {
+            lblRoom.text = "Room \(indexPath.row)"
         }
-    
+        
+        if let lblBet:UILabel = cell.viewWithTag(3) as? UILabel {
+            lblBet.text = "$\(indexPath.row/5) 00"
+        }
+        if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
+            imgView.image = UIImage(named: "1people")
+        }
+        
         return cell
     }
 
