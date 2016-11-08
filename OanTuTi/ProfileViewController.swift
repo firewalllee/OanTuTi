@@ -30,6 +30,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     var isUpdating:Bool = false
     let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var imgData: Data!
+    var isPhotoSelected: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +40,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         //Listen login event from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientUpdateProfileRs) { (data, ack) in
             print(data[0])
-            //Waiting indicator
-            self.waitingIndicator(with: self.indicator)
             
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
@@ -82,6 +81,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         //Init 3 textfield will hide and scale to 0.1 belong y coordinate
         self.wrapTextfieldHeightConstraint.constant = 0
         self.wrapTextfield.isHidden = true
+        self.wrapTextfield.isUserInteractionEnabled = false
         self.tapImage.isEnabled = false
         self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
         //Load user infor
@@ -147,8 +147,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         }
         self.lblEmail.text = User_mail
         if let myAvatar:String = myProfile.avatar {
-            imgAvatar.loadAvatar(myAvatar)
-            imgData = UIImagePNGRepresentation(imgAvatar.image!)
+            if self.isPhotoSelected == false {
+                imgAvatar.loadAvatar(myAvatar)
+                imgData = UIImagePNGRepresentation(imgAvatar.image!)
+            }
         }
     }
     
@@ -186,7 +188,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                     UIView.animate(withDuration: 0.3) {
                         self.view.layoutIfNeeded()
                         self.btnEdit.setTitle("Update", for: .normal)
-
                     }
             })
             self.isUpdating = true
@@ -202,18 +203,20 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let oldPass: String = self.txtPassword.text!
         let newPass: String = self.txtNewPassword.text!
         
-        if oldPass == Contants.Instance.null {
+        if oldPass == Contants.Instance.null && self.isPhotoSelected == false {
             self.isUpdating = false
         } else if newPass.characters.count != 0 && newPass.characters.count < 6 {
             self.showNotification(title: "Password!", message: "Your new password must be at least 6 characters")
         } else if nickname == Contants.Instance.null {
             self.showNotification(title: "Nickname!", message: "Please fill out your Nickname")
         } else if newPass == Contants.Instance.null {
-            
+            //Waiting indicator
+            self.waitingIndicator(with: indicator)
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         } else {
-            
+            //Waiting indicator
+            self.waitingIndicator(with: indicator)
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: newPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         }
@@ -280,6 +283,9 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             }
             
             imgAvatar.image = UIImage(data: imgData)
+            self.isPhotoSelected = true
+            self.isUpdating = false
+            self.wrapTextfield.isUserInteractionEnabled = false
         }
         self.dismiss(animated: true, completion: nil)
     }

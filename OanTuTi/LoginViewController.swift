@@ -265,6 +265,64 @@ extension UIViewController {
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
     }
+    
+//    func selectImage() {
+//        resignFirstResponder()
+//        
+//        let imgPicker:UIImagePickerController = UIImagePickerController()
+//        imgPicker.delegate = self
+//        
+//        //Action sheet to select the image source
+//        let listSelectSource:UIAlertController = UIAlertController(title: "Choose source", message: "Photo Library or Camera", preferredStyle: .actionSheet)
+//        
+//        let photoLibrary:UIAlertAction = UIAlertAction(title: "Photo Library", style: .default) { (UIAlertAction) in
+//            
+//            imgPicker.sourceType = .photoLibrary
+//            imgPicker.isEditing = true
+//            self.present(imgPicker, animated: true, completion: nil)
+//        }
+//        
+//        let camera:UIAlertAction = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
+//            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+//                imgPicker.sourceType = .camera
+//                imgPicker.cameraCaptureMode = .photo
+//                imgPicker.modalPresentationStyle = .fullScreen
+//                imgPicker.allowsEditing = true
+//                self.present(imgPicker, animated: true, completion: nil)
+//            } else {
+//                self.showNotification(title: "Notice", message: "Can't find your camera!")
+//            }
+//        }
+//        
+//        let cancel:UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { (UIAlertAction) in
+//        }
+//        
+//        listSelectSource.addAction(photoLibrary)
+//        listSelectSource.addAction(camera)
+//        listSelectSource.addAction(cancel)
+//        
+//        present(listSelectSource, animated: true, completion: nil)
+//    }
+//    
+//    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        if let imageSelected = info [UIImagePickerControllerOriginalImage] as? UIImage {
+//            
+//            let imageValue:CGFloat = max(imageSelected.size.height, imageSelected.size.width)
+//            
+//            if imageValue > 3000 {
+//                imgData = UIImageJPEGRepresentation(imageSelected, 0.1)
+//            }
+//            if imageValue > 2000 {
+//                imgData = UIImageJPEGRepresentation(imageSelected, 0.5)
+//            } else {
+//                imgData = UIImagePNGRepresentation(imageSelected)
+//            }
+//            
+//            imgAvatar.image = UIImage(data: imgData)
+//        }
+//        self.dismiss(animated: true, completion: nil)
+//    }
+
 }
 
 
