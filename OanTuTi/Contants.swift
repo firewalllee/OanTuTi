@@ -19,6 +19,8 @@ class Contants {
     let segueRegister: String = "segueRegister"
     let segueMenu: String = "segueMenu"
     let segueProfile: String = "segueProfile"
+    //---------------CellID------------------------
+    let cellRoom: String = "roomCell"
     //---------------Contants----------------------
     let null: String = ""
     let avatar: String = "avatar"

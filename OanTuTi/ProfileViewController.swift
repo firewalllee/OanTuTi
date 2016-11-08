@@ -37,9 +37,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         self.hideKeyboardWhenTappedAround()
         
         
-        //Listen login event from server
+        //Listen Update event from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientUpdateProfileRs) { (data, ack) in
+<<<<<<< HEAD
             print(data[0])
+=======
+>>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
             
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
@@ -49,13 +52,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                             myProfile.update(name: self.txtDisplayName.text!, avatar: newAvatarUrl)
                             self.lblDisplayName.text = myProfile.name
                         }
+                        //-------Clean textfield password--------------
+                        self.txtPassword.text = Contants.Instance.null
+                        self.txtNewPassword.text = Contants.Instance.null
+                        self.isUpdating = false
                         //-------Dismiss loading alert-----------------
                         self.dismiss(animated: true) {
-                            //-------Clean textfield password--------------
-                            self.txtPassword.text = Contants.Instance.null
-                            self.txtNewPassword.text = Contants.Instance.null
                             self.showNotification(title: "Notice!", message: "Update successful!")
-                            self.isUpdating = false
                         }
                     } else {
                         //-------Dismiss loading alert-----------------
@@ -63,11 +66,11 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                             //-------Clean textfield password--------------
                             self.txtPassword.text = Contants.Instance.null
                             self.txtNewPassword.text = Contants.Instance.null
-                            
+                            self.isUpdating = false
                             if let message: String = response[Contants.Instance.message] as? String {
                                 self.showNotification(title: "Notice!", message: message)
                             }
-                            self.isUpdating = false
+                            
                         }
                     }
                 }
@@ -79,11 +82,20 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(false)
         
         //Init 3 textfield will hide and scale to 0.1 belong y coordinate
+<<<<<<< HEAD
         self.wrapTextfieldHeightConstraint.constant = 0
         self.wrapTextfield.isHidden = true
         self.wrapTextfield.isUserInteractionEnabled = false
         self.tapImage.isEnabled = false
         self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
+=======
+        if !self.isUpdating {
+            self.wrapTextfieldHeightConstraint.constant = 0
+            self.wrapTextfield.isHidden = true
+            self.tapImage.isEnabled = false
+            self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
+        }
+>>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
         //Load user infor
         self.loadInfo()
         //Make scale animation
@@ -92,6 +104,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        self.imgAvatar.clipsToBounds = true
     }
     
     func viewProperties(){
@@ -146,11 +160,18 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             self.lblLosts.text = "\(losts) Lost"
         }
         self.lblEmail.text = User_mail
+<<<<<<< HEAD
         if let myAvatar:String = myProfile.avatar {
             if self.isPhotoSelected == false {
                 imgAvatar.loadAvatar(myAvatar)
                 imgData = UIImagePNGRepresentation(imgAvatar.image!)
             }
+=======
+        if imgData != nil {
+            self.imgAvatar.image = UIImage(data: imgData)
+        } else if let myAvatar:String = myProfile.avatar {
+            imgAvatar.loadAvatar(myAvatar)
+>>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
         }
     }
     
@@ -215,8 +236,15 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         } else {
+<<<<<<< HEAD
             //Waiting indicator
             self.waitingIndicator(with: indicator)
+=======
+            self.waitingIndicator(with: self.indicator)
+            if self.imgData == nil {
+                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+            }
+>>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: newPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         }
@@ -259,7 +287,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         listSelectSource.addAction(camera)
         listSelectSource.addAction(cancel)
         
-        present(listSelectSource, animated: true, completion: nil)
+        self.present(listSelectSource, animated: true, completion: nil)
     }
     
 }
