@@ -19,9 +19,14 @@ class SocketIOManager {
     func establishConnection() {
         socket.connect()
     }
-    //Close connection
+    //Logout when into background
     func closeConnection() {
-        socket.disconnect()
+        //Static set to myProfile variables
+        if let uid: String = myProfile.uid {
+            disconnect([Contants.Instance.uid: uid])
+            print("\(uid) Before disconnect")
+        }
+        //socket.disconnect()
     }
     
     //Emit an event
@@ -31,6 +36,7 @@ class SocketIOManager {
     
     //User disconnect
     func disconnect(_ uid: Dictionary<String, Any>) {
+        
         socket.emit(Commands.Instance.ClientLogout, uid)
     }
     

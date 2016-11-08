@@ -36,7 +36,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                     //-------CheckLogin----------------------------
                     if isSuccess {
-                        //-------Get user email-----------------------
+                        //-------Get user infor-----------------------
                         User_mail = self.txtEmail.text!
                         //-------Textfield reset-----------------------
                         self.txtEmail.text = Contants.Instance.null

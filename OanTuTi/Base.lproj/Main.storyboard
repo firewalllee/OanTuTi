@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -142,7 +143,7 @@
                                         <state key="normal" image="button4"/>
                                         <connections>
                                             <action selector="btnPlay:" destination="GLN-0X-qb3" eventType="touchUpInside" id="o0h-NW-Qt5"/>
-                                            <segue destination="Yy9-QT-jxY" kind="show" identifier="segueRoom" id="cej-dZ-rLo"/>
+                                            <segue destination="yTf-Gx-b1E" kind="show" identifier="segueRoom" id="ETo-2D-DOO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="niR-Fv-U5K">
@@ -215,16 +216,16 @@
                             <constraint firstItem="yxw-Vx-yYT" firstAttribute="centerY" secondItem="Vbo-fY-jxh" secondAttribute="centerY" constant="20" id="zZF-ny-EC0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Menu" id="V1O-Zx-jt8">
-                        <barButtonItem key="leftBarButtonItem" image="sign-out" id="udk-xG-Itu">
+                    <navigationItem key="navigationItem" title="Menu" id="06v-O8-OQZ">
+                        <barButtonItem key="leftBarButtonItem" image="sign-out" id="59A-80-hjk">
                             <connections>
-                                <action selector="btnLogout:" destination="GLN-0X-qb3" id="Djw-dk-eAA"/>
+                                <action selector="btnLogout:" destination="GLN-0X-qb3" id="2pQ-6n-BxM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="btnAbout" destination="niR-Fv-U5K" id="AS8-c6-y7z"/>
-                        <outlet property="btnLogout" destination="udk-xG-Itu" id="ftU-7F-R0O"/>
+                        <outlet property="btnLogout" destination="59A-80-hjk" id="4f2-ld-RT5"/>
                         <outlet property="btnPlay" destination="X4U-0J-7Kr" id="pZK-mC-06n"/>
                         <outlet property="btnProfile" destination="8Zn-nz-GiF" id="tHC-tq-MFs"/>
                         <outlet property="imgAvatar" destination="SiW-ED-Xni" id="W8n-Gc-wPD"/>
@@ -240,23 +241,56 @@
             <point key="canvasLocation" x="2341.5999999999999" y="-396.25187406296857"/>
         </scene>
         <!--Room-->
-        <scene sceneID="q7P-al-UzI">
+        <scene sceneID="5UJ-OY-6Wz">
             <objects>
-                <viewController id="Yy9-QT-jxY" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IPu-fM-GOa"/>
-                        <viewControllerLayoutGuide type="bottom" id="5m8-K4-aVC"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="U3T-IS-mDj">
+                <collectionViewController id="yTf-Gx-b1E" customClass="RoomCollectionViewController" customModule="OanTuTi" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="U37-pX-fcK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.45100301500000001" green="0.98819988969999994" blue="0.83749610190000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Room" id="RLV-gv-MzU"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d8w-Bl-PN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="coT-Tc-Gkx">
+                            <size key="itemSize" width="81" height="80"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="roomCell" id="Y3c-M2-nF0">
+                                <rect key="frame" x="0.0" y="0.0" width="81" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="81" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlm-0F-ho8">
+                                            <frame key="frameInset" minX="19" minY="30" width="54" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="Pfo-hE-rul"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="42" id="wJV-C0-upJ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Nlm-0F-ho8" firstAttribute="leading" secondItem="Y3c-M2-nF0" secondAttribute="leadingMargin" constant="11" id="Pzb-wy-Pmt"/>
+                                    <constraint firstItem="Nlm-0F-ho8" firstAttribute="top" secondItem="Y3c-M2-nF0" secondAttribute="topMargin" constant="22" id="zUe-vt-skP"/>
+                                </constraints>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="yTf-Gx-b1E" id="vpu-cF-3Sz"/>
+                            <outlet property="delegate" destination="yTf-Gx-b1E" id="cE7-g8-fJD"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Room" id="V1O-Zx-jt8"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="stO-gP-QFL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3214" y="-396"/>
+            <point key="canvasLocation" x="3247.1999999999998" y="-397.15142428785612"/>
         </scene>
         <!--Đăng kí-->
         <scene sceneID="PyP-Tf-aRy">
@@ -435,12 +469,12 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝Confirm" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-zb-WAw">
+                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝New Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="C9a-zb-WAw">
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CXQ-JD-9kG">
+                                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="🗝Old Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="CXQ-JD-9kG">
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
@@ -541,7 +575,6 @@
                             <constraint firstItem="r8u-Dv-WbD" firstAttribute="centerX" secondItem="0gg-Sd-Ay8" secondAttribute="centerX" id="upq-NX-UcU"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="06v-O8-OQZ"/>
                     <connections>
                         <outlet property="btnEdit" destination="7sV-65-vXH" id="10K-wZ-kTN"/>
                         <outlet property="imgAvatar" destination="zUY-I4-9Ye" id="ldf-d2-Jbc"/>
