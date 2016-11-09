@@ -26,12 +26,12 @@ class RoomCollectionViewController: UICollectionViewController {
         bgImage.contentMode = .scaleToFill
         self.collectionView?.backgroundView = bgImage
         
-        //Listen event page from server
-        SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
-            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                print(response)
-            }
-        }
+//        //Listen event page from server
+//        SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
+//            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+//                print(response)
+//            }
+//        }
         
     }
     

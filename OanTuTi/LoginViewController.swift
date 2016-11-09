@@ -30,6 +30,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
+        //Test.....
+        //Listen event page from server
+        SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
+            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+                print(response["rooms"]!)
+                if let room:Array<Dictionary<String, Any>> = response["rooms"] as? Array<Dictionary<String, Any>> {
+                    let startTime:Date = Date()
+                    let room:Room = Room(room[0])
+                    print(room.id!)
+                    let endTime:Date = Date()
+                    print(endTime.timeIntervalSince(startTime))
+                }
+            }
+        }
+        
         //Listen login event from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientLoginRs) { (data, ack) in
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {

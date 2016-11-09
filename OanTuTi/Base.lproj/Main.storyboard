@@ -274,7 +274,7 @@
                                                 <constraint firstAttribute="width" secondItem="iHA-qc-fT6" secondAttribute="height" id="HEv-Lz-hcP"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZP-ku-dpb">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZP-ku-dpb">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="17" id="0jw-4Z-zMa"/>
                                             </constraints>
