@@ -66,17 +66,25 @@ class RoomCollectionViewController: UICollectionViewController {
         //state image
         let index:Int = Int(indexPath.row % 3)
         if index == 0{
+            // Joinable
             if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
                 imgView.image = UIImage(named: "1people")
+                imgView.image = imgView.image!.withRenderingMode(.alwaysTemplate)
+                imgView.tintColor = UIColor.init(Hex: 0x07cc28)
             }
         } else if index == 1{
+            // Full
             if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
                 imgView.image = UIImage(named: "2people")
+                imgView.image = imgView.image!.withRenderingMode(.alwaysTemplate)
+                imgView.tintColor = UIColor.init(Hex: 0x07cc28)
             }
         } else {
+            // Playing
             if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
-                imgView.image = UIImage(named: "2peoplePlaying")
-                imgView.tintColor = UIColor.green
+                imgView.image = UIImage(named: "2people")
+                imgView.image = imgView.image!.withRenderingMode(.alwaysTemplate)
+                imgView.tintColor = UIColor.init(Hex: 0xff3e1c)
             }
         }
         
@@ -84,6 +92,7 @@ class RoomCollectionViewController: UICollectionViewController {
         cell.clipsToBounds = true
         cell.layer.borderColor = UIColor.lightText.cgColor
         cell.layer.borderWidth = 5
+        cell.contentView.backgroundColor = UIColor.init(Hex: 0xd4ded7)
         
         return cell
     }
