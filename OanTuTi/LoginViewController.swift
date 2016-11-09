@@ -107,7 +107,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
             txtPassword.becomeFirstResponder()
-        } else {
+        } else if textField.tag == 1 {
             textField.resignFirstResponder()
             self.btnLogin(UIButton())
         }

@@ -96,7 +96,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.txtPassword.becomeFirstResponder()
         } else if textField.tag == 1 {
             self.txtNickname.becomeFirstResponder()
-        } else {
+        } else if textField.tag == 2 {
             textField.resignFirstResponder()
             self.btnRegister(self)
         }

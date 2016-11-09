@@ -265,8 +265,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="17" id="c5J-Wa-aMJ"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="0.0" blue="0.17380880795730214" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1people" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-qc-fT6">
@@ -278,15 +278,15 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="17" id="0jw-4Z-zMa"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="0.0" blue="0.17380880795730214" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.44313725490196076" green="0.98039215686274506" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="yzI-Oo-TPc" firstAttribute="top" secondItem="Y3c-M2-nF0" secondAttribute="top" id="8fp-Sf-FoU"/>
+                                    <constraint firstItem="yzI-Oo-TPc" firstAttribute="top" secondItem="Y3c-M2-nF0" secondAttribute="top" constant="5" id="8fp-Sf-FoU"/>
                                     <constraint firstItem="yZP-ku-dpb" firstAttribute="top" secondItem="iHA-qc-fT6" secondAttribute="bottom" constant="5" id="HUk-b6-5eW"/>
                                     <constraint firstItem="yZP-ku-dpb" firstAttribute="height" secondItem="yzI-Oo-TPc" secondAttribute="height" id="NU8-B6-L2G"/>
                                     <constraint firstItem="iHA-qc-fT6" firstAttribute="width" secondItem="yzI-Oo-TPc" secondAttribute="width" multiplier="2/3" id="Pfd-QI-EoE"/>
@@ -304,7 +304,9 @@
                             <outlet property="delegate" destination="yTf-Gx-b1E" id="cE7-g8-fJD"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Room" id="V1O-Zx-jt8"/>
+                    <navigationItem key="navigationItem" title="Room" id="V1O-Zx-jt8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="play" id="6W3-vE-o7p"/>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stO-gP-QFL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
