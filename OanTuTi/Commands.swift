@@ -27,4 +27,26 @@ class Commands {
     let ClientUpdateProfile: String = "Client-Update-Profile"
     let ClientUpdateProfileRs: String = "Client-Update-Profile-Rs"
     
+    let ClientCreateRoom: String = "Client-Create-Room"
+    let ClientCreateRoomRs: String = "Client-Create-Room-Rs"
+    
+    let ClientGetFirstRoomPage: String = "Server-Send-First-Rooms-Page"
+    
+    let ClientGetRoomByPage: String = "Client-Get-Room-By-Page"
+    let ClientGetRoomByPageRs: String = "Client-Get-Room-By-Page-Rs"
+    
+    let ClientJoinRoom: String = "Client-Join-Room"
+    let ClientJoinRoomRs: String = "Client-Join-Room-Rs"
+    
+    let ClientLeaveRoom: String = "Client-Leave-Room"
+    let ClientLeaveRoomRs: String = "Client-Leave-Room-Rs"
+    
+    let PlayerLeaveRoom: String = "Player-Leave-Room"
+    
+    let ClientReady: String = "Client-Ready"
+    let ClientReadyRs: String = "Client-Ready-Rs"
+    
+    let ClientUpdateRoomInfo: String = "Client-Update-Room-Info"
+    let ClientUpdateRoomInfoRs: String = "Client-Update-Room-Info-Rs"
+    
 }

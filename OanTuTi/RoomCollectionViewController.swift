@@ -9,32 +9,38 @@
 import UIKit
 
 let reuseIdentifier:String = Contants.Instance.cellRoom
+fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+
 class RoomCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        //self.collectionView!.register(RoomCollectionViewCell.self, forCellWithReuseIdentifier: Contants.Instance.cellRoom)
-
-        // Do any additional setup after loading the view.
+        ///Make spacing margin
+        let spacing:CGFloat = (self.view.frame.size.width - 280) / 4
+        self.collectionView?.contentInset = UIEdgeInsets(top: 10, left: spacing, bottom: 0, right: spacing)
+        
+        //set background image
+        let bgImage = UIImageView();
+        bgImage.image = UIImage(named: "background");
+        bgImage.contentMode = .scaleToFill
+        self.collectionView?.backgroundView = bgImage
+        
+        //Listen event page from server
+        SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
+            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+                print(response)
+            }
+        }
+        
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        self.view.rotateXAxis()
     }
-    */
 
     // MARK: UICollectionViewDataSource
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -43,7 +49,7 @@ class RoomCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 30
+        return 15
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -56,13 +62,33 @@ class RoomCollectionViewController: UICollectionViewController {
         if let lblBet:UILabel = cell.viewWithTag(3) as? UILabel {
             lblBet.text = "$\(indexPath.row/5) 00"
         }
-        if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
-            imgView.image = UIImage(named: "1people")
+        
+        //state image
+        let index:Int = Int(indexPath.row % 3)
+        if index == 0{
+            if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
+                imgView.image = UIImage(named: "1people")
+            }
+        } else if index == 1{
+            if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
+                imgView.image = UIImage(named: "2people")
+            }
+        } else {
+            if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
+                imgView.image = UIImage(named: "2peoplePlaying")
+                imgView.tintColor = UIColor.green
+            }
         }
+        
+        cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
+        cell.layer.borderColor = UIColor.lightText.cgColor
+        cell.layer.borderWidth = 5
         
         return cell
     }
-
+    
+    
     // MARK: UICollectionViewDelegate
 
     /*
