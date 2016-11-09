@@ -30,7 +30,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     var isUpdating:Bool = false
     let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     var imgData: Data!
-    var isPhotoSelected: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,10 +38,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         
         //Listen Update event from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientUpdateProfileRs) { (data, ack) in
-<<<<<<< HEAD
-            print(data[0])
-=======
->>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
             
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
@@ -82,20 +77,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(false)
         
         //Init 3 textfield will hide and scale to 0.1 belong y coordinate
-<<<<<<< HEAD
-        self.wrapTextfieldHeightConstraint.constant = 0
-        self.wrapTextfield.isHidden = true
-        self.wrapTextfield.isUserInteractionEnabled = false
-        self.tapImage.isEnabled = false
-        self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
-=======
+
         if !self.isUpdating {
             self.wrapTextfieldHeightConstraint.constant = 0
             self.wrapTextfield.isHidden = true
             self.tapImage.isEnabled = false
             self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
         }
->>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
         //Load user infor
         self.loadInfo()
         //Make scale animation
@@ -160,18 +148,10 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             self.lblLosts.text = "\(losts) Lost"
         }
         self.lblEmail.text = User_mail
-<<<<<<< HEAD
-        if let myAvatar:String = myProfile.avatar {
-            if self.isPhotoSelected == false {
-                imgAvatar.loadAvatar(myAvatar)
-                imgData = UIImagePNGRepresentation(imgAvatar.image!)
-            }
-=======
         if imgData != nil {
             self.imgAvatar.image = UIImage(data: imgData)
         } else if let myAvatar:String = myProfile.avatar {
             imgAvatar.loadAvatar(myAvatar)
->>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
         }
     }
     
@@ -224,7 +204,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let oldPass: String = self.txtPassword.text!
         let newPass: String = self.txtNewPassword.text!
         
-        if oldPass == Contants.Instance.null && self.isPhotoSelected == false {
+        if oldPass == Contants.Instance.null {
             self.isUpdating = false
         } else if newPass.characters.count != 0 && newPass.characters.count < 6 {
             self.showNotification(title: "Password!", message: "Your new password must be at least 6 characters")
@@ -233,18 +213,16 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         } else if newPass == Contants.Instance.null {
             //Waiting indicator
             self.waitingIndicator(with: indicator)
+            if self.imgData == nil {
+                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+            }
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         } else {
-<<<<<<< HEAD
-            //Waiting indicator
-            self.waitingIndicator(with: indicator)
-=======
             self.waitingIndicator(with: self.indicator)
             if self.imgData == nil {
                 self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
             }
->>>>>>> d2ba191a6e58d449227b4a762180f17d2322c80a
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: newPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         }
@@ -311,7 +289,6 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             }
             
             imgAvatar.image = UIImage(data: imgData)
-            self.isPhotoSelected = true
             self.isUpdating = false
             self.wrapTextfield.isUserInteractionEnabled = false
         }
