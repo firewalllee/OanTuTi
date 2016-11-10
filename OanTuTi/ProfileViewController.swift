@@ -174,6 +174,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                         self.tapImage.isEnabled = false
                         self.btnEdit.setTitle("Edit", for: .normal)
                     })
+                    
             })
             self.emitUpdate()
 //            self.isUpdating = false
@@ -262,8 +263,8 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             }
             
             imgAvatar.image = UIImage(data: imgData)
-            self.isUpdating = false
-            self.wrapTextfield.isUserInteractionEnabled = false
+            self.isUpdating = true
+            self.wrapTextfield.isUserInteractionEnabled = true
         }
         self.dismiss(animated: true, completion: nil)
     }
