@@ -13,6 +13,7 @@
 		BE56288F1DD37175002D50FA /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE56288E1DD37175002D50FA /* Room.swift */; };
 		BE5628911DD37FCA002D50FA /* ListenRoomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */; };
 		BE5636D51DD0DA6C00E1FEB0 /* RoomCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5636D41DD0DA6C00E1FEB0 /* RoomCollectionViewController.swift */; };
+		BE7F87CE1DD46DA000C76DD3 /* ExtensionUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7F87CD1DD46DA000C76DD3 /* ExtensionUIViewController.swift */; };
 		BE8CF3FE1DCB0F6300F74ECE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8CF3FD1DCB0F6300F74ECE /* AppDelegate.swift */; };
 		BE8CF4031DCB0F6300F74ECE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE8CF4011DCB0F6300F74ECE /* Main.storyboard */; };
 		BE8CF4051DCB0F6300F74ECE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE8CF4041DCB0F6300F74ECE /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		BE56288E1DD37175002D50FA /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenRoomEvent.swift; sourceTree = "<group>"; };
 		BE5636D41DD0DA6C00E1FEB0 /* RoomCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCollectionViewController.swift; sourceTree = "<group>"; };
+		BE7F87CD1DD46DA000C76DD3 /* ExtensionUIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUIViewController.swift; sourceTree = "<group>"; };
 		BE8CF3FA1DCB0F6300F74ECE /* OanTuTi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OanTuTi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE8CF3FD1DCB0F6300F74ECE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BE8CF4021DCB0F6300F74ECE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */,
 				BE5636D41DD0DA6C00E1FEB0 /* RoomCollectionViewController.swift */,
 				BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */,
+				BE7F87CD1DD46DA000C76DD3 /* ExtensionUIViewController.swift */,
 				BEF37DC91DCC5858008780D8 /* SocketIOManager.swift */,
 			);
 			name = Controller;
@@ -230,6 +233,7 @@
 				TargetAttributes = {
 					BE8CF3F91DCB0F6300F74ECE = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = F4W7MF6JSX;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -281,6 +285,7 @@
 				BE0018FD1DCCF1B50038A410 /* MenuViewController.swift in Sources */,
 				BE56288F1DD37175002D50FA /* Room.swift in Sources */,
 				BE5628911DD37FCA002D50FA /* ListenRoomEvent.swift in Sources */,
+				BE7F87CE1DD46DA000C76DD3 /* ExtensionUIViewController.swift in Sources */,
 				BEF37DEB1DCC595A008780D8 /* SocketEngineSpec.swift in Sources */,
 				BE8CF4111DCB109000F74ECE /* LoginViewController.swift in Sources */,
 				BEF37DE51DCC595A008780D8 /* SocketAnyEvent.swift in Sources */,
@@ -428,7 +433,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = F4W7MF6JSX;
 				INFOPLIST_FILE = OanTuTi/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Phuc.OanTuTi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -440,7 +447,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = F4W7MF6JSX;
 				INFOPLIST_FILE = OanTuTi/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Phuc.OanTuTi;
 				PRODUCT_NAME = "$(TARGET_NAME)";

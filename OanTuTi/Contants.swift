@@ -50,6 +50,7 @@ class Contants {
     let oldPass: String = "oldPass"
     let newPass: String = "newPass"
     let ready: String = "ready"
+    let room_id: String = "room_id"
     let room_name: String = "room_name"
     let rooms: String = "rooms"
     let socket_id: String = "socket_id"

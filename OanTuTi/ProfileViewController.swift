@@ -236,36 +236,9 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let imgPicker:UIImagePickerController = UIImagePickerController()
         imgPicker.delegate = self
         
-        //Action sheet to select the image source
-        let listSelectSource:UIAlertController = UIAlertController(title: "Choose source", message: "Photo Library or Camera", preferredStyle: .actionSheet)
+        let alert:UIAlertController = self.selectImageFromDevice(imgPicker)
         
-        let photoLibrary:UIAlertAction = UIAlertAction(title: "Photo Library", style: .default) { (UIAlertAction) in
-            
-            imgPicker.sourceType = .photoLibrary
-            imgPicker.isEditing = true
-            self.present(imgPicker, animated: true, completion: nil)
-        }
-        
-        let camera:UIAlertAction = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-                imgPicker.sourceType = .camera
-                imgPicker.cameraCaptureMode = .photo
-                imgPicker.modalPresentationStyle = .fullScreen
-                imgPicker.allowsEditing = true
-                self.present(imgPicker, animated: true, completion: nil)
-            } else {
-                self.showNotification(title: "Notice", message: "Can't find your camera!")
-            }
-        }
-        
-        let cancel:UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { (UIAlertAction) in
-        }
-        
-        listSelectSource.addAction(photoLibrary)
-        listSelectSource.addAction(camera)
-        listSelectSource.addAction(cancel)
-        
-        self.present(listSelectSource, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
 }
@@ -296,4 +269,5 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
     }
     
 }
+
 
