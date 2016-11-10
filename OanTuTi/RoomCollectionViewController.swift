@@ -10,7 +10,6 @@ import UIKit
 
 //MARK: - Global variables
 var isEmit:Bool = false
-
 class RoomCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
