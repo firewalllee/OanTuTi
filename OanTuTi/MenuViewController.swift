@@ -85,33 +85,3 @@ class MenuViewController: UIViewController {
     }
 
 }
-
-//MARK: - Make extension UIImageView
-extension UIImageView {
-    
-    // Download image from url with Multithread
-    func loadAvatar (_ link:String) {
-        
-        // Properties indicator activity
-        let queue = DispatchQueue(label: "LoadImage", attributes: DispatchQueue.Attributes.concurrent, target: nil)
-        let activity:UIActivityIndicatorView = UIActivityIndicatorView(frame: self.bounds)
-        activity.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
-        activity.activityIndicatorViewStyle = .whiteLarge
-        activity.color = UIColor.gray
-        self.addSubview(activity)
-        activity.startAnimating()
-
-        queue.async {
-            let url:URL = URL(string: link)!
-            do {
-                let data:Data = try Data(contentsOf: url)
-                DispatchQueue.main.async(execute: {
-                    activity.stopAnimating()
-                    self.image = UIImage(data: data)
-                })
-            } catch {
-                activity.stopAnimating()
-            }
-        }
-    }
-}
