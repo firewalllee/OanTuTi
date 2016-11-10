@@ -19,6 +19,7 @@ class Contants {
     let segueRegister: String = "segueRegister"
     let segueMenu: String = "segueMenu"
     let segueProfile: String = "segueProfile"
+    let segueWaiting: String = "segueWaiting"
     //---------------CellID------------------------
     let cellRoom: String = "roomCell"
     //---------------Contants----------------------
@@ -34,6 +35,7 @@ class Contants {
     let guest: String = "guest"
     let histories: String = "histories"
     let host: String = "host"
+    let host_uid: String = "host_uid"
     let id: String = "id"
     let isSuccess: String = "isSuccess"
     let joinable:String = "joinable"
