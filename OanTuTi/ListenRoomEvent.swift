@@ -47,9 +47,8 @@ class ListenRoomEvent {
                             NotificationCenter.default.post(name: updateRoomDelegate, object: nil)
                         }
                     }
-                    print(totalPage, "-=====>", currentPage, "=====>", pageNeedReload)
+                    //Reload current screen
                     if totalPage >= 2 && pageNeedReload <= currentPage {
-                        print(pageNeedReload)
                         SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: pageNeedReload])
                     }
                 }

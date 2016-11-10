@@ -41,18 +41,17 @@ class RoomCollectionViewController: UICollectionViewController {
         NotificationCenter.default.removeObserver(self)
     }
 
+    //MARK: - Delegate from Listen Class
+    func receiveEvent() {
+        self.collectionView?.reloadData()
+    }
+    
     // MARK: UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return rooms.count
     }
 
-
-    //MARK: - Delegate from Listen Class
-    func receiveEvent() {
-        self.collectionView?.reloadData()
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return rooms[section].count
@@ -84,6 +83,7 @@ class RoomCollectionViewController: UICollectionViewController {
                 }
             }
             
+            //cell properties
             cell.layer.cornerRadius = 5
             cell.clipsToBounds = true
             cell.layer.borderColor = UIColor.lightText.cgColor
@@ -100,10 +100,17 @@ class RoomCollectionViewController: UICollectionViewController {
         let section:Int = indexPath.section
         pageNeedReload = section + 1
         
+        //Kick flag, make collectionView can reload data
         if section + 1 == currentPage && index >= 7 && totalPage > currentPage {
             isEmit = false
         }
+        //When scroll down again, collectionView will reload data
+        if pageNeedReload < currentPage {
+            isEmit = false
+            currentPage -= 1
+        }
         
+        //Get data if receive permission from code above (isEmiting)
         if !isEmit {
             
             currentPage += 1
