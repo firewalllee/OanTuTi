@@ -8,8 +8,8 @@
 
 import UIKit
 
-let reuseIdentifier:String = Contants.Instance.cellRoom
-fileprivate let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+//MARK: - Global variables
+var isEmit:Bool = false
 
 class RoomCollectionViewController: UICollectionViewController {
 
@@ -26,68 +26,122 @@ class RoomCollectionViewController: UICollectionViewController {
         bgImage.contentMode = .scaleToFill
         self.collectionView?.backgroundView = bgImage
         
-//        //Listen event page from server
-//        SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
-//            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-//                print(response)
-//            }
-//        }
-        
+        //Add observation
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: updateRoomDelegate, object: nil)
+        //set height between sections
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         self.view.rotateXAxis()
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        NotificationCenter.default.removeObserver(self)
+    }
 
     // MARK: UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return rooms.count
     }
 
 
+    //MARK: - Delegate from Listen Class
+    func receiveEvent() {
+        self.collectionView?.reloadData()
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 15
+        return rooms[section].count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contants.Instance.cellRoom, for: indexPath)
     
-        if let lblRoom: UILabel = cell.viewWithTag(1) as? UILabel {
-            lblRoom.text = "Room \(indexPath.row)"
-        }
-        
-        if let lblBet:UILabel = cell.viewWithTag(3) as? UILabel {
-            lblBet.text = "$\(indexPath.row/5) 00"
-        }
-        
-        //state image
-        let index:Int = Int(indexPath.row % 3)
-        if index == 0{
-            if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
-                imgView.image = UIImage(named: "1people")
+        if rooms.count > 0 {
+            //Get room name
+            if let lblRoom: UILabel = cell.viewWithTag(1) as? UILabel {
+                if let room_name:String = rooms[indexPath.section][indexPath.row].roomName {
+                    lblRoom.text = room_name
+                }
             }
-        } else if index == 1{
-            if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
-                imgView.image = UIImage(named: "2people")
+            //Get money bet
+            if let lblBet:UILabel = cell.viewWithTag(3) as? UILabel {
+                if let money:Double = rooms[indexPath.section][indexPath.row].moneyBet {
+                    lblBet.text = "$\(Int(money))"
+                } else {
+                    lblBet.text = "$0"
+                }
             }
-        } else {
+            
+            //state image            
             if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
-                imgView.image = UIImage(named: "2peoplePlaying")
-                imgView.tintColor = UIColor.green
+                if let roomState:String = rooms[indexPath.section][indexPath.row].roomState {
+                    bindImage(imgView: imgView, state: roomState)
+                }
             }
+            
+            cell.layer.cornerRadius = 5
+            cell.clipsToBounds = true
+            cell.layer.borderColor = UIColor.lightText.cgColor
+            cell.layer.borderWidth = 5
+            cell.contentView.backgroundColor = UIColor.init(Hex: 0xd4ded7)
         }
-        
-        cell.layer.cornerRadius = 5
-        cell.clipsToBounds = true
-        cell.layer.borderColor = UIColor.lightText.cgColor
-        cell.layer.borderWidth = 5
         
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        let index:Int = indexPath.row
+        let section:Int = indexPath.section
+        pageNeedReload = section + 1
+        
+        if section + 1 == currentPage && index >= 7 && totalPage > currentPage {
+            isEmit = false
+        }
+        
+        if !isEmit {
+            
+            currentPage += 1
+            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: currentPage])
+            
+            isEmit = true
+        }
+        
+    }
+    
+    
+    //MARK: - Binding data to Cell of collectionView
+    func bindImage(imgView: UIImageView, state:String) {
+        if state == Contants.Instance.joinable {
+            // Joinable
+            imgView.image = UIImage(named: "1people")
+            imgView.tintColor = UIColor.init(Hex: 0x07cc28)
+        } else if state == Contants.Instance.full {
+            // Full
+            imgView.image = UIImage(named: "2people")
+            imgView.tintColor = UIColor.init(Hex: 0x07cc28)
+        } else {
+            // Playing
+            imgView.image = UIImage(named: "2people")
+            imgView.tintColor = UIColor.init(Hex: 0xff3e1c)
+        }
+        imgView.image = imgView.image!.withRenderingMode(.alwaysTemplate)
+    }
+    
+    //MARK: - Create room tasks
+    @IBAction func createRoom(_ sender: AnyObject) {
+        
+        let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: "\(arc4random())", Contants.Instance.money_bet: 400.0, "host_uid": myProfile.uid!]
+        
+        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
+        
+        
+    }
     
     // MARK: UICollectionViewDelegate
 

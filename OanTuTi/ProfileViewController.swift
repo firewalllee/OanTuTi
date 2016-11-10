@@ -77,6 +77,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(false)
         
         //Init 3 textfield will hide and scale to 0.1 belong y coordinate
+
         if !self.isUpdating {
             self.wrapTextfieldHeightConstraint.constant = 0
             self.wrapTextfield.isHidden = true
@@ -188,7 +189,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                     UIView.animate(withDuration: 0.3) {
                         self.view.layoutIfNeeded()
                         self.btnEdit.setTitle("Update", for: .normal)
-
                     }
             })
             self.isUpdating = true
@@ -211,7 +211,11 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         } else if nickname == Contants.Instance.null {
             self.showNotification(title: "Nickname!", message: "Please fill out your Nickname")
         } else if newPass == Contants.Instance.null {
-            
+            //Waiting indicator
+            self.waitingIndicator(with: indicator)
+            if self.imgData == nil {
+                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+            }
             let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         } else {
@@ -285,6 +289,8 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             }
             
             imgAvatar.image = UIImage(data: imgData)
+            self.isUpdating = false
+            self.wrapTextfield.isUserInteractionEnabled = false
         }
         self.dismiss(animated: true, completion: nil)
     }

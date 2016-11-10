@@ -118,7 +118,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jj1-FS-hAn" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1544.8" y="-396.25187406296857"/>
+            <point key="canvasLocation" x="1842" y="-397"/>
         </scene>
         <!--Menu-->
         <scene sceneID="6GM-G9-f0c">
@@ -237,7 +237,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JGq-Ei-OTl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2341.5999999999999" y="-396.25187406296857"/>
+            <point key="canvasLocation" x="2604" y="-397"/>
         </scene>
         <!--Room-->
         <scene sceneID="5UJ-OY-6Wz">
@@ -251,7 +251,7 @@
                             <size key="itemSize" width="140" height="140"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="roomCell" id="Y3c-M2-nF0">
@@ -265,8 +265,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="17" id="c5J-Wa-aMJ"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="1" green="0.0" blue="0.17380880795730214" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="17"/>
+                                            <color key="textColor" red="0.9993599057" green="0.14970120789999999" blue="0.0082355923949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1people" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-qc-fT6">
@@ -274,25 +274,33 @@
                                                 <constraint firstAttribute="width" secondItem="iHA-qc-fT6" secondAttribute="height" id="HEv-Lz-hcP"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZP-ku-dpb">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZP-ku-dpb">
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="17" id="0jw-4Z-zMa"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="1" green="0.0" blue="0.17380880795730214" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="17"/>
+                                            <color key="textColor" red="1" green="0.98234318620000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coins" translatesAutoresizingMaskIntoConstraints="NO" id="T2q-fR-5Dv">
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="T2q-fR-5Dv" secondAttribute="height" multiplier="1:1" id="E8h-f3-wSd"/>
+                                                <constraint firstAttribute="height" constant="17" id="Lj6-qN-JYX"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                 </view>
-                                <color key="backgroundColor" red="0.44313725490196076" green="0.98039215686274506" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.88860247461928932" green="0.88860247461928932" blue="0.88860247461928932" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="yzI-Oo-TPc" firstAttribute="top" secondItem="Y3c-M2-nF0" secondAttribute="top" constant="5" id="8fp-Sf-FoU"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="top" secondItem="iHA-qc-fT6" secondAttribute="bottom" constant="5" id="HUk-b6-5eW"/>
+                                    <constraint firstItem="yzI-Oo-TPc" firstAttribute="top" secondItem="Y3c-M2-nF0" secondAttribute="top" constant="7" id="8fp-Sf-FoU"/>
+                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="top" secondItem="iHA-qc-fT6" secondAttribute="bottom" constant="1" id="HUk-b6-5eW"/>
+                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="top" secondItem="T2q-fR-5Dv" secondAttribute="top" id="Hkc-Xs-5iL"/>
                                     <constraint firstItem="yZP-ku-dpb" firstAttribute="height" secondItem="yzI-Oo-TPc" secondAttribute="height" id="NU8-B6-L2G"/>
                                     <constraint firstItem="iHA-qc-fT6" firstAttribute="width" secondItem="yzI-Oo-TPc" secondAttribute="width" multiplier="2/3" id="Pfd-QI-EoE"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="leading" secondItem="yzI-Oo-TPc" secondAttribute="leading" id="Rnn-7U-cSY"/>
+                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="leading" secondItem="T2q-fR-5Dv" secondAttribute="trailing" constant="10" id="QNG-Jy-XFB"/>
+                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="leading" secondItem="yzI-Oo-TPc" secondAttribute="leading" constant="37" id="Rnn-7U-cSY"/>
                                     <constraint firstItem="yZP-ku-dpb" firstAttribute="trailing" secondItem="yzI-Oo-TPc" secondAttribute="trailing" id="WFN-Aa-acr"/>
-                                    <constraint firstItem="iHA-qc-fT6" firstAttribute="top" secondItem="yzI-Oo-TPc" secondAttribute="bottom" constant="5" id="Wrk-xv-z1T"/>
+                                    <constraint firstItem="iHA-qc-fT6" firstAttribute="top" secondItem="yzI-Oo-TPc" secondAttribute="bottom" constant="3" id="Wrk-xv-z1T"/>
                                     <constraint firstItem="iHA-qc-fT6" firstAttribute="centerX" secondItem="yzI-Oo-TPc" secondAttribute="centerX" id="lsD-Qd-ZnB"/>
                                     <constraint firstAttribute="trailing" secondItem="yzI-Oo-TPc" secondAttribute="trailing" constant="5" id="sWi-UN-Y4e"/>
                                     <constraint firstItem="yzI-Oo-TPc" firstAttribute="leading" secondItem="Y3c-M2-nF0" secondAttribute="leading" constant="5" id="vSf-b4-wLv"/>
@@ -305,12 +313,18 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Room" id="V1O-Zx-jt8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="play" id="6W3-vE-o7p"/>
+                        <barButtonItem key="rightBarButtonItem" image="createRoom" id="6W3-vE-o7p">
+                            <connections>
+                                <action selector="createRoom:" destination="yTf-Gx-b1E" id="D0p-rK-Mfc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="375" height="667"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="stO-gP-QFL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3247.1999999999998" y="-397.15142428785612"/>
+            <point key="canvasLocation" x="3350" y="-397"/>
         </scene>
         <!--Đăng kí-->
         <scene sceneID="PyP-Tf-aRy">
@@ -425,7 +439,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1545" y="347"/>
+            <point key="canvasLocation" x="1841" y="395"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="otq-BR-29O">
@@ -443,7 +457,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jh2-I7-Doo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="786" y="-396"/>
+            <point key="canvasLocation" x="1138" y="-397"/>
         </scene>
         <!--Profile-->
         <scene sceneID="uOC-Tt-3xd">
@@ -634,7 +648,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2341.5999999999999" y="346.77661169415296"/>
+            <point key="canvasLocation" x="2604" y="396"/>
         </scene>
     </scenes>
     <resources>
@@ -645,6 +659,7 @@
         <image name="button5" width="250" height="125"/>
         <image name="button6" width="250" height="125"/>
         <image name="coins" width="32" height="32"/>
+        <image name="createRoom" width="32" height="32"/>
         <image name="sign-out" width="33" height="33"/>
     </resources>
 </document>

@@ -30,20 +30,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
-        //Test.....
-        //Listen event page from server
-        SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
-            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                print(response["rooms"]!)
-                if let room:Array<Dictionary<String, Any>> = response["rooms"] as? Array<Dictionary<String, Any>> {
-                    let startTime:Date = Date()
-                    let room:Room = Room(room[0])
-                    print(room.id!)
-                    let endTime:Date = Date()
-                    print(endTime.timeIntervalSince(startTime))
-                }
-            }
-        }
+        ListenRoomEvent.ListenRoomsList()
         
         //Listen login event from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientLoginRs) { (data, ack) in
@@ -280,6 +267,80 @@ extension UIViewController {
         self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
         UIView.commitAnimations()
     }
+    
+//    func selectImage() {
+//        resignFirstResponder()
+//        
+//        let imgPicker:UIImagePickerController = UIImagePickerController()
+//        imgPicker.delegate = self
+//        
+//        //Action sheet to select the image source
+//        let listSelectSource:UIAlertController = UIAlertController(title: "Choose source", message: "Photo Library or Camera", preferredStyle: .actionSheet)
+//        
+//        let photoLibrary:UIAlertAction = UIAlertAction(title: "Photo Library", style: .default) { (UIAlertAction) in
+//            
+//            imgPicker.sourceType = .photoLibrary
+//            imgPicker.isEditing = true
+//            self.present(imgPicker, animated: true, completion: nil)
+//        }
+//        
+//        let camera:UIAlertAction = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
+//            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
+//                imgPicker.sourceType = .camera
+//                imgPicker.cameraCaptureMode = .photo
+//                imgPicker.modalPresentationStyle = .fullScreen
+//                imgPicker.allowsEditing = true
+//                self.present(imgPicker, animated: true, completion: nil)
+//            } else {
+//                self.showNotification(title: "Notice", message: "Can't find your camera!")
+//            }
+//        }
+//        
+//        let cancel:UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { (UIAlertAction) in
+//        }
+//        
+//        listSelectSource.addAction(photoLibrary)
+//        listSelectSource.addAction(camera)
+//        listSelectSource.addAction(cancel)
+//        
+//        present(listSelectSource, animated: true, completion: nil)
+//    }
+//    
+//    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        if let imageSelected = info [UIImagePickerControllerOriginalImage] as? UIImage {
+//            
+//            let imageValue:CGFloat = max(imageSelected.size.height, imageSelected.size.width)
+//            
+//            if imageValue > 3000 {
+//                imgData = UIImageJPEGRepresentation(imageSelected, 0.1)
+//            }
+//            if imageValue > 2000 {
+//                imgData = UIImageJPEGRepresentation(imageSelected, 0.5)
+//            } else {
+//                imgData = UIImagePNGRepresentation(imageSelected)
+//            }
+//            
+//            imgAvatar.image = UIImage(data: imgData)
+//        }
+//        self.dismiss(animated: true, completion: nil)
+//    }
+
 }
 
+// MARK: Make extension for UIColor
+extension UIColor {
+    
+    // Change color with hexa code.
+    convenience init(red: Int, green: Int, blue: Int) {
+        assert(red >= 0 && red <= 255, "Invalid red component")
+        assert(green >= 0 && green <= 255, "Invalid green component")
+        assert(blue >= 0 && blue <= 255, "Invalid blue component")
+        
+        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+    }
+    
+    convenience init(Hex:Int) {
+        self.init(red:(Hex >> 16) & 0xff, green:(Hex >> 8) & 0xff, blue:Hex & 0xff)
+    }
+}
 
