@@ -262,8 +262,8 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             }
             
             imgAvatar.image = UIImage(data: imgData)
-            self.isUpdating = false
-            self.wrapTextfield.isUserInteractionEnabled = false
+            self.isUpdating = true
+            self.wrapTextfield.isUserInteractionEnabled = true
         }
         self.dismiss(animated: true, completion: nil)
     }
