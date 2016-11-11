@@ -12,7 +12,7 @@ import UIKit
 var isFirstLogin:Bool = true
 var updateRoomDelegate:Notification.Name = Notification.Name("postDelegate")
 var rooms:Array<Array<Room>> = Array<Array<Room>>()
-var totalPage:Int = 0
+var totalPage:Int = 1
 var currentPage: Int = 1
 var pageNeedReload:Int = 1
 
@@ -40,7 +40,6 @@ class ListenRoomEvent {
                     } else {
                         rooms.append(firstRooms)
                     }
-                    
                     //send delegate to RoomCollectionView
                     if let currentWindow = UIApplication.topViewController() {
                         if currentWindow is RoomCollectionViewController {

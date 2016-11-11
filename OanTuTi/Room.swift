@@ -19,6 +19,8 @@ class Room {
     var guestId:String?
     var guestState:Bool?
     
+    init() {}
+    
     init(_ json:Dictionary<String, Any>) {
         if let id:String = json[Contants.Instance.id] as? String {
             self.id = id
