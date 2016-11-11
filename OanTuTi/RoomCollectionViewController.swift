@@ -10,6 +10,8 @@ import UIKit
 
 //MARK: - Global variables
 var isEmit:Bool = false
+var myRoomId:String?
+
 class RoomCollectionViewController: UICollectionViewController {
     
     //MARK: - Declarations
@@ -38,6 +40,9 @@ class RoomCollectionViewController: UICollectionViewController {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                     //-------CheckUpdate----------------------------
                     if isSuccess {
+                        if let room_id:String = response[Contants.Instance.room_id] as? String {
+                            myRoomId = room_id
+                        }
                         self.dismiss(animated: true) {
                             self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
                         }
@@ -56,11 +61,6 @@ class RoomCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         self.view.rotateXAxis()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        NotificationCenter.default.removeObserver(self)
     }
 
     //MARK: - Delegate from Listen Class
@@ -145,6 +145,13 @@ class RoomCollectionViewController: UICollectionViewController {
         
     }
     
+    //MARK:- Prepare for segue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Contants.Instance.segueWaiting {
+            self.collectionView?.reloadData()
+        }
+    }
+    
     //MARK: - Test join room
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         SocketIOManager.Instance.socketEmit(Commands.Instance.ClientJoinRoom, [Contants.Instance.room_id: rooms[indexPath.section][indexPath.row].id!, Contants.Instance.uid: myProfile.uid!])
@@ -189,6 +196,8 @@ class RoomCollectionViewController: UICollectionViewController {
         txtRoomName.layer.cornerRadius = 3
         txtRoomName.placeholder = "Room name"
         txtRoomName.textAlignment = NSTextAlignment.center
+        txtRoomName.spellCheckingType = UITextSpellCheckingType.no
+        txtRoomName.autocorrectionType = UITextAutocorrectionType.no
         subview.addSubview(txtRoomName)
         
         // Add textfield for bet
@@ -198,6 +207,8 @@ class RoomCollectionViewController: UICollectionViewController {
         txtMoneyBet.layer.cornerRadius = 3
         txtMoneyBet.placeholder = "Coin bet"
         txtMoneyBet.textAlignment = NSTextAlignment.center
+        txtMoneyBet.spellCheckingType = UITextSpellCheckingType.no
+        txtMoneyBet.autocorrectionType = UITextAutocorrectionType.no
         subview.addSubview(txtMoneyBet)
         
         alertView.customSubview = subview
@@ -206,25 +217,21 @@ class RoomCollectionViewController: UICollectionViewController {
         alertView.addButton("Create", backgroundColor: UIColor.green, textColor: UIColor.white, showDurationStatus: false) {
             
             let roomName: String = txtRoomName.text!
-            let money_bet: String = txtMoneyBet.text!
-            
-            // Check room name and bet.
-            if Int(money_bet) != nil && roomName != Contants.Instance.null {
-                // Waiting indicator
-                self.waitingIndicator(with: self.indicator)
-                let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: roomName, Contants.Instance.money_bet: money_bet, Contants.Instance.host_uid: myProfile.uid!]
-                SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
-            } else {
-                self.showNotification(title: "Notice!", message: "Fail to create your room. Try again and please make sure you fill in the name and the bet is a number!")
+            if let money_bet:Double = Double(txtMoneyBet.text!) {
+                // Check room name and bet.
+                if roomName != Contants.Instance.null {
+                    // Waiting indicator
+                    self.waitingIndicator(with: self.indicator)
+                    let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: roomName, Contants.Instance.money_bet: money_bet, Contants.Instance.host_uid: myProfile.uid!]
+                    SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
+                } else {
+                    self.showNotification(title: "Notice!", message: "Fail to create your room. Try again and please make sure you fill in the name and the bet is a number!")
+                }
             }
-            
         }
         alertView.addButton("Cancle", backgroundColor: UIColor.lightGray, textColor: UIColor.red, showDurationStatus: false) {
             
         }
-        
-        
-        
         
         alertView.showEdit("Create Room", subTitle: "", closeButtonTitle: "Cancel", colorStyle: 0xc38cff, colorTextButton: 0xfc0217
             , circleIconImage: alertViewIcon, animationStyle: .topToBottom)

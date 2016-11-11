@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7EF35D811DD4A4C6008918F7 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF35D7F1DD4A4C6008918F7 /* SCLAlertView.swift */; };
-		7EF35D821DD4A4C6008918F7 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF35D801DD4A4C6008918F7 /* SCLExtensions.swift */; };
+		7E51E39F1DD4CA1300499D75 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51E39D1DD4CA1300499D75 /* SCLAlertView.swift */; };
+		7E51E3A01DD4CA1300499D75 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51E39E1DD4CA1300499D75 /* SCLExtensions.swift */; };
 		BE0018FB1DCCEE0E0038A410 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0018FA1DCCEE0E0038A410 /* User.swift */; };
 		BE0018FD1DCCF1B50038A410 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0018FC1DCCF1B50038A410 /* MenuViewController.swift */; };
+		BE0B02F11DD570FB006CD237 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0B02F01DD570FB006CD237 /* WaitingViewController.swift */; };
 		BE53A7C91DCF6C8A000A2AB8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */; };
 		BE56288F1DD37175002D50FA /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE56288E1DD37175002D50FA /* Room.swift */; };
 		BE5628911DD37FCA002D50FA /* ListenRoomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */; };
@@ -52,10 +53,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7EF35D7F1DD4A4C6008918F7 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCLAlertView.swift; path = ../../CustomAlert/Pods/SCLAlertView/SCLAlertView/SCLAlertView.swift; sourceTree = "<group>"; };
-		7EF35D801DD4A4C6008918F7 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCLExtensions.swift; path = ../../CustomAlert/Pods/SCLAlertView/SCLAlertView/SCLExtensions.swift; sourceTree = "<group>"; };
+		7E51E39D1DD4CA1300499D75 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
+		7E51E39E1DD4CA1300499D75 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
 		BE0018FA1DCCEE0E0038A410 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BE0018FC1DCCF1B50038A410 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		BE0B02F01DD570FB006CD237 /* WaitingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingViewController.swift; sourceTree = "<group>"; };
 		BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BE56288E1DD37175002D50FA /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenRoomEvent.swift; sourceTree = "<group>"; };
@@ -140,8 +142,8 @@
 		BEDE989B1DCB2DB100C6806F /* Suppporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7EF35D7F1DD4A4C6008918F7 /* SCLAlertView.swift */,
-				7EF35D801DD4A4C6008918F7 /* SCLExtensions.swift */,
+				7E51E39D1DD4CA1300499D75 /* SCLAlertView.swift */,
+				7E51E39E1DD4CA1300499D75 /* SCLExtensions.swift */,
 				BE8CF3FD1DCB0F6300F74ECE /* AppDelegate.swift */,
 				BE8CF4041DCB0F6300F74ECE /* Assets.xcassets */,
 				BE8CF4061DCB0F6300F74ECE /* LaunchScreen.storyboard */,
@@ -158,6 +160,7 @@
 				BE0018FC1DCCF1B50038A410 /* MenuViewController.swift */,
 				BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */,
 				BE5636D41DD0DA6C00E1FEB0 /* RoomCollectionViewController.swift */,
+				BE0B02F01DD570FB006CD237 /* WaitingViewController.swift */,
 				BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */,
 				BE7F87CD1DD46DA000C76DD3 /* ExtensionUIViewController.swift */,
 				BEF37DC91DCC5858008780D8 /* SocketIOManager.swift */,
@@ -280,11 +283,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE0B02F11DD570FB006CD237 /* WaitingViewController.swift in Sources */,
 				BEF37DF21DCC595A008780D8 /* SocketIOClientSpec.swift in Sources */,
 				BE8CF4121DCB109000F74ECE /* RegisterViewController.swift in Sources */,
 				BEF37DE81DCC595A008780D8 /* SocketEngineClient.swift in Sources */,
 				BEF37DF91DCC595A008780D8 /* SSLSecurity.swift in Sources */,
-				7EF35D811DD4A4C6008918F7 /* SCLAlertView.swift in Sources */,
+				7E51E39F1DD4CA1300499D75 /* SCLAlertView.swift in Sources */,
 				BE0018FB1DCCEE0E0038A410 /* User.swift in Sources */,
 				BEF37DE71DCC595A008780D8 /* SocketEngine.swift in Sources */,
 				BE53A7C91DCF6C8A000A2AB8 /* ProfileViewController.swift in Sources */,
@@ -316,7 +320,7 @@
 				BEF37DF01DCC595A008780D8 /* SocketIOClientConfiguration.swift in Sources */,
 				BEF37DF61DCC595A008780D8 /* SocketParsable.swift in Sources */,
 				BEF37DEF1DCC595A008780D8 /* SocketIOClient.swift in Sources */,
-				7EF35D821DD4A4C6008918F7 /* SCLExtensions.swift in Sources */,
+				7E51E3A01DD4CA1300499D75 /* SCLExtensions.swift in Sources */,
 				BEF37DCA1DCC5858008780D8 /* SocketIOManager.swift in Sources */,
 				BEDE989E1DCB2DE300C6806F /* Commands.swift in Sources */,
 			);

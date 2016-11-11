@@ -112,7 +112,7 @@ extension UIView {
         self.layer.cornerRadius = radius
         self.clipsToBounds = true
     }
-    
+    //-----Scale animation
     func scaleAnimation() {
         
         self.layer.transform = CATransform3DMakeScale(0.1, 0.1, 0.1)
@@ -125,7 +125,7 @@ extension UIView {
             })
         }
     }
-    
+    ////---------Rotate x axis-----------
     func rotateXAxis() {
         self.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI/2), 0, 1, 0)
         
@@ -133,6 +133,16 @@ extension UIView {
             self.layer.transform = CATransform3DMakeRotation(0, 0, 1, 0)
         }
     }
+    
+    ////---------Rotate x axis-----------
+    func rotateYAxis() {
+        self.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI/2), 1, 0, 0)
+        
+        UIView.animate(withDuration: 0.7) {
+            self.layer.transform = CATransform3DMakeRotation(0, 1, 0, 0)
+        }
+    }
+    
     
 }
 
