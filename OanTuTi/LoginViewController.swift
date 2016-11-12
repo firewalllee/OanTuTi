@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Global variables
 var myProfile:User = User()
 var User_mail:String = String()
 
@@ -30,9 +31,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
+        //MARK: - Call Listener when application start
+        ListenRegisterEvent.ListenRegisterResponse()
+        ListenProfileEvent.ListenProfileResponse()
         ListenRoomEvent.ListenRoomsList()
-        
-        //Listen login event from server
+        ListenRoomEvent.ListenCreateRoom()
+        ListenWaitingRoomEvent.ListenWaitingRoomResponse()
+
+        //Listen login event from server - First screen, don't need to manager by other class :))
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientLoginRs) { (data, ack) in
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
@@ -64,7 +70,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }
-            
         }
         
     }

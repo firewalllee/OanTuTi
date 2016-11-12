@@ -23,6 +23,8 @@ class MenuViewController: UIViewController {
     
     //MARK: - Declarations
     
+    
+    
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,21 +39,12 @@ class MenuViewController: UIViewController {
             imgAvatar.loadAvatar(myAvatar)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         self.viewPropeties()
         self.wrapView.scaleAnimation()
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-    }
-    
+    }    
     
     //MARK: Setting some properties of views
     func viewPropeties() {
@@ -62,11 +55,6 @@ class MenuViewController: UIViewController {
         self.btnAbout.lightBorder(with: 8)
         self.imgAvatar.lightBorder(with: 4)
         self.lblCoin.textColor = UIColor.yellow
-    }
-    
-    //MARK: - Play tasks
-    @IBAction func btnPlay(_ sender: AnyObject) {
-        
     }
     
     //MARK: - Profile tasks

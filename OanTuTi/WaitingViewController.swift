@@ -8,38 +8,50 @@
 
 import UIKit
 
+//Global variables
+var isFirstLgin:Bool = true
+
 class WaitingViewController: UIViewController {
 
+    //MARK: - Declarations
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        SocketIOManager.Instance.socket.on(Commands.Instance.ClientLeaveRoomRs) { (data, ack) in
-            print(data)
-            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                print(response)
-                if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
-                    if isSuccess {
-                        print(isSuccess)
-                    } else {
-                        if let message:String = response[Contants.Instance.message] as? String {
-                            self.showNotification(title: "Notice", message: message)
-                        }
-                    }
-                }
-            }
-        }
-        //TEST LEAVEROOM
-        SocketIOManager.Instance.socket.on(Commands.Instance.PlayerLeaveRoom) { (data, ack) in
-            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                print(response)
-            }
-        }
+        
+        //Add observation
+        //->Player Leave Room
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receivePlayerLeaveRoomEvent), name: NotificationCommands.Instance.waitingDelegate, object: nil)
+        //->This user leave Room
+        NotificationCenter.default.addObserver(self, selector: #selector(self.userLeaveRoom), name: NotificationCommands.Instance.leaveRoomDelegate, object: nil)
         
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         self.view.rotateYAxis()
+    }
+    
+    //MARK: - Listener response
+    //-> player leaver room
+    func receivePlayerLeaveRoomEvent(notification: Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            print("Player leave Room =>", response)
+        }
+    }
+    //-> User leave room
+    func userLeaveRoom(notification: Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            print("Leave Room", response)
+            if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
+                if isSuccess {
+                } else {
+                    if let message:String = response[Contants.Instance.message] as? String {
+                        self.showNotification(title: "Notice", message: message)
+                    }
+                }
+            }
+        }
     }
     
     //MARK: - Leave room task

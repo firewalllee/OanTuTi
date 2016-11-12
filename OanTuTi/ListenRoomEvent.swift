@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 var isFirstLogin:Bool = true
-var updateRoomDelegate:Notification.Name = Notification.Name("postDelegate")
 var rooms:Array<Array<Room>> = Array<Array<Room>>()
 var totalPage:Int = 1
 var currentPage: Int = 1
@@ -29,6 +28,7 @@ class ListenRoomEvent {
                 if let total:Int = response[Contants.Instance.total_page] as? Int {
                     totalPage = total
                 }
+
                 //reset value before reload rooms list
                 var firstRooms:Array<Room> = Array<Room>()
                 if let roomList:Array<Dictionary<String, Any>> = response[Contants.Instance.rooms] as? Array<Dictionary<String, Any>> {
@@ -43,7 +43,7 @@ class ListenRoomEvent {
                     //send delegate to RoomCollectionView
                     if let currentWindow = UIApplication.topViewController() {
                         if currentWindow is RoomCollectionViewController {
-                            NotificationCenter.default.post(name: updateRoomDelegate, object: nil)
+                            NotificationCenter.default.post(name: NotificationCommands.Instance.updateRoomDelegate, object: nil)
                         }
                     }
                     //Reload current screen
@@ -72,11 +72,24 @@ class ListenRoomEvent {
                     //send delegate to RoomCollectionView
                     if let currentWindow = UIApplication.topViewController() {
                         if currentWindow is RoomCollectionViewController {
-                            NotificationCenter.default.post(name: updateRoomDelegate, object: nil)
+                            NotificationCenter.default.post(name: NotificationCommands.Instance.updateRoomDelegate, object: nil)
                         }
                     }
                     
                 }
+            }
+        }
+        
+    }
+    
+    static func ListenCreateRoom() {
+        
+        SocketIOManager.Instance.socket.on(Commands.Instance.ClientCreateRoomRs) { (data, ack) in
+
+            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+                
+                //Send to rooms list screen an event when user create room
+                NotificationCenter.default.post(name: NotificationCommands.Instance.createRoomDelegate, object: response)
             }
         }
         

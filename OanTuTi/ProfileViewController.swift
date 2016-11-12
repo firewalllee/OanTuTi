@@ -33,44 +33,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.hideKeyboardWhenTappedAround()
         
+        //Add observation from Listener class
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: NotificationCommands.Instance.profileDelegate, object: nil)
+
         
-        //Listen Update event from server
-        SocketIOManager.Instance.socket.on(Commands.Instance.ClientUpdateProfileRs) { (data, ack) in
-            
-            if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
-                    //-------CheckUpdate----------------------------
-                    if isSuccess {
-                        if let newAvatarUrl: String = response[Contants.Instance.newAvatarUrl] as? String {
-                            myProfile.update(name: self.txtDisplayName.text!, avatar: newAvatarUrl)
-                            self.lblDisplayName.text = myProfile.name
-                        }
-                        //-------Clean textfield password--------------
-                        self.txtPassword.text = Contants.Instance.null
-                        self.txtNewPassword.text = Contants.Instance.null
-                        self.isUpdating = false
-                        //-------Dismiss loading alert-----------------
-                        self.dismiss(animated: true) {
-                            self.showNotification(title: "Notice!", message: "Update successful!")
-                        }
-                    } else {
-                        //-------Dismiss loading alert-----------------
-                        self.dismiss(animated: true) {
-                            //-------Clean textfield password--------------
-                            self.txtPassword.text = Contants.Instance.null
-                            self.txtNewPassword.text = Contants.Instance.null
-                            self.isUpdating = false
-                            if let message: String = response[Contants.Instance.message] as? String {
-                                self.showNotification(title: "Notice!", message: message)
-                            }
-                            
-                        }
-                    }
-                }
-            }
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -99,6 +68,42 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     func viewProperties(){
         self.btnEdit.lightBorder(with: 8)
         self.imgAvatar.lightBorder(with: 4)
+    }
+    
+    //MARK: - Listen function from Listener class - Main function -> Solve Profile tasks
+    func receiveEvent(notification: Notification) {
+
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
+                //-------CheckUpdate----------------------------
+                if isSuccess {
+                    if let newAvatarUrl: String = response[Contants.Instance.newAvatarUrl] as? String {
+                        myProfile.update(name: self.txtDisplayName.text!, avatar: newAvatarUrl)
+                        self.lblDisplayName.text = myProfile.name
+                    }
+                    //-------Clean textfield password--------------
+                    self.txtPassword.text = Contants.Instance.null
+                    self.txtNewPassword.text = Contants.Instance.null
+                    self.isUpdating = false
+                    //-------Dismiss loading alert-----------------
+                    self.dismiss(animated: true) {
+                        self.showNotification(title: "Notice!", message: "Update successful!")
+                    }
+                } else {
+                    //-------Dismiss loading alert-----------------
+                    self.dismiss(animated: true) {
+                        //-------Clean textfield password--------------
+                        self.txtPassword.text = Contants.Instance.null
+                        self.txtNewPassword.text = Contants.Instance.null
+                        self.isUpdating = false
+                        if let message: String = response[Contants.Instance.message] as? String {
+                            self.showNotification(title: "Notice!", message: message)
+                        }
+                        
+                    }
+                }
+            }
+        }
     }
     
     //MARK: - Textfield delegate
@@ -263,8 +268,7 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             }
             
             imgAvatar.image = UIImage(data: imgData)
-            self.isUpdating = true
-            self.wrapTextfield.isUserInteractionEnabled = true
+            
         }
         self.dismiss(animated: true, completion: nil)
     }

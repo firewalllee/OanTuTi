@@ -24,48 +24,51 @@ class RoomCollectionViewController: UICollectionViewController {
         let spacing:CGFloat = (self.view.frame.size.width - 280) / 4
         self.collectionView?.contentInset = UIEdgeInsets(top: 10, left: spacing, bottom: 0, right: spacing)
         
-        //set background image
+        //set collectionView background image
         let bgImage = UIImageView();
         bgImage.image = UIImage(named: "background");
         bgImage.contentMode = .scaleToFill
         self.collectionView?.backgroundView = bgImage
         
-        //Add observation
-        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: updateRoomDelegate, object: nil)
-        //set height between sections
+        ////----Add observation-----------------
+        //->Rooms List
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: NotificationCommands.Instance.updateRoomDelegate , object: nil)
+        //->Create Room
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveCreateRoomEvent), name: NotificationCommands.Instance.createRoomDelegate, object: nil)
         
-        // Listen Create room event from server
-        SocketIOManager.Instance.socket.on(Commands.Instance.ClientCreateRoomRs) { (data, ack) in
-            if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
-                    //-------CheckUpdate----------------------------
-                    if isSuccess {
-                        if let room_id:String = response[Contants.Instance.room_id] as? String {
-                            myRoomId = room_id
-                        }
-                        self.dismiss(animated: true) {
-                            self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
-                        }
-                    } else {
-                        self.dismiss(animated: true) {
-                            if let message: String = response[Contants.Instance.message] as? String {
-                                self.showNotification(title: "Notice!", message: message)
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         self.view.rotateXAxis()
     }
 
-    //MARK: - Delegate from Listen Class
+    //MARK: - Delegate from Listener Class
+    //->Rooms List
     func receiveEvent() {
         self.collectionView?.reloadData()
+    }
+    //->Create Room
+    func receiveCreateRoomEvent(notification:Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
+                //-------CheckUpdate----------------------------
+                if isSuccess {
+                    if let room_id:String = response[Contants.Instance.room_id] as? String {
+                        myRoomId = room_id
+                    }
+                    self.dismiss(animated: true) {
+                        self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
+                    }
+                } else {
+                    self.dismiss(animated: true) {
+                        if let message: String = response[Contants.Instance.message] as? String {
+                            self.showNotification(title: "Notice!", message: message)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     // MARK: UICollectionViewDataSource
@@ -155,6 +158,8 @@ class RoomCollectionViewController: UICollectionViewController {
     //MARK: - Test join room
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         SocketIOManager.Instance.socketEmit(Commands.Instance.ClientJoinRoom, [Contants.Instance.room_id: rooms[indexPath.section][indexPath.row].id!, Contants.Instance.uid: myProfile.uid!])
+        myRoomId = rooms[indexPath.section][indexPath.row].id
+        self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
     }
     
     //MARK: - Binding data to Cell of collectionView
