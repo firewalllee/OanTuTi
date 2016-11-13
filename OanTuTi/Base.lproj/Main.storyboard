@@ -139,16 +139,16 @@
                                             <constraint firstAttribute="width" constant="130" id="62N-zW-2b7"/>
                                             <constraint firstAttribute="height" constant="60" id="qhP-6A-wd6"/>
                                         </constraints>
-                                        <state key="normal" image="button4"/>
+                                        <state key="normal" image="play"/>
                                         <connections>
                                             <segue destination="yTf-Gx-b1E" kind="show" identifier="segueRoom" id="ETo-2D-DOO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="niR-Fv-U5K">
-                                        <state key="normal" image="button5"/>
+                                        <state key="normal" image="about"/>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Zn-nz-GiF">
-                                        <state key="normal" image="button6"/>
+                                        <state key="normal" image="profile"/>
                                         <connections>
                                             <action selector="btnProfile:" destination="GLN-0X-qb3" eventType="touchUpInside" id="lCz-Ca-6xV"/>
                                         </connections>
@@ -384,7 +384,7 @@
                                             <constraint firstAttribute="width" secondItem="pc0-Lm-TKw" secondAttribute="height" multiplier="1:1" id="hOF-JX-WeL"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwR-0v-kkQ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwR-0v-kkQ">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="Ctm-7G-GhM"/>
                                         </constraints>
@@ -440,7 +440,7 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xST-8A-8Qn" userLabel="Player2 View">
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 2 (Host)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIe-gO-qhV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 2 (Host)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIe-gO-qhV">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="Xtr-VE-amr"/>
                                         </constraints>
@@ -522,8 +522,25 @@
                                 <action selector="leaveRoom:" destination="h6d-8i-JR8" id="JCC-wj-ftk"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="DSt-Tl-5Y4"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="DSt-Tl-5Y4">
+                            <connections>
+                                <action selector="btnUpdateRoom:" destination="h6d-8i-JR8" id="dhA-lo-V1h"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="btnReadyStart" destination="NW4-d0-LYj" id="u5z-cz-GNV"/>
+                        <outlet property="imgGuestAvatar" destination="pc0-Lm-TKw" id="2y0-KW-DTW"/>
+                        <outlet property="imgUserAvatar" destination="nzp-7z-hqI" id="yNi-gr-HDp"/>
+                        <outlet property="lblBestOf" destination="5Lr-en-3cX" id="2QS-Gs-udr"/>
+                        <outlet property="lblGuestMoney" destination="mWX-vN-1Ie" id="ous-fr-pfl"/>
+                        <outlet property="lblGuestName" destination="uwR-0v-kkQ" id="sSj-JC-A08"/>
+                        <outlet property="lblGuestReady" destination="4pQ-pJ-VX2" id="E23-SP-Tv8"/>
+                        <outlet property="lblMoneyBet" destination="oA8-yA-XgW" id="d3T-mN-tYI"/>
+                        <outlet property="lblRoomName" destination="DW8-hG-JHg" id="oPT-rn-zZo"/>
+                        <outlet property="lblUserMoney" destination="Ehe-Di-WMF" id="mpY-5m-k5A"/>
+                        <outlet property="lblUserName" destination="zIe-gO-qhV" id="8ct-W2-9ER"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htN-A5-swl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -857,13 +874,13 @@
     <resources>
         <image name="1people" width="150" height="150"/>
         <image name="Logo" width="512" height="350"/>
+        <image name="about" width="250" height="125"/>
         <image name="avatar" width="128" height="128"/>
         <image name="background" width="146" height="146"/>
-        <image name="button4" width="250" height="125"/>
-        <image name="button5" width="250" height="125"/>
-        <image name="button6" width="250" height="125"/>
         <image name="coins" width="32" height="32"/>
         <image name="createRoom" width="32" height="32"/>
+        <image name="play" width="250" height="125"/>
+        <image name="profile" width="250" height="125"/>
         <image name="sign-out" width="33" height="33"/>
         <image name="start" width="250" height="125"/>
     </resources>

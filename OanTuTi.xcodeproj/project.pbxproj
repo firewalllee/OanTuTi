@@ -122,9 +122,9 @@
 		BE2FC3DC1DD722EB00203354 /* ListenerController */ = {
 			isa = PBXGroup;
 			children = (
-				BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */,
 				BE2FC3D81DD7179D00203354 /* ListenRegisterEvent.swift */,
 				BE2FC3DA1DD71E6500203354 /* ListenProfileEvent.swift */,
+				BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */,
 				BE2FC3DD1DD7262C00203354 /* ListenWaitingRoomEvent.swift */,
 				BE2FC3D61DD7168900203354 /* NotificationCommands.swift */,
 			);

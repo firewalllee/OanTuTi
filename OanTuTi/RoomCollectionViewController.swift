@@ -16,7 +16,10 @@ class RoomCollectionViewController: UICollectionViewController {
     
     //MARK: - Declarations
     let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
-
+    var nextRoom:Room = Room()
+    var hostUser:User!
+    var isHost:Bool = true      //Check host or guest in next screen
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +38,8 @@ class RoomCollectionViewController: UICollectionViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: NotificationCommands.Instance.updateRoomDelegate , object: nil)
         //->Create Room
         NotificationCenter.default.addObserver(self, selector: #selector(self.receiveCreateRoomEvent), name: NotificationCommands.Instance.createRoomDelegate, object: nil)
+        //->Join Room
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveJoinRoomEvent), name: NotificationCommands.Instance.joinRoomDelegate, object: nil)
         
     }
 
@@ -51,11 +56,13 @@ class RoomCollectionViewController: UICollectionViewController {
     //->Create Room
     func receiveCreateRoomEvent(notification:Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            print("Create Room -> ", response)
+            
             if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                 //-------CheckUpdate----------------------------
                 if isSuccess {
                     if let room_id:String = response[Contants.Instance.room_id] as? String {
-                        myRoomId = room_id
+                        self.nextRoom.id = room_id
                     }
                     self.dismiss(animated: true) {
                         self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
@@ -68,6 +75,25 @@ class RoomCollectionViewController: UICollectionViewController {
                     }
                 }
             }
+        }
+    }
+    //->Join Room
+    func receiveJoinRoomEvent(notification: Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            if let _:Bool = response[Contants.Instance.isSuccess] as? Bool {
+                
+                self.dismiss(animated: true, completion: {
+                    if let message:String = response[Contants.Instance.message] as? String {
+                        self.showNotification(title: "Notice", message: message)
+                    }
+                    return
+                })
+            }
+            self.hostUser = User(response)
+            self.dismiss(animated: true, completion: { 
+                self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
+            })
+            
         }
     }
     
@@ -151,15 +177,27 @@ class RoomCollectionViewController: UICollectionViewController {
     //MARK:- Prepare for segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Contants.Instance.segueWaiting {
-            self.collectionView?.reloadData()
+            
+            if let waitingRoom:WaitingViewController = segue.destination as? WaitingViewController {
+                //transfer room infor to next screen using prepare for segue function
+                waitingRoom.thisRoom = self.nextRoom
+                waitingRoom.isHost = self.isHost
+                waitingRoom.otherUser = self.hostUser
+            }
+            
         }
     }
     
-    //MARK: - Test join room
+    //MARK: - Join room task
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //Start indicator waiting
+        self.waitingIndicator(with: self.indicator)
+        //Emit to server
         SocketIOManager.Instance.socketEmit(Commands.Instance.ClientJoinRoom, [Contants.Instance.room_id: rooms[indexPath.section][indexPath.row].id!, Contants.Instance.uid: myProfile.uid!])
-        myRoomId = rooms[indexPath.section][indexPath.row].id
-        self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
+        //Get next room infor
+        self.nextRoom = rooms[indexPath.section][indexPath.row]
+        self.isHost = false
+        
     }
     
     //MARK: - Binding data to Cell of collectionView
@@ -227,7 +265,13 @@ class RoomCollectionViewController: UICollectionViewController {
                 if roomName != Contants.Instance.null {
                     // Waiting indicator
                     self.waitingIndicator(with: self.indicator)
+                    //get infor of next room
+                    self.nextRoom.roomName = roomName
+                    self.nextRoom.moneyBet = money_bet
+                    self.isHost = true
+                    //Init json data to push to server
                     let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: roomName, Contants.Instance.money_bet: money_bet, Contants.Instance.host_uid: myProfile.uid!]
+                    //Emit to server
                     SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
                 } else {
                     self.showNotification(title: "Notice!", message: "Fail to create your room. Try again and please make sure you fill in the name and the bet is a number!")

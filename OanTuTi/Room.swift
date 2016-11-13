@@ -18,6 +18,7 @@ class Room {
     var hostState:Bool?
     var guestId:String?
     var guestState:Bool?
+    var best_of:Int = 5
     
     init() {}
     
@@ -51,6 +52,13 @@ class Room {
             }
         }
         
+    }
+    
+    init(room_id:String, room_name:String, money_bet: Double = 1000, best_of:Int = 5) {
+        self.id = room_id
+        self.roomName = room_name
+        self.moneyBet = money_bet
+        self.best_of = best_of
     }
     
 }

@@ -21,6 +21,6 @@ class NotificationCommands {
     let createRoomDelegate:Notification.Name = Notification.Name("createRoom")
     let waitingDelegate:Notification.Name = Notification.Name("waiting")
     let leaveRoomDelegate:Notification.Name = Notification.Name("leaveRoom")
-    
+    let joinRoomDelegate:Notification.Name = Notification.Name("joinRoom")
     
 }

@@ -93,5 +93,11 @@ class ListenRoomEvent {
             }
         }
         
+        SocketIOManager.Instance.socket.on(Commands.Instance.ClientJoinRoomRs) { (data, ack) in
+            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+                NotificationCenter.default.post(name: NotificationCommands.Instance.joinRoomDelegate, object: response)
+            }
+         }
+        
     }
 }
