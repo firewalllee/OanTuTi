@@ -234,24 +234,13 @@ class RoomCollectionViewController: UICollectionViewController {
         
         // Add textfield for Room name
         let txtRoomName = UITextField(frame: CGRect(x:x, y:10, width: 200, height: 30))
-        txtRoomName.layer.borderColor = UIColor.red.cgColor
-        txtRoomName.layer.borderWidth = 1.5
-        txtRoomName.layer.cornerRadius = 3
-        txtRoomName.placeholder = "Room name"
-        txtRoomName.textAlignment = NSTextAlignment.center
-        txtRoomName.spellCheckingType = UITextSpellCheckingType.no
-        txtRoomName.autocorrectionType = UITextAutocorrectionType.no
+        txtRoomName.standardTextField(borderColor: UIColor.red.cgColor, placeHolder: "Room name")
         subview.addSubview(txtRoomName)
         
         // Add textfield for bet
         let txtMoneyBet = UITextField(frame: CGRect(x: x,y: txtRoomName.frame.maxY + 10,width: 200,height: 30))
-        txtMoneyBet.layer.borderColor = UIColor.yellow.cgColor
-        txtMoneyBet.layer.borderWidth = 1.5
-        txtMoneyBet.layer.cornerRadius = 3
-        txtMoneyBet.placeholder = "Coin bet"
-        txtMoneyBet.textAlignment = NSTextAlignment.center
-        txtMoneyBet.spellCheckingType = UITextSpellCheckingType.no
-        txtMoneyBet.autocorrectionType = UITextAutocorrectionType.no
+        txtMoneyBet.standardTextField(borderColor: UIColor.yellow.cgColor, placeHolder: "Money bet")
+        txtMoneyBet.keyboardType = UIKeyboardType.numberPad
         subview.addSubview(txtMoneyBet)
         
         alertView.customSubview = subview

@@ -27,6 +27,13 @@ class ListenWaitingRoomEvent {
             }
         }
         
+        SocketIOManager.Instance.socket.on(Commands.Instance.ClientUpdateRoomInfoRs) { (data, ack) in
+            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+                print(response)
+                NotificationCenter.default.post(name: NotificationCommands.Instance.updateRoomInfoDelegate, object: response)
+            }
+        }
+        
     }
     
 }

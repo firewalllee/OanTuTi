@@ -530,6 +530,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="btnReadyStart" destination="NW4-d0-LYj" id="u5z-cz-GNV"/>
+                        <outlet property="btnUpdate" destination="DSt-Tl-5Y4" id="B6o-5L-t6e"/>
                         <outlet property="imgGuestAvatar" destination="pc0-Lm-TKw" id="2y0-KW-DTW"/>
                         <outlet property="imgUserAvatar" destination="nzp-7z-hqI" id="yNi-gr-HDp"/>
                         <outlet property="lblBestOf" destination="5Lr-en-3cX" id="2QS-Gs-udr"/>

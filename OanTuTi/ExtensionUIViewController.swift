@@ -146,6 +146,21 @@ extension UIView {
     
 }
 
+//MARK: - Extension UITextField
+extension UITextField {
+    
+    func standardTextField(borderColor: CGColor, placeHolder: String) {
+        self.layer.borderColor = borderColor
+        self.layer.borderWidth = 1.5
+        self.layer.cornerRadius = 3
+        self.placeholder = placeHolder
+        self.textAlignment = NSTextAlignment.center
+        self.spellCheckingType = UITextSpellCheckingType.no
+        self.autocorrectionType = UITextAutocorrectionType.no
+    }
+    
+}
+
 // MARK: Make extension for UIColor
 extension UIColor {
     
