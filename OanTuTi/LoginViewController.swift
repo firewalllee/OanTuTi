@@ -9,7 +9,7 @@
 import UIKit
 
 //Global variables
-var myProfile:User = User()
+//var myProfile:User = User()
 var User_mail:String = String()
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.txtPassword.text = Contants.Instance.null
                         //---------------------------------------------
                         if let jsonUser:Dictionary<String, Any> = response[Contants.Instance.user] as? Dictionary<String, Any> {
-                            myProfile = User(jsonUser)
+                            MyProfile.Instance = MyProfile(jsonUser)
                         }
                         //-------Dismiss loading alert-----------------
                         self.dismiss(animated: true, completion: nil)

@@ -27,6 +27,7 @@
 		BE8CF4081DCB0F6300F74ECE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE8CF4061DCB0F6300F74ECE /* LaunchScreen.storyboard */; };
 		BE8CF4111DCB109000F74ECE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8CF40F1DCB109000F74ECE /* LoginViewController.swift */; };
 		BE8CF4121DCB109000F74ECE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8CF4101DCB109000F74ECE /* RegisterViewController.swift */; };
+		BEB13E031DDB34D900445317 /* MyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB13E021DDB34D900445317 /* MyProfile.swift */; };
 		BEDE989E1DCB2DE300C6806F /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE989D1DCB2DE300C6806F /* Commands.swift */; };
 		BEDE98A01DCB2F3100C6806F /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE989F1DCB2F3100C6806F /* Contants.swift */; };
 		BEF37DCA1DCC5858008780D8 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF37DC91DCC5858008780D8 /* SocketIOManager.swift */; };
@@ -79,6 +80,7 @@
 		BE8CF4091DCB0F6300F74ECE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE8CF40F1DCB109000F74ECE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BE8CF4101DCB109000F74ECE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		BEB13E021DDB34D900445317 /* MyProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfile.swift; sourceTree = "<group>"; };
 		BEDE989D1DCB2DE300C6806F /* Commands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
 		BEDE989F1DCB2F3100C6806F /* Contants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
 		BEF37DC91DCC5858008780D8 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				BE0018FA1DCCEE0E0038A410 /* User.swift */,
+				BEB13E021DDB34D900445317 /* MyProfile.swift */,
 				BEDE989D1DCB2DE300C6806F /* Commands.swift */,
 				BEDE989F1DCB2F3100C6806F /* Contants.swift */,
 				BE56288E1DD37175002D50FA /* Room.swift */,
@@ -310,6 +313,7 @@
 				BEF37DE81DCC595A008780D8 /* SocketEngineClient.swift in Sources */,
 				BEF37DF91DCC595A008780D8 /* SSLSecurity.swift in Sources */,
 				7E51E39F1DD4CA1300499D75 /* SCLAlertView.swift in Sources */,
+				BEB13E031DDB34D900445317 /* MyProfile.swift in Sources */,
 				BE0018FB1DCCEE0E0038A410 /* User.swift in Sources */,
 				BEF37DE71DCC595A008780D8 /* SocketEngine.swift in Sources */,
 				BE53A7C91DCF6C8A000A2AB8 /* ProfileViewController.swift in Sources */,

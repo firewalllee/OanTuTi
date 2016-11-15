@@ -69,14 +69,14 @@ class WaitingViewController: UIViewController {
         }
         self.lblBestOf.text = "Bo \(thisRoom.best_of)"
         
-        if let userName:String = myProfile.name {
+        if let userName:String = MyProfile.Instance.name {
             self.lblUserName.text = userName
         }
-        if let imgUserAvatar:String = myProfile.avatar {
-            self.imgUserAvatar.loadAvatar(imgUserAvatar)
+        if let imgData:Data = MyProfile.Instance.imgData {
+            self.imgUserAvatar.image = UIImage(data: imgData)
         }
-        if let coin:Int = myProfile.coin_card {
-            self.lblUserMoney.text = "\(coin)"
+        if let coin:Int = MyProfile.Instance.coin_card {
+            self.lblUserMoney.text = "$ \(coin)"
         }
         if self.isHost {
             self.lblUserName.text = self.lblUserName.text! + " (Host)"
@@ -224,7 +224,7 @@ class WaitingViewController: UIViewController {
     @IBAction func leaveRoom(_ sender: AnyObject) {
         
         if let room_id = thisRoom.id {
-            if let uid:String = myProfile.uid {
+            if let uid:String = MyProfile.Instance.uid {
                 
                 let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: room_id, Contants.Instance.uid: uid]
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientLeaveRoom, jsonData)
