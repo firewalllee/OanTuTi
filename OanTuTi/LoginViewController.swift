@@ -8,6 +8,7 @@
 
 import UIKit
 
+//Global variables
 var myProfile:User = User()
 var User_mail:String = String()
 
@@ -30,13 +31,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
-        //Listen login event from server
+        //MARK: - Call Listener when application start
+        ListenRegisterEvent.ListenRegisterResponse()
+        ListenProfileEvent.ListenProfileResponse()
+        ListenRoomEvent.ListenRoomsList()
+        ListenRoomEvent.ListenCreateRoom()
+        ListenWaitingRoomEvent.ListenWaitingRoomResponse()
+
+        //Listen login event from server - First screen, don't need to manager by other class :))
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientLoginRs) { (data, ack) in
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                     //-------CheckLogin----------------------------
                     if isSuccess {
-                        //-------Get user email-----------------------
+                        //-------Get user infor-----------------------
                         User_mail = self.txtEmail.text!
                         //-------Textfield reset-----------------------
                         self.txtEmail.text = Contants.Instance.null
@@ -56,13 +64,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             self.txtPassword.text = Contants.Instance.null
                             //-------Show message from server alert--------
                             if let message: String = response[Contants.Instance.message] as? String {
-                                self.showNotification(title: "Notice", message: message)
+                                self.showNotification(title: "Notice!", message: message)
                             }
                         }
                     }
                 }
             }
-            
         }
         
     }
@@ -82,7 +89,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func ViewsProperties() {
         
         self.btnSignUp.lightBorder(with: 8)
-
     }
     
     //MARK: - Delegate keyboard
@@ -108,7 +114,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.tag == 0 {
             txtPassword.becomeFirstResponder()
-        } else {
+        } else if textField.tag == 1 {
             textField.resignFirstResponder()
             self.btnLogin(UIButton())
         }
@@ -168,91 +174,6 @@ extension LoginViewController:ProtocolUserEmail {
             let destinationVC:RegisterViewController = segue.destination as! RegisterViewController
             destinationVC.delegate = self
         }
-    }
-    
-}
-
-//MARK: - Make extension UIView
-extension UIView {
-    
-    //Corner radius items
-    func lightBorder(with radius: CGFloat) {
-        self.layer.cornerRadius = radius
-        self.clipsToBounds = true
-    }
-    
-    func scaleAnimation() {
-        
-        self.layer.transform = CATransform3DMakeScale(0.1, 0.1, 0.1)
-        
-        UIView.animate(withDuration: 0.3, animations: {
-            self.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.1)
-        }) { (true) in
-            UIView.animate(withDuration: 0.3, animations: {
-                self.layer.transform = CATransform3DMakeScale(1, 1, 1)
-            })
-        }
-    }
-    
-    func rotateXAxis() {
-        self.layer.transform = CATransform3DMakeRotation(CGFloat(M_PI/2), 0, 1, 0)
-        
-        UIView.animate(withDuration: 0.7) {
-            self.layer.transform = CATransform3DMakeRotation(0, 0, 1, 0)
-        }
-    }
-    
-}
-
-
-//MARK: - Make extension UIViewController
-extension UIViewController {
-    
-    //Get the height of top wrap view
-    func getTopFreeHeight(_ wrapView: UIView) -> CGFloat {
-        if let naviHeight = self.navigationController?.navigationBar.frame.height {
-            return wrapView.frame.origin.y - naviHeight - 20 //20 is the height of status bar
-        } else {
-            return wrapView.frame.origin.y
-        }
-    }
-    
-    //Show notification with 1 button OK
-    func showNotification(title: String, message: String) {
-        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-        
-        let alertOk: UIAlertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil)
-        
-        alert.addAction(alertOk)
-        
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    //Indicator waiting
-    func waitingIndicator(with indicator: UIActivityIndicatorView) {
-        
-        let alert:UIAlertController = UIAlertController(title: "Loading\n", message: "", preferredStyle: UIAlertControllerStyle.alert)
-        let alertCancel: UIAlertAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil)
-        alert.addAction(alertCancel)
-        indicator.activityIndicatorViewStyle = .gray
-        
-        self.present(alert, animated: true) {
-            //Properties
-            indicator.frame = CGRect(x: alert.view.frame.width/2, y: alert.view.frame.height/2, width: 0, height: 0)
-            alert.view.addSubview(indicator)
-            indicator.autoresizingMask = [UIViewAutoresizing.flexibleWidth, UIViewAutoresizing.flexibleHeight]
-            indicator.startAnimating()
-        }
-    }
-    
-    //Hide keyboard when tap screen.
-    func hideKeyboardWhenTappedAround() {
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
-        self.view.addGestureRecognizer(tap)
-    }
-    
-    func dismissKeyboard() {
-        self.view.endEditing(true)
     }
     
 }

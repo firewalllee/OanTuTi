@@ -36,39 +36,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         self.hideKeyboardWhenTappedAround()
         
-        //
-        imgData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
+        //Add observation from Class ListenRegisterEvent
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: NotificationCommands.Instance.signupDelegate, object: nil)
         
-        //Listen register event from server
-        SocketIOManager.Instance.socket.on(Commands.Instance.ClientSignUpRs) { (data, ack) in
-            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
-                    
-                    if isSuccess {
-                        if self.delegate != nil {
-                            self.delegate?.userEmail(self.txtEmail.text!)
-                            //------------Reset textfield------------------
-                            self.txtEmail.text = Contants.Instance.null
-                            self.txtPassword.text = Contants.Instance.null
-                            self.txtNickname.text = Contants.Instance.null
-                            //-------Dismiss loading alert-----------------
-                            self.dismiss(animated: true, completion: nil)
-                            //---------------------------------------------
-                            _ = self.navigationController?.popViewController(animated: true)
-                        }
-                        
-                    } else {
-                        //-------Dismiss loading alert-----------------
-                        self.dismiss(animated: true, completion: nil)
-                        //-------Show message from server alert--------
-                        if let message:String = response[Contants.Instance.message] as? String {
-                            self.showNotification(title: "Notice", message: message)
-                        }
-                    }
-                    
-                }
-            }
-        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
@@ -80,12 +50,51 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         //Get free top space to scroll up when keyboard will show or hiden
         self.spaceTopFree = self.getTopFreeHeight(wrapView)
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(false)
+        ///Remove observation when leave this screen
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: Setting some properties of views
     func viewsProperties() {
         
         self.btnRegister.lightBorder(with: 8)
         self.imgAvatar.lightBorder(with: 4)
         
+    }
+    
+    //MARK: - Receive event function from class Listener
+    func receiveEvent(notification: Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            
+            if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
+                //Register successfully
+                if isSuccess {
+                    if self.delegate != nil {
+                        self.delegate?.userEmail(self.txtEmail.text!)
+                        //------------Reset textfield------------------
+                        self.txtEmail.text = Contants.Instance.null
+                        self.txtPassword.text = Contants.Instance.null
+                        self.txtNickname.text = Contants.Instance.null
+                        //-------Dismiss loading alert-----------------
+                        self.dismiss(animated: true, completion: nil)
+                        //-----------Back to login screen--------------
+                        _ = self.navigationController?.popViewController(animated: true)
+                    }
+                    
+                } else {    //Login failed
+                    //-------Dismiss loading alert-----------------
+                    self.dismiss(animated: true) {
+                        //-------Show message from server alert--------
+                        if let message:String = response[Contants.Instance.message] as? String {
+                            self.showNotification(title: "Notice", message: message)
+                        }
+                    }
+                }
+                
+            }
+        }
     }
     
     //MARK: - Textfield delegate
@@ -96,7 +105,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             self.txtPassword.becomeFirstResponder()
         } else if textField.tag == 1 {
             self.txtNickname.becomeFirstResponder()
-        } else {
+        } else if textField.tag == 2 {
             textField.resignFirstResponder()
             self.btnRegister(self)
         }
@@ -134,6 +143,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             } else {
                 //Waiting indicator
                 self.waitingIndicator(with: indicator)
+                
+                if imgData == nil {
+                    imgData = UIImagePNGRepresentation(UIImage(named: "avatar")!)
+                }
+                
                 let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.pass: pass, Contants.Instance.nickname: nickname, Contants.Instance.file: imgData]
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientSignUp, jsonData)
             }
@@ -148,36 +162,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let imgPicker:UIImagePickerController = UIImagePickerController()
         imgPicker.delegate = self
         
-        //Action sheet to select the image source
-        let listSelectSource:UIAlertController = UIAlertController(title: "Choose source", message: "Photo Library or Camera", preferredStyle: .actionSheet)
+        let alert:UIAlertController = self.selectImageFromDevice(imgPicker)
         
-        let photoLibrary:UIAlertAction = UIAlertAction(title: "Photo Library", style: .default) { (UIAlertAction) in
-            
-            imgPicker.sourceType = .photoLibrary
-            imgPicker.isEditing = true
-            self.present(imgPicker, animated: true, completion: nil)
-        }
-        
-        let camera:UIAlertAction = UIAlertAction(title: "Camera", style: .default) { (UIAlertAction) in
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) {
-                imgPicker.sourceType = .camera
-                imgPicker.cameraCaptureMode = .photo
-                imgPicker.modalPresentationStyle = .fullScreen
-                imgPicker.allowsEditing = true
-                self.present(imgPicker, animated: true, completion: nil)
-            } else {
-                self.showNotification(title: "Notice", message: "Can't find your camera!")
-            }
-        }
-        
-        let cancel:UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { (UIAlertAction) in
-        }
-        
-        listSelectSource.addAction(photoLibrary)
-        listSelectSource.addAction(camera)
-        listSelectSource.addAction(cancel)
-        
-        present(listSelectSource, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -208,4 +195,5 @@ extension RegisterViewController: UINavigationControllerDelegate, UIImagePickerC
     }
     
 }
+
 

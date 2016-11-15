@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -44,9 +46,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>Set the Background</string>
-    <key>NSCameraUsageDescription</key>
-    <string>Set the Background of the app with your beautiful photography</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Set the Background</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Set the Background of the app with your beautiful photography</string>
 </dict>
 </plist>
