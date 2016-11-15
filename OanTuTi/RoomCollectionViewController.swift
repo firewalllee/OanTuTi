@@ -82,18 +82,17 @@ class RoomCollectionViewController: UICollectionViewController {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             if let _:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 
-                self.dismiss(animated: true, completion: {
+                self.dismiss(animated: true) {
                     if let message:String = response[Contants.Instance.message] as? String {
                         self.showNotification(title: "Notice", message: message)
                     }
-                    return
-                })
+                }
+            } else {
+                self.hostUser = User(response)
+                self.dismiss(animated: true) {
+                    self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
+                }
             }
-            self.hostUser = User(response)
-            self.dismiss(animated: true, completion: { 
-                self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
-            })
-            
         }
     }
     

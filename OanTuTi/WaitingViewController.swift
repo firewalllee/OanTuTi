@@ -31,6 +31,7 @@ class WaitingViewController: UIViewController {
     
     var otherUser:User!
     var isHost:Bool = true      //Check host or guest from previous screen
+    var isClientReady = true
     let best_of:Array<String> = ["1", "3", "5", "7", "9", "11", "15"]
     
     
@@ -48,7 +49,8 @@ class WaitingViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerJoinRoom), name: NotificationCommands.Instance.joinRoomDelegate, object: nil)
         //->Update Room delegate
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateRoom), name: NotificationCommands.Instance.updateRoomInfoDelegate, object: nil)
-        
+        //Client ready
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clientReady), name: NotificationCommands.Instance.readyDelegate, object: nil)
         
     }
 
@@ -82,7 +84,7 @@ class WaitingViewController: UIViewController {
             
         } else {
             self.btnReadyStart.setBackgroundImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
-            self.lblGuestReady.isHidden = true
+            //self.lblGuestReady.isHidden = true
             self.btnUpdate.isEnabled = false
             
             if let hostName:String = otherUser.name {
@@ -105,6 +107,7 @@ class WaitingViewController: UIViewController {
         self.imgGuestAvatar.image = #imageLiteral(resourceName: "avatar")
         self.lblGuestName.text = "Waiting user"
         self.lblGuestMoney.text = "$0"
+        self.btnReadyStart.isEnabled = false
     }
     //Get infor of new player join room
     func playerJoin(_ otherUser:User) {
@@ -164,7 +167,6 @@ class WaitingViewController: UIViewController {
             
             self.otherUser = User(response)
             self.playerJoin(self.otherUser)
-            
         }
     }
     //-> Update room info response
@@ -189,6 +191,31 @@ class WaitingViewController: UIViewController {
                 }
             } else {
                 self.showNotification(title: "Notice", message: "Can't update room information")
+            }
+        }
+    }
+    //-> Client Ready
+    func clientReady(notification: Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            guard let ready:Bool = response[Contants.Instance.ready] as? Bool else {
+                return
+            }
+            //If client ready
+            if isHost {
+                if ready {
+                    self.btnReadyStart.isEnabled = true
+                    self.lblGuestReady.isHidden = false
+                } else {
+                    self.lblGuestReady.isHidden = true
+                    self.btnReadyStart.isEnabled = false
+                }
+            }  else { //host ready start
+                if ready {
+                    self.btnReadyStart.setBackgroundImage(#imageLiteral(resourceName: "unready"), for: UIControlState.normal)
+                } else {
+                    self.btnReadyStart.setBackgroundImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
+                }
+                self.isClientReady = true // Client have been ready
             }
         }
     }
@@ -267,7 +294,7 @@ class WaitingViewController: UIViewController {
             , animationStyle: .topToBottom)
         
     }
-    
+    //Update room infor emit function
     func prepareForEmit(name: String, moneyBet: Double, best_of: Int) {
         if name != Contants.Instance.null && moneyBet > 0 {
             if let id:String = thisRoom.id {
@@ -276,6 +303,25 @@ class WaitingViewController: UIViewController {
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateRoomInfo, jsonData)
             }
         }
+    }
+    
+    
+    @IBAction func btnReadyStart(_ sender: UIButton) {
+        
+        if self.isHost {
+            //MARK: - Play button on host user
+            //Perform segue to starting game 
+//            self.performSegue(withIdentifier: Contants.Instance.seguePlayRoom, sender: nil)
+            
+        } else {
+            if isClientReady {
+                if let room_id:String = self.thisRoom.id {
+                    SocketIOManager.Instance.socketEmit(Commands.Instance.ClientReady, [Contants.Instance.room_id: room_id])
+                    self.isClientReady = false
+                }
+            }
+        }
+        
     }
     
     
