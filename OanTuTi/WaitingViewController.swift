@@ -31,6 +31,7 @@ class WaitingViewController: UIViewController {
     
     var otherUser:User!
     var isHost:Bool = true      //Check host or guest from previous screen
+    var isClientReady = true
     let best_of:Array<String> = ["1", "3", "5", "7", "9", "11", "15"]
     
     
@@ -48,7 +49,8 @@ class WaitingViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerJoinRoom), name: NotificationCommands.Instance.joinRoomDelegate, object: nil)
         //->Update Room delegate
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateRoom), name: NotificationCommands.Instance.updateRoomInfoDelegate, object: nil)
-        
+        //Client ready
+        NotificationCenter.default.addObserver(self, selector: #selector(self.clientReady), name: NotificationCommands.Instance.readyDelegate, object: nil)
         
     }
 
@@ -73,14 +75,14 @@ class WaitingViewController: UIViewController {
         }
         self.lblBestOf.text = "Bo \(thisRoom.best_of)"
         
-        if let userName:String = myProfile.name {
+        if let userName:String = MyProfile.Instance.name {
             self.lblUserName.text = userName
         }
-        if let imgUserAvatar:String = myProfile.avatar {
-            self.imgUserAvatar.loadAvatar(imgUserAvatar)
+        if let imgData:Data = MyProfile.Instance.imgData {
+            self.imgUserAvatar.image = UIImage(data: imgData)
         }
-        if let coin:Int = myProfile.coin_card {
-            self.lblUserMoney.text = "\(coin)"
+        if let coin:Int = MyProfile.Instance.coin_card {
+            self.lblUserMoney.text = "$ \(coin)"
         }
         if self.isHost {
             self.lblUserName.text = self.lblUserName.text! + " (Host)"
@@ -88,7 +90,7 @@ class WaitingViewController: UIViewController {
             
         } else {
             self.btnReadyStart.setBackgroundImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
-            self.lblGuestReady.isHidden = true
+            //self.lblGuestReady.isHidden = true
             self.btnUpdate.isEnabled = false
             
             if let hostName:String = otherUser.name {
@@ -111,6 +113,7 @@ class WaitingViewController: UIViewController {
         self.imgGuestAvatar.image = #imageLiteral(resourceName: "avatar")
         self.lblGuestName.text = "Waiting user"
         self.lblGuestMoney.text = "$0"
+        self.btnReadyStart.isEnabled = false
     }
     //Get infor of new player join room
     func playerJoin(_ otherUser:User) {
@@ -170,7 +173,6 @@ class WaitingViewController: UIViewController {
             
             self.otherUser = User(response)
             self.playerJoin(self.otherUser)
-            
         }
     }
     //-> Update room info response
@@ -198,12 +200,37 @@ class WaitingViewController: UIViewController {
             }
         }
     }
+    //-> Client Ready
+    func clientReady(notification: Notification) {
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            guard let ready:Bool = response[Contants.Instance.ready] as? Bool else {
+                return
+            }
+            //If client ready
+            if isHost {
+                if ready {
+                    self.btnReadyStart.isEnabled = true
+                    self.lblGuestReady.isHidden = false
+                } else {
+                    self.lblGuestReady.isHidden = true
+                    self.btnReadyStart.isEnabled = false
+                }
+            }  else { //host ready start
+                if ready {
+                    self.btnReadyStart.setBackgroundImage(#imageLiteral(resourceName: "unready"), for: UIControlState.normal)
+                } else {
+                    self.btnReadyStart.setBackgroundImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
+                }
+                self.isClientReady = true // Client have been ready
+            }
+        }
+    }
     
     //MARK: - Leave room task
     @IBAction func leaveRoom(_ sender: AnyObject) {
         
         if let room_id = thisRoom.id {
-            if let uid:String = myProfile.uid {
+            if let uid:String = MyProfile.Instance.uid {
                 
                 let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: room_id, Contants.Instance.uid: uid]
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientLeaveRoom, jsonData)
@@ -243,7 +270,7 @@ class WaitingViewController: UIViewController {
         //Add label...Bo
         let lblBo:UILabel = UILabel(frame: CGRect(x: x, y: txtMoneyBet.frame.maxY + 10, width: 90, height: 40))
         lblBo.text = "Bo >>"
-        lblBo.font = UIFont(name: "Avenir Heavy", size: 30)
+        lblBo.font = UIFont(name: "Chalkboard SE", size: 30)
         lblBo.textAlignment = NSTextAlignment.center
         subview.addSubview(lblBo)
         
@@ -273,7 +300,7 @@ class WaitingViewController: UIViewController {
             , animationStyle: .topToBottom)
         
     }
-    
+    //Update room infor emit function
     func prepareForEmit(name: String, moneyBet: Double, best_of: Int) {
         if name != Contants.Instance.null && moneyBet > 0 {
             if let id:String = thisRoom.id {
@@ -282,6 +309,25 @@ class WaitingViewController: UIViewController {
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateRoomInfo, jsonData)
             }
         }
+    }
+    
+    
+    @IBAction func btnReadyStart(_ sender: UIButton) {
+        
+        if self.isHost {
+            //MARK: - Play button on host user
+            //Perform segue to starting game 
+//            self.performSegue(withIdentifier: Contants.Instance.seguePlayRoom, sender: nil)
+            
+        } else {
+            if isClientReady {
+                if let room_id:String = self.thisRoom.id {
+                    SocketIOManager.Instance.socketEmit(Commands.Instance.ClientReady, [Contants.Instance.room_id: room_id])
+                    self.isClientReady = false
+                }
+            }
+        }
+        
     }
     
     

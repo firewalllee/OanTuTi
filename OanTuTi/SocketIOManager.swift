@@ -22,7 +22,7 @@ class SocketIOManager {
     //Logout when into background
     func closeConnection() {
         //Static set to myProfile variables
-        if let uid: String = myProfile.uid {
+        if let uid: String = MyProfile.Instance.uid {
             disconnect([Contants.Instance.uid: uid])
         }
         //socket.disconnect()

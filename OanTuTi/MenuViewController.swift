@@ -29,14 +29,17 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let myName:String = myProfile.name {
+        if let myName:String = MyProfile.Instance.name {
             lblNickname.text = myName
         }
-        if let myCoin_card:Int = myProfile.coin_card {
+        if let myCoin_card:Int = MyProfile.Instance.coin_card {
             lblCoin.text = String(myCoin_card)
         }
-        if let myAvatar:String = myProfile.avatar {
-            imgAvatar.loadAvatar(myAvatar)
+//        if let myAvatar:String = MyProfile.Instance.avatar {
+//            imgAvatar.loadAvatar(myAvatar)
+//        }
+        if let imgData:Data = MyProfile.Instance.imgData {
+            imgAvatar.image = UIImage(data: imgData)
         }
     }
     
@@ -65,7 +68,7 @@ class MenuViewController: UIViewController {
     
     //MARK: - signout tasks
     @IBAction func btnLogout(_ sender: UIBarButtonItem) {
-        if let uid:String = myProfile.uid {
+        if let uid:String = MyProfile.Instance.uid {
             let jsonUID:Dictionary<String, Any> = [Contants.Instance.uid: uid]
             SocketIOManager.Instance.disconnect(jsonUID)
             _ = self.navigationController?.popViewController(animated: true)

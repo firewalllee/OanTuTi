@@ -82,18 +82,17 @@ class RoomCollectionViewController: UICollectionViewController {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             if let _:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 
-                self.dismiss(animated: true, completion: {
+                self.dismiss(animated: true) {
                     if let message:String = response[Contants.Instance.message] as? String {
                         self.showNotification(title: "Notice", message: message)
                     }
-                    return
-                })
+                }
+            } else {
+                self.hostUser = User(response)
+                self.dismiss(animated: true) {
+                    self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
+                }
             }
-            self.hostUser = User(response)
-            self.dismiss(animated: true, completion: { 
-                self.performSegue(withIdentifier: Contants.Instance.segueWaiting, sender: nil)
-            })
-            
         }
     }
     
@@ -193,7 +192,9 @@ class RoomCollectionViewController: UICollectionViewController {
         //Start indicator waiting
         self.waitingIndicator(with: self.indicator)
         //Emit to server
-        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientJoinRoom, [Contants.Instance.room_id: rooms[indexPath.section][indexPath.row].id!, Contants.Instance.uid: myProfile.uid!])
+        if let uid:String = MyProfile.Instance.uid {
+            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientJoinRoom, [Contants.Instance.room_id: rooms[indexPath.section][indexPath.row].id!, Contants.Instance.uid: uid])
+        }
         //Get next room infor
         self.nextRoom = rooms[indexPath.section][indexPath.row]
         self.isHost = false
@@ -259,9 +260,12 @@ class RoomCollectionViewController: UICollectionViewController {
                     self.nextRoom.moneyBet = money_bet
                     self.isHost = true
                     //Init json data to push to server
-                    let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: roomName, Contants.Instance.money_bet: money_bet, Contants.Instance.host_uid: myProfile.uid!]
-                    //Emit to server
-                    SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
+                    if let uid:String = MyProfile.Instance.uid {
+                        let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: roomName, Contants.Instance.money_bet: money_bet, Contants.Instance.host_uid: uid]
+                        //Emit to server
+                        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
+                    }
+                    
                 } else {
                     self.showNotification(title: "Notice!", message: "Fail to create your room. Try again and please make sure you fill in the name and the bet is a number!")
                 }

@@ -29,7 +29,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Declarations
     var isUpdating:Bool = false
     let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var imgData: Data!
+    //var imgData: Data!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     func viewProperties(){
         self.btnEdit.lightBorder(with: 8)
-        self.imgAvatar.lightBorder(with: 4)
+        self.imgAvatar.lightBorder(with: 8)
     }
     
     //MARK: - Listen function from Listener class - Main function -> Solve Profile tasks
@@ -78,8 +78,17 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
                 //-------CheckUpdate----------------------------
                 if isSuccess {
                     if let newAvatarUrl: String = response[Contants.Instance.newAvatarUrl] as? String {
-                        myProfile.update(name: self.txtDisplayName.text!, avatar: newAvatarUrl)
-                        self.lblDisplayName.text = myProfile.name
+                        //myProfile.update(name: self.txtDisplayName.text!, avatar: newAvatarUrl)
+                        MyProfile.Instance.name = self.txtDisplayName.text!
+                        if let url:URL = URL(string: newAvatarUrl) {
+                            do {
+                                MyProfile.Instance.imgData = try Data(contentsOf: url)
+                            } catch {
+                                MyProfile.Instance.imgData = nil
+                            }
+                        }
+                        
+                        self.lblDisplayName.text = MyProfile.Instance.name
                     }
                     //-------Clean textfield password--------------
                     self.txtPassword.text = Contants.Instance.null
@@ -139,25 +148,30 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
 
     //Load information of user when view have loaded
     func loadInfo() {
-        if let name: String = myProfile.name {
+        if let name: String = MyProfile.Instance.name {
             self.lblDisplayName.text = name
             self.txtDisplayName.text = name
         }
-        if let coins: Int = myProfile.coin_card {
+        if let coins: Int = MyProfile.Instance.coin_card {
             self.lblCoins.text = "\(coins)"
         }
-        if let wins: Int = myProfile.statis?.wins {
+        if let wins: Int = MyProfile.Instance.statis?.wins {
             self.lblWins.text = "\(wins) Wins"
         }
-        if let losts: Int = myProfile.statis?.wins {
+        if let losts: Int = MyProfile.Instance.statis?.wins {
             self.lblLosts.text = "\(losts) Lost"
         }
         self.lblEmail.text = User_mail
-        if imgData != nil {
+//        if imgData != nil {
+//            self.imgAvatar.image = UIImage(data: imgData)
+//        } else if let myAvatar:String = MyProfile.Instance.avatar {
+//            imgAvatar.loadAvatar(myAvatar)
+//        }
+        
+        if let imgData:Data = MyProfile.Instance.imgData {
             self.imgAvatar.image = UIImage(data: imgData)
-        } else if let myAvatar:String = myProfile.avatar {
-            imgAvatar.loadAvatar(myAvatar)
         }
+        
     }
     
     
@@ -219,18 +233,22 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         } else if newPass == Contants.Instance.null {
             //Waiting indicator
             self.waitingIndicator(with: indicator)
-            if self.imgData == nil {
-                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+//            if self.imgData == nil {
+//                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+//            }
+            if let imgData:Data = MyProfile.Instance.imgData {
+                let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: imgData, Contants.Instance.nickname: nickname]
+                SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
             }
-            let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
-            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         } else {
             self.waitingIndicator(with: self.indicator)
-            if self.imgData == nil {
-                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+//            if self.imgData == nil {
+//                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
+//            }
+            if let imgData:Data = MyProfile.Instance.imgData {
+                let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: newPass, Contants.Instance.file: imgData, Contants.Instance.nickname: nickname]
+                SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
             }
-            let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: newPass, Contants.Instance.file: self.imgData, Contants.Instance.nickname: nickname]
-            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
         }
     }
     
@@ -259,15 +277,16 @@ extension ProfileViewController: UINavigationControllerDelegate, UIImagePickerCo
             let imageValue:CGFloat = max(imageSelected.size.height, imageSelected.size.width)
             
             if imageValue > 3000 {
-                imgData = UIImageJPEGRepresentation(imageSelected, 0.1)
+                MyProfile.Instance.imgData = UIImageJPEGRepresentation(imageSelected, 0.1)
             }
             if imageValue > 2000 {
-                imgData = UIImageJPEGRepresentation(imageSelected, 0.5)
+                MyProfile.Instance.imgData = UIImageJPEGRepresentation(imageSelected, 0.5)
             } else {
-                imgData = UIImagePNGRepresentation(imageSelected)
+                MyProfile.Instance.imgData = UIImagePNGRepresentation(imageSelected)
             }
-            
-            imgAvatar.image = UIImage(data: imgData)
+            if let imgData:Data = MyProfile.Instance.imgData {
+                imgAvatar.image = UIImage(data: imgData)
+            }
             
         }
         self.dismiss(animated: true, completion: nil)
