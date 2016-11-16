@@ -51,7 +51,10 @@ class RoomCollectionViewController: UICollectionViewController {
     //MARK: - Delegate from Listener Class
     //->Rooms List
     func receiveEvent() {
-        self.collectionView?.reloadData()
+        //Let main queue to update table view
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
+        }
     }
     //->Create Room
     func receiveCreateRoomEvent(notification:Notification) {
@@ -111,6 +114,9 @@ class RoomCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contants.Instance.cellRoom, for: indexPath)
     
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.main.scale
+        
         if rooms.count > 0 {
             //Get room name
             if let lblRoom: UILabel = cell.viewWithTag(1) as? UILabel {

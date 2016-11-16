@@ -254,12 +254,18 @@ class WaitingViewController: UIViewController {
         let txtRoomName = UITextField(frame: CGRect(x:x, y:10, width: width, height: 30))
         txtRoomName.standardTextField(borderColor: UIColor.red.cgColor, placeHolder: "Room name")
         subview.addSubview(txtRoomName)
+        if let roomName:String = self.thisRoom.roomName {
+            txtRoomName.text = roomName
+        }
         
         // Add textfield for bet
         let txtMoneyBet = UITextField(frame: CGRect(x: x,y: txtRoomName.frame.maxY + 10,width: width,height: 30))
         txtMoneyBet.standardTextField(borderColor: UIColor.yellow.cgColor, placeHolder: "Coin bet")
         txtMoneyBet.keyboardType = UIKeyboardType.numberPad
         subview.addSubview(txtMoneyBet)
+        if let coin:Double = self.thisRoom.moneyBet {
+            txtMoneyBet.text = "\(Int(coin))"
+        }
         
         //Add label...Bo
         let lblBo:UILabel = UILabel(frame: CGRect(x: x, y: txtMoneyBet.frame.maxY + 10, width: 90, height: 40))

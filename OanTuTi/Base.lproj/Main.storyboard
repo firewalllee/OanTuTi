@@ -386,7 +386,7 @@
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwR-0v-kkQ">
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="Ctm-7G-GhM"/>
+                                            <constraint firstAttribute="height" constant="50" id="Ctm-7G-GhM"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="33"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -428,7 +428,7 @@
                                     <constraint firstItem="uwR-0v-kkQ" firstAttribute="leading" secondItem="YEw-ro-LcF" secondAttribute="leading" constant="8" id="VLh-yC-K4d"/>
                                     <constraint firstItem="slj-1B-puj" firstAttribute="top" secondItem="pc0-Lm-TKw" secondAttribute="bottom" constant="15" id="cCK-QD-FCO"/>
                                     <constraint firstItem="slj-1B-puj" firstAttribute="leading" secondItem="pc0-Lm-TKw" secondAttribute="leading" id="d8e-G8-IBK"/>
-                                    <constraint firstItem="pc0-Lm-TKw" firstAttribute="top" secondItem="uwR-0v-kkQ" secondAttribute="bottom" constant="15" id="g7W-LZ-pDF"/>
+                                    <constraint firstItem="pc0-Lm-TKw" firstAttribute="top" secondItem="uwR-0v-kkQ" secondAttribute="bottom" id="g7W-LZ-pDF"/>
                                     <constraint firstItem="4pQ-pJ-VX2" firstAttribute="leading" secondItem="pc0-Lm-TKw" secondAttribute="trailing" constant="10" id="lOw-ZB-HLe"/>
                                     <constraint firstItem="mWX-vN-1Ie" firstAttribute="bottom" secondItem="slj-1B-puj" secondAttribute="bottom" id="udh-4e-mFZ"/>
                                 </constraints>
@@ -442,7 +442,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player 2 (Host)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zIe-gO-qhV">
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="35" id="Xtr-VE-amr"/>
+                                            <constraint firstAttribute="height" constant="50" id="Xtr-VE-amr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="33"/>
                                         <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -488,7 +488,7 @@
                                     <constraint firstAttribute="trailing" secondItem="zIe-gO-qhV" secondAttribute="trailing" constant="8" id="eZz-Z7-USI"/>
                                     <constraint firstItem="NW4-d0-LYj" firstAttribute="centerY" secondItem="nzp-7z-hqI" secondAttribute="centerY" constant="10" id="fWh-2r-qLO"/>
                                     <constraint firstItem="zIe-gO-qhV" firstAttribute="leading" secondItem="xST-8A-8Qn" secondAttribute="leading" constant="8" id="jAm-dk-Wgy"/>
-                                    <constraint firstItem="nzp-7z-hqI" firstAttribute="top" secondItem="zIe-gO-qhV" secondAttribute="bottom" constant="15" id="kr9-29-LcQ"/>
+                                    <constraint firstItem="nzp-7z-hqI" firstAttribute="top" secondItem="zIe-gO-qhV" secondAttribute="bottom" id="kr9-29-LcQ"/>
                                     <constraint firstItem="Ehe-Di-WMF" firstAttribute="bottom" secondItem="e9Z-WS-pdL" secondAttribute="bottom" id="qNN-9l-ADq"/>
                                     <constraint firstAttribute="trailing" secondItem="NW4-d0-LYj" secondAttribute="trailing" constant="60" id="rjZ-KY-mUq"/>
                                     <constraint firstItem="nzp-7z-hqI" firstAttribute="leading" secondItem="zIe-gO-qhV" secondAttribute="leading" id="yfQ-W6-dxu"/>
