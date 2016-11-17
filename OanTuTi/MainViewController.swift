@@ -36,9 +36,10 @@ class MainViewController: UIViewController {
     
     //MARK: - Declarations
     var match_id:String = String()
-    var selection:Int = 1
+    var selection:Int = 0
     var ready:Bool = true
     var game_id:Int = 1
+    var best_of:Int = 1
     
     var thisRoom:Room = Room()
     var otherUser:User = User()
@@ -77,6 +78,7 @@ class MainViewController: UIViewController {
     func bind() {
         //Both user
         self.lblBestOf.text = "Bo \(self.thisRoom.best_of)"
+        self.best_of = thisRoom.best_of
         
         //This user
         if let userName:String = MyProfile.Instance.name {
@@ -100,50 +102,62 @@ class MainViewController: UIViewController {
     //-> User quit suddenly quit game
     func playerLeaveGame(notification:Notification) {
         if let _:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            self.alertMessage("Congratulation! You have won this match!", completion: { 
-                _ = self.navigationController?.popViewController(animated: true)
-            })
+            self.alertEndGame("You win!")
         }
     }
     //-> User submit selection
     func userSubmit(notification:Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             
-            print("Submit", response)
+            //Reset ready state
+            self.isReady(lbl: lblUserReady, false)
+            self.isReady(lbl: lblGuestReady, false)
             
             if let their:Int = response[Contants.Instance.their] as? Int {
+                
                 self.whichAnswer(their, me: false)
+                if let selF:Int = response[Contants.Instance.selF] as? Int {
+                    self.whichAnswer(selF)
+                    //If draw will not score this game
+                    if their == selF {
+                        self.lblMatchResult.text = "Draw"
+                        self.lblMatchResult.textColor = #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)
+                        self.btnSubmit.isEnabled = true
+                        self.resetTime()
+                        
+                        return
+                    }
+                }
             }
-            if let selF:Int = response[Contants.Instance.selF] as? Int {
-                self.whichAnswer(selF)
-            }
+            
+            
             if let win:Bool = response[Contants.Instance.win] as? Bool {
                 if win {
                     self.lblMatchResult.text = "Win"
+                    self.lblMatchResult.textColor = UIColor.green
                     self.lblUserScore.text = "\((Int(self.lblUserScore.text!) ?? 0) + 1)"
                 } else {
                     self.lblMatchResult.text = "Lost"
+                    self.lblMatchResult.textColor = UIColor.red
                     self.lblGuestScore.text = "\((Int(self.lblGuestScore.text!) ?? 0) + 1)"
                 }
             }
             
             //Reset timer
-            if timer != nil {
-                self.timer.invalidate()
-                self.timer = nil
-                self.count = 60
-                self.lblTime.text = "Time \(self.count)"
-            }
+            self.resetTime()
             
             self.game_id += 1
             self.btnSubmit.isEnabled = true
-            if self.game_id > self.thisRoom.best_of {
-                self.alertMessage("Game is end!", completion: {
-                    self.dismiss(animated: true, completion: { 
-                        _ = self.navigationController?.popViewController(animated: true)
-                    })
-                    
-                })
+            //MARK: - Calculate result and coin card here
+            let win:Int = Int(self.lblUserScore.text!) ?? 0
+            let lost:Int = Int(self.lblGuestScore.text!) ?? 0
+            let numberGameNeeded:Int = self.best_of/2 + 1
+            
+            if win == numberGameNeeded {
+                self.alertEndGame("You Win!")
+            }
+            if lost == numberGameNeeded {
+                self.alertEndGame("You lost!")
             }
             
         }
@@ -165,23 +179,21 @@ class MainViewController: UIViewController {
             //->User ready
             self.isReady(lbl: self.lblUserReady, selF)
             
+            //Change background image of ready button
+            if selF {
+                self.btnReady.setImage(UIImage(named: "unready"), for: UIControlState.normal)
+            } else {
+                self.btnReady.setImage(UIImage(named: "ready"), for: UIControlState.normal)
+            }
+            
+            //If both ready, timer will start calculating
             if their && selF {
                 //Timer will start
                 if timer == nil {
                     timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCalc), userInfo: nil, repeats: true)
                 }
             } else {
-                if timer != nil {
-                    timer.invalidate()
-                    timer = nil
-                    self.count = 60
-                }
-            }
-            
-            if selF {
-                self.btnReady.setBackgroundImage(#imageLiteral(resourceName: "unready"), for: UIControlState.normal)
-            } else {
-                self.btnReady.setBackgroundImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
+                self.resetTime()
             }
             
         }
@@ -222,11 +234,21 @@ class MainViewController: UIViewController {
             lbl.textColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
         }
     }
-    
+    //Reset timer and lbl Time 
+    func resetTime() {
+        //Reset timer
+        if timer != nil {
+            self.timer.invalidate()
+            self.timer = nil
+        }
+        self.count = 60
+        self.lblTime.text = "Time \(self.count)"
+    }
     //Timer calculating time when start game
     func timerCalc() {
         self.count -= 1
         if self.count < 1 {
+            //Users not submitS
             self.timer.invalidate()
             self.timer = nil
             self.lblMatchResult.text = "Draw"
@@ -236,6 +258,7 @@ class MainViewController: UIViewController {
         }
     }
     
+    //Choose answer ==>
     @IBAction func btnSelection(_ sender: UIButton) {
         
         self.selection = sender.tag
@@ -247,7 +270,7 @@ class MainViewController: UIViewController {
     
     //MARK: - Ready tasks
     @IBAction func btnReady(_ sender: AnyObject) {
-        
+    
         if timer != nil {
             timer.invalidate()
             timer = nil
@@ -264,6 +287,11 @@ class MainViewController: UIViewController {
     
     //MARK: - Submit tasks
     @IBAction func btnSubmit(_ sender: AnyObject) {
+        
+        if self.selection < 1 {
+            self.showNotification(title: "Notice", message: "You must choice 1")
+            return
+        }
         
         if let uid:String = MyProfile.Instance.uid {
             let jsonData:Dictionary<String, Any> = [Contants.Instance.match_id: self.match_id, Contants.Instance.game_id: self.game_id, Contants.Instance.uid: uid, Contants.Instance.selection: self.selection]
@@ -295,6 +323,17 @@ class MainViewController: UIViewController {
         
     }
     
+    //MARK: - Alert end game
+    func alertEndGame(_ result:String) {
+        let alert:UIAlertController = UIAlertController(title: "Notice!", message: result, preferredStyle: UIAlertControllerStyle.alert)
+        
+        let alertOk:UIAlertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (btn) in
+            _ = self.navigationController?.popViewController(animated: true)
+        }
+        alert.addAction(alertOk)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 extension UIViewController {
@@ -313,5 +352,7 @@ extension UIViewController {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    
     
 }
