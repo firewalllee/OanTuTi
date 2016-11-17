@@ -37,8 +37,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         ListenRoomEvent.ListenRoomsList()
         ListenRoomEvent.ListenCreateRoom()
         ListenWaitingRoomEvent.ListenWaitingRoomResponse()
+        ListenPlayingEvent.ListenPlayingResponse()
         ListenMatchResultEvent.ListenMatchResultResponse()
-
+        
         //Listen login event from server - First screen, don't need to manager by other class :))
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientLoginRs) { (data, ack) in
             if let response: Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {

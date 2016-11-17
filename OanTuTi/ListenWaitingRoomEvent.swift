@@ -43,6 +43,12 @@ class ListenWaitingRoomEvent {
                 NotificationCenter.default.post(name: NotificationCommands.Instance.readyDelegate, object: response)
             }
         }
+        //Client start game
+        SocketIOManager.Instance.socket.on(Commands.Instance.ClientsStartPlayingRs) { (data, ack) in
+            if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
+                NotificationCenter.default.post(name: NotificationCommands.Instance.clientSartgameDelegate, object: response)
+            }
+        }
         
     }
     

@@ -28,10 +28,10 @@ class WaitingViewController: UIViewController {
     
     //MARK: - Declarations
     var thisRoom:Room = Room()
-    
     var otherUser:User!
     var isHost:Bool = true      //Check host or guest from previous screen
     var isClientReady = true
+    var matchId:String!
     let best_of:Array<String> = ["1", "3", "5", "7", "9", "11", "15"]
     
     
@@ -51,6 +51,8 @@ class WaitingViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateRoom), name: NotificationCommands.Instance.updateRoomInfoDelegate, object: nil)
         //Client ready
         NotificationCenter.default.addObserver(self, selector: #selector(self.clientReady), name: NotificationCommands.Instance.readyDelegate, object: nil)
+        //Start game
+        NotificationCenter.default.addObserver(self, selector: #selector(self.startGame), name: NotificationCommands.Instance.clientSartgameDelegate, object: nil)
         
     }
 
@@ -225,11 +227,34 @@ class WaitingViewController: UIViewController {
             }
         }
     }
+    //-> Client start game
+    func startGame(notification: Notification) {
+        
+        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            print(response)
+            guard let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool else {
+                return
+            }
+            
+            if isSuccess {
+                if let match_id:String = response[Contants.Instance.match_id] as? String {
+                    self.matchId = match_id
+                    self.performSegue(withIdentifier: Contants.Instance.segueMain, sender: nil)
+                }
+            } else {
+                if let message:String = response[Contants.Instance.message] as? String {
+                    self.showNotification(title: "Notice", message: message)
+                }
+            }
+            
+        }
+        
+    }
     
     //MARK: - Leave room task
     @IBAction func leaveRoom(_ sender: AnyObject) {
         
-        if let room_id = thisRoom.id {
+        if let room_id:String = thisRoom.id {
             if let uid:String = MyProfile.Instance.uid {
                 
                 let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: room_id, Contants.Instance.uid: uid]
@@ -260,12 +285,18 @@ class WaitingViewController: UIViewController {
         let txtRoomName = UITextField(frame: CGRect(x:x, y:10, width: width, height: 30))
         txtRoomName.standardTextField(borderColor: UIColor.red.cgColor, placeHolder: "Room name")
         subview.addSubview(txtRoomName)
+        if let roomName:String = self.thisRoom.roomName {
+            txtRoomName.text = roomName
+        }
         
         // Add textfield for bet
         let txtMoneyBet = UITextField(frame: CGRect(x: x,y: txtRoomName.frame.maxY + 10,width: width,height: 30))
         txtMoneyBet.standardTextField(borderColor: UIColor.yellow.cgColor, placeHolder: "Coin bet")
         txtMoneyBet.keyboardType = UIKeyboardType.numberPad
         subview.addSubview(txtMoneyBet)
+        if let coin:Double = self.thisRoom.moneyBet {
+            txtMoneyBet.text = "\(Int(coin))"
+        }
         
         //Add label...Bo
         let lblBo:UILabel = UILabel(frame: CGRect(x: x, y: txtMoneyBet.frame.maxY + 10, width: 90, height: 40))
@@ -317,7 +348,10 @@ class WaitingViewController: UIViewController {
         if self.isHost {
             //MARK: - Play button on host user
             //Perform segue to starting game 
-//            self.performSegue(withIdentifier: Contants.Instance.seguePlayRoom, sender: nil)
+            if let room_id:String = thisRoom.id {
+                let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: room_id]
+                SocketIOManager.Instance.socketEmit(Commands.Instance.ClientsStartPlaying, jsonData)
+            }
             
         } else {
             if isClientReady {
@@ -330,6 +364,16 @@ class WaitingViewController: UIViewController {
         
     }
     
+    //MARK: - Transfer data to next screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Contants.Instance.segueMain {
+            if let mainVC:MainViewController = segue.destination as? MainViewController {
+                mainVC.thisRoom = self.thisRoom
+                mainVC.match_id = self.matchId
+                mainVC.otherUser = self.otherUser
+            }
+        }
+    }
     
 }
 

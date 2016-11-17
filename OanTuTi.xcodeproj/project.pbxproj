@@ -18,6 +18,7 @@
 		BE2FC3D91DD7179D00203354 /* ListenRegisterEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2FC3D81DD7179D00203354 /* ListenRegisterEvent.swift */; };
 		BE2FC3DB1DD71E6500203354 /* ListenProfileEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2FC3DA1DD71E6500203354 /* ListenProfileEvent.swift */; };
 		BE2FC3DE1DD7262C00203354 /* ListenWaitingRoomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2FC3DD1DD7262C00203354 /* ListenWaitingRoomEvent.swift */; };
+		BE3CFD2E1DDCADBA00FD0C89 /* ListenPlayingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3CFD2D1DDCADBA00FD0C89 /* ListenPlayingEvent.swift */; };
 		BE53A7C91DCF6C8A000A2AB8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */; };
 		BE56288F1DD37175002D50FA /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE56288E1DD37175002D50FA /* Room.swift */; };
 		BE5628911DD37FCA002D50FA /* ListenRoomEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */; };
@@ -71,6 +72,7 @@
 		BE2FC3D81DD7179D00203354 /* ListenRegisterEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenRegisterEvent.swift; sourceTree = "<group>"; };
 		BE2FC3DA1DD71E6500203354 /* ListenProfileEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenProfileEvent.swift; sourceTree = "<group>"; };
 		BE2FC3DD1DD7262C00203354 /* ListenWaitingRoomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenWaitingRoomEvent.swift; sourceTree = "<group>"; };
+		BE3CFD2D1DDCADBA00FD0C89 /* ListenPlayingEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenPlayingEvent.swift; sourceTree = "<group>"; };
 		BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BE56288E1DD37175002D50FA /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenRoomEvent.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */,
 				BE2FC3DD1DD7262C00203354 /* ListenWaitingRoomEvent.swift */,
 				7EE419CC1DDD864E00CFD264 /* ListenMatchResultEvent.swift */,
+				BE3CFD2D1DDCADBA00FD0C89 /* ListenPlayingEvent.swift */,
 				BE2FC3D61DD7168900203354 /* NotificationCommands.swift */,
 			);
 			name = ListenerController;
@@ -343,6 +346,7 @@
 				BEF37DE31DCC595A008780D8 /* SocketAckEmitter.swift in Sources */,
 				BEF37DF41DCC595A008780D8 /* SocketLogger.swift in Sources */,
 				BEF37DF71DCC595A008780D8 /* SocketStringReader.swift in Sources */,
+				BE3CFD2E1DDCADBA00FD0C89 /* ListenPlayingEvent.swift in Sources */,
 				BEF37DF51DCC595A008780D8 /* SocketPacket.swift in Sources */,
 				BEF37DE91DCC595A008780D8 /* SocketEnginePacketType.swift in Sources */,
 				BEF37DFA1DCC595A008780D8 /* WebSocket.swift in Sources */,
