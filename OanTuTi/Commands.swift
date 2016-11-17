@@ -49,4 +49,10 @@ class Commands {
     let ClientUpdateRoomInfo: String = "Client-Update-Room-Info"
     let ClientUpdateRoomInfoRs: String = "Client-Update-Room-Info-Rs"
     
+    let ClientsStartPlaying:String = "Clients-Start-Playing"
+    let ClientsStartPlayingRs:String = "Clients-Start-Playing-Rs"
+    
+    let ClientSubmitSelection:String = "Client-Submit-Selection"
+    let ClientSubmitSelectionRs:String = "Client-Submit-Selection-Rs"
+    
 }

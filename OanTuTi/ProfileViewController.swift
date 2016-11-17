@@ -67,7 +67,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     func viewProperties(){
         self.btnEdit.lightBorder(with: 8)
-        self.imgAvatar.lightBorder(with: 4)
+        self.imgAvatar.lightBorder(with: 8)
     }
     
     //MARK: - Listen function from Listener class - Main function -> Solve Profile tasks
