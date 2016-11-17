@@ -23,9 +23,7 @@ class Contants {
     //---------------CellID------------------------
     let cellRoom: String = "roomCell"
     //---------------Contants----------------------
-    let null: String = ""
     let avatar: String = "avatar"
-    let newAvatarUrl: String = "newAvatarUrl"
     let best_of:String = "best_of"
     let coin_card: String = "coin_card"
     let current_page: String = "current_page"
@@ -44,7 +42,9 @@ class Contants {
     let message: String = "message"
     let money_bet: String = "money_bet"
     let name: String = "name"
+    let newAvatarUrl: String = "newAvatarUrl"
     let noti_token: String = "noti_token"
+    let null: String = ""
     let uid: String = "uid"
     let user: String = "user"
     let page: String = "page"
@@ -53,6 +53,7 @@ class Contants {
     let oldPass: String = "oldPass"
     let newPass: String = "newPass"
     let ready: String = "ready"
+    let restCoinCard = "rest_coin_card"
     let room_id: String = "room_id"
     let room_name: String = "room_name"
     let room_info:String = "room_info"
@@ -62,6 +63,5 @@ class Contants {
     let statistics: String = "statistics"
     let total_page: String = "total_page"
     let wins: String = "wins"
-    
-    
+    let win: String = "win"
 }

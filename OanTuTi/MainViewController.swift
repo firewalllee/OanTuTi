@@ -37,7 +37,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //-> Server send match result
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveMatchResultEvent), name: NotificationCommands.Instance.matchResultDelegate, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,7 +55,22 @@ class MainViewController: UIViewController {
         imgGuestAvatar.lightBorder(with: 4)
         imgUserAvatar.lightBorder(with: 4)
     }
-
+    
+    func receiveMatchResultEvent(notification: Notification) {
+        if let response: Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+            if let win: Bool = response[Contants.Instance.win] as? Bool {
+                if win {
+                    if let restCoins: Int = response[Contants.Instance.restCoinCard] as? Int {
+                        MyProfile.Instance.coin_card = restCoins
+                        showNotification(title: "You won!", message: "Your cions: \(MyProfile.Instance.coin_card)")
+                    }
+                } else if let restCoins: Int = response[Contants.Instance.restCoinCard] as? Int {
+                        MyProfile.Instance.coin_card = restCoins
+                        showNotification(title: "You lose!", message: "Your cions: \(MyProfile.Instance.coin_card)")
+                }
+            }
+        }
+    }
     /*
     // MARK: - Navigation
 

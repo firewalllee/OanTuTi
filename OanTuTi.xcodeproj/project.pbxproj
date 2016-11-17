@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7E51E39F1DD4CA1300499D75 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51E39D1DD4CA1300499D75 /* SCLAlertView.swift */; };
 		7E51E3A01DD4CA1300499D75 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E51E39E1DD4CA1300499D75 /* SCLExtensions.swift */; };
+		7EE419CD1DDD864E00CFD264 /* ListenMatchResultEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE419CC1DDD864E00CFD264 /* ListenMatchResultEvent.swift */; };
 		7EF153331DDC37D500FC1F01 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF153321DDC37D500FC1F01 /* MainViewController.swift */; };
 		BE0018FB1DCCEE0E0038A410 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0018FA1DCCEE0E0038A410 /* User.swift */; };
 		BE0018FD1DCCF1B50038A410 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0018FC1DCCF1B50038A410 /* MenuViewController.swift */; };
@@ -61,6 +62,7 @@
 /* Begin PBXFileReference section */
 		7E51E39D1DD4CA1300499D75 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		7E51E39E1DD4CA1300499D75 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
+		7EE419CC1DDD864E00CFD264 /* ListenMatchResultEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenMatchResultEvent.swift; sourceTree = "<group>"; };
 		7EF153321DDC37D500FC1F01 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		BE0018FA1DCCEE0E0038A410 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		BE0018FC1DCCF1B50038A410 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				BE2FC3DA1DD71E6500203354 /* ListenProfileEvent.swift */,
 				BE5628901DD37FCA002D50FA /* ListenRoomEvent.swift */,
 				BE2FC3DD1DD7262C00203354 /* ListenWaitingRoomEvent.swift */,
+				7EE419CC1DDD864E00CFD264 /* ListenMatchResultEvent.swift */,
 				BE2FC3D61DD7168900203354 /* NotificationCommands.swift */,
 			);
 			name = ListenerController;
@@ -326,6 +329,7 @@
 				BE56288F1DD37175002D50FA /* Room.swift in Sources */,
 				BE2FC3DB1DD71E6500203354 /* ListenProfileEvent.swift in Sources */,
 				BE5628911DD37FCA002D50FA /* ListenRoomEvent.swift in Sources */,
+				7EE419CD1DDD864E00CFD264 /* ListenMatchResultEvent.swift in Sources */,
 				BE7F87CE1DD46DA000C76DD3 /* ExtensionUIViewController.swift in Sources */,
 				BEF37DEB1DCC595A008780D8 /* SocketEngineSpec.swift in Sources */,
 				BE8CF4111DCB109000F74ECE /* LoginViewController.swift in Sources */,

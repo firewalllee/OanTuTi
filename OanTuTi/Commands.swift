@@ -49,4 +49,5 @@ class Commands {
     let ClientUpdateRoomInfo: String = "Client-Update-Room-Info"
     let ClientUpdateRoomInfoRs: String = "Client-Update-Room-Info-Rs"
     
+    let ServerSendMatchResult: String = "Server-Send-Match-Result"
 }

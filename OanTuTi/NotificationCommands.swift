@@ -24,5 +24,5 @@ class NotificationCommands {
     let joinRoomDelegate:Notification.Name = Notification.Name("joinRoom")
     let updateRoomInfoDelegate:Notification.Name = Notification.Name("updateRoom")
     let readyDelegate:Notification.Name = Notification.Name("clientReady")
-    
+    let matchResultDelegate:Notification.Name = Notification.Name("matchResult")
 }
