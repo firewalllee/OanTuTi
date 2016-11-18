@@ -8,10 +8,6 @@
 
 import UIKit
 
-//MARK: - Global variables
-var isEmit:Bool = false
-var myRoomId:String?
-
 class RoomCollectionViewController: UICollectionViewController {
     
     //MARK: - Declarations
@@ -19,6 +15,7 @@ class RoomCollectionViewController: UICollectionViewController {
     var nextRoom:Room = Room()
     var hostUser:User!
     var isHost:Bool = true      //Check host or guest in next screen
+    var isEmit:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,11 +157,11 @@ class RoomCollectionViewController: UICollectionViewController {
         
         //Kick flag, make collectionView can reload data
         if section + 1 == currentPage && index >= 7 && totalPage > currentPage {
-            isEmit = false
+            self.isEmit = false
         }
         //When scroll down again, collectionView will reload data
         if pageNeedReload < currentPage {
-            isEmit = false
+            self.isEmit = false
             currentPage -= 1
         }
         
@@ -174,7 +171,7 @@ class RoomCollectionViewController: UICollectionViewController {
             currentPage += 1
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: currentPage])
             
-            isEmit = true
+            self.isEmit = true
         }
         
     }
@@ -197,6 +194,17 @@ class RoomCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //Start indicator waiting
         self.waitingIndicator(with: self.indicator)
+        
+        //Check money before join room
+        if let coin:Int = MyProfile.Instance.coin_card {
+            let moneyBet:Int = Int(rooms[indexPath.section][indexPath.row].moneyBet ?? 0)
+            if coin < moneyBet {
+                self.showNotification(title: "Notice!", message: "You don't enough coins to join this room!")
+                self.indicator.stopAnimating()
+                return
+            }
+        }
+        
         //Emit to server
         if let uid:String = MyProfile.Instance.uid {
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientJoinRoom, [Contants.Instance.room_id: rooms[indexPath.section][indexPath.row].id!, Contants.Instance.uid: uid])

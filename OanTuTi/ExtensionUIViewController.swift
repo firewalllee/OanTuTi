@@ -194,14 +194,17 @@ extension UIImageView {
         activity.startAnimating()
         
         queue.async {
-            let url:URL = URL(string: link)!
-            do {
-                let data:Data = try Data(contentsOf: url)
-                DispatchQueue.main.async(execute: {
+            if let url:URL = URL(string: link) {
+                do {
+                    let data:Data = try Data(contentsOf: url)
+                    DispatchQueue.main.async(execute: {
+                        activity.stopAnimating()
+                        self.image = UIImage(data: data)
+                    })
+                } catch {
                     activity.stopAnimating()
-                    self.image = UIImage(data: data)
-                })
-            } catch {
+                }
+            } else {
                 activity.stopAnimating()
             }
         }

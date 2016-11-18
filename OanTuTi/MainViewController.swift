@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol updateCoin:class {
+    func update(coin:Int, win:Bool)
+}
+
 class MainViewController: UIViewController {
 
     //MARK: - Mapped items
@@ -40,6 +44,9 @@ class MainViewController: UIViewController {
     var ready:Bool = true
     var game_id:Int = 1
     var best_of:Int = 1
+    
+    //delegate
+    weak var delegate:updateCoin? = nil
     
     var thisRoom:Room = Room()
     var otherUser:User = User()
@@ -105,7 +112,9 @@ class MainViewController: UIViewController {
         if let response: Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             if let restCoin: Int = response[Contants.Instance.restCoinCard] as? Int {
                 MyProfile.Instance.coin_card = restCoin
+                
                 if let win: Bool = response[Contants.Instance.win] as? Bool {
+                    delegate?.update(coin: restCoin, win: win)
                     if win {
                         self.alertEndGame("You won! Your coin: \(restCoin)")
                     } else {
@@ -165,17 +174,17 @@ class MainViewController: UIViewController {
             
             self.game_id += 1
             self.btnSubmit.isEnabled = true
-            //MARK: - Calculate result and coin card here
-            let win:Int = Int(self.lblUserScore.text!) ?? 0
-            let lost:Int = Int(self.lblGuestScore.text!) ?? 0
-            let numberGameNeeded:Int = self.best_of/2 + 1
-            
-            if win == numberGameNeeded {
-                self.alertEndGame("You won!")
-            }
-            if lost == numberGameNeeded {
-                self.alertEndGame("You lose!")
-            }
+//            //MARK: - Calculate result and coin card here
+//            let win:Int = Int(self.lblUserScore.text!) ?? 0
+//            let lost:Int = Int(self.lblGuestScore.text!) ?? 0
+//            let numberGameNeeded:Int = self.best_of/2 + 1
+//            
+//            if win == numberGameNeeded {
+//                self.alertEndGame("You won!")
+//            }
+//            if lost == numberGameNeeded {
+//                self.alertEndGame("You lose!")
+//            }
             
         }
     }
@@ -260,6 +269,7 @@ class MainViewController: UIViewController {
         }
         self.count = 60
         self.lblTime.text = "Time \(self.count)"
+        self.btnReady.setImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
     }
     //Timer calculating time when start game
     func timerCalc() {
