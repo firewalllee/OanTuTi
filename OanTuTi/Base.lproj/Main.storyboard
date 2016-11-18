@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60b-P3-YCp">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Eci-n1-svj">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -588,7 +588,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="rBc-cW-ije"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="rBc-cW-ije">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="CSo-Tr-VpJ"/>
+                                            <constraint firstAttribute="width" secondItem="rBc-cW-ije" secondAttribute="height" multiplier="1:1" id="qrX-07-gDV"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.14999999999999999" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -710,6 +715,7 @@
                                     <constraint firstItem="Hew-9r-9CR" firstAttribute="top" secondItem="Ahq-FX-Wg6" secondAttribute="top" constant="8" id="uTH-T1-2Ye"/>
                                     <constraint firstItem="WVO-o9-xpB" firstAttribute="centerY" secondItem="Hew-9r-9CR" secondAttribute="centerY" id="vy4-VA-ZCH"/>
                                     <constraint firstItem="K5j-mz-6d6" firstAttribute="top" secondItem="XDc-sq-Uey" secondAttribute="bottom" constant="21" id="wgw-Bp-2hv"/>
+                                    <constraint firstAttribute="bottom" secondItem="fh1-R5-ZKI" secondAttribute="bottom" constant="7.5" id="yEb-gG-GcF"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IpF-70-fHo">
