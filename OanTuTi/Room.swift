@@ -51,6 +51,9 @@ class Room {
                 self.hostState = state
             }
         }
+        if let bo:Int = json[Contants.Instance.best_of] as? Int {
+            self.best_of = bo
+        }
         
     }
     

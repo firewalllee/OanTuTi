@@ -354,6 +354,12 @@ class WaitingViewController: UIViewController {
             }
             
         } else {
+            //check user money with room bet money
+            if (MyProfile.Instance.coin_card ?? 0) < Int(self.thisRoom.moneyBet ?? 0) {
+                self.showNotification(title: "Notice!", message: "You don't have enough money to play this room!")
+                return
+            }
+            
             if isClientReady {
                 if let room_id:String = self.thisRoom.id {
                     SocketIOManager.Instance.socketEmit(Commands.Instance.ClientReady, [Contants.Instance.room_id: room_id])
@@ -371,10 +377,35 @@ class WaitingViewController: UIViewController {
                 mainVC.thisRoom = self.thisRoom
                 mainVC.match_id = self.matchId
                 mainVC.otherUser = self.otherUser
+                mainVC.delegate = self
             }
         }
     }
     
+}
+
+//Caculating money after match
+extension WaitingViewController:updateCoin {
+    func update(coin: Int, win:Bool) {
+        self.lblUserMoney.text = "$ \(coin)"
+        
+        let guestMoneyString:Array<String> = self.lblGuestMoney.text!.components(separatedBy: " ")
+        guard var guestMoney:Int = Int(guestMoneyString[1]) else {
+            return
+        }
+        
+        if let oldMoney:Int = self.otherUser.coin_card {
+            if win {
+                guestMoney = oldMoney - Int(thisRoom.moneyBet!)
+            } else {
+                guestMoney = oldMoney + Int(thisRoom.moneyBet!)
+            }
+            self.otherUser.coin_card = guestMoney
+        }
+
+        self.lblGuestMoney.text = "$ \(guestMoney)"
+        
+    }
 }
 
 extension WaitingViewController:UIPickerViewDelegate, UIPickerViewDataSource {
