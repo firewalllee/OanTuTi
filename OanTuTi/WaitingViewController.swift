@@ -387,6 +387,12 @@ class WaitingViewController: UIViewController {
 //Caculating money after match
 extension WaitingViewController:updateCoin {
     func update(coin: Int, win:Bool) {
+        
+        //Reset ready state if user is guest in room
+        if !self.isHost {
+            self.btnReadyStart(UIButton())
+        }
+        
         self.lblUserMoney.text = "$ \(coin)"
         
         let guestMoneyString:Array<String> = self.lblGuestMoney.text!.components(separatedBy: " ")

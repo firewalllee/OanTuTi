@@ -56,7 +56,6 @@ class RoomCollectionViewController: UICollectionViewController {
     //->Create Room
     func receiveCreateRoomEvent(notification:Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            print("Create Room -> ", response)
             
             if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                 //-------CheckUpdate----------------------------
@@ -80,6 +79,7 @@ class RoomCollectionViewController: UICollectionViewController {
     //->Join Room
     func receiveJoinRoomEvent(notification: Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+
             if let _:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 
                 self.dismiss(animated: true) {
@@ -109,40 +109,35 @@ class RoomCollectionViewController: UICollectionViewController {
 
     //Draw room on interface (each cell)
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contants.Instance.cellRoom, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Contants.Instance.cellRoom, for: indexPath) as! RoomCell
 
+        //cell properties
+        cell.layer.cornerRadius = 5
+        cell.clipsToBounds = true
+        cell.layer.borderColor = UIColor.lightText.cgColor
+        cell.layer.borderWidth = 5
+        cell.contentView.backgroundColor = UIColor.init(Hex: 0xd4ded7)
+        
         cell.layer.shouldRasterize = true
         cell.layer.rasterizationScale = UIScreen.main.scale
         
         if rooms.count > 0 {
             //Get room name
-            if let lblRoom: UILabel = cell.viewWithTag(1) as? UILabel {
-                if let room_name:String = rooms[indexPath.section][indexPath.row].roomName {
-                    lblRoom.text = room_name
-                }
+            if let room_name:String = rooms[indexPath.section][indexPath.row].roomName {
+                cell.lblRoomName.text = room_name
             }
             //Get money bet
-            if let lblBet:UILabel = cell.viewWithTag(3) as? UILabel {
-                if let money:Double = rooms[indexPath.section][indexPath.row].moneyBet {
-                    lblBet.text = "$\(Int(money))"
-                } else {
-                    lblBet.text = "$0"
-                }
+            if let money:Double = rooms[indexPath.section][indexPath.row].moneyBet {
+                cell.lblMoney.text = "$ \(Int(money))"
+            } else {
+                cell.lblMoney.text = "$ 0"
             }
-            
-            //state image            
-            if let imgView:UIImageView = cell.viewWithTag(2) as? UIImageView {
-                if let roomState:String = rooms[indexPath.section][indexPath.row].roomState {
-                    bindImage(imgView: imgView, state: roomState)
-                }
+
+            //state image
+            if let roomState:String = rooms[indexPath.section][indexPath.row].roomState {
+                bindImage(imgView: cell.imgAvatar, state: roomState)
             }
-            
-            //cell properties
-            cell.layer.cornerRadius = 5
-            cell.clipsToBounds = true
-            cell.layer.borderColor = UIColor.lightText.cgColor
-            cell.layer.borderWidth = 5
-            cell.contentView.backgroundColor = UIColor.init(Hex: 0xd4ded7)
+        
         }
         
         return cell

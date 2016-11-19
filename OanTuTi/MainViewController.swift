@@ -275,7 +275,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    //Choose answer ==>
+    //MARK: - Choose answer ==>
     @IBAction func btnSelection(_ sender: UIButton) {
         
         self.selection = sender.tag
@@ -316,7 +316,7 @@ class MainViewController: UIViewController {
             print("Submit => ", jsonData)
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientSubmitSelection, jsonData)
             
-            
+            self.imgGuestChoose.image = UIImage(named: "Icon")
             self.btnSubmit.isEnabled = false
         }
         

@@ -31,6 +31,7 @@
 		BE8CF4111DCB109000F74ECE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8CF40F1DCB109000F74ECE /* LoginViewController.swift */; };
 		BE8CF4121DCB109000F74ECE /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE8CF4101DCB109000F74ECE /* RegisterViewController.swift */; };
 		BEB13E031DDB34D900445317 /* MyProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB13E021DDB34D900445317 /* MyProfile.swift */; };
+		BEC6615E1DE0888100B6D782 /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC6615D1DE0888100B6D782 /* RoomCell.swift */; };
 		BEDE989E1DCB2DE300C6806F /* Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE989D1DCB2DE300C6806F /* Commands.swift */; };
 		BEDE98A01DCB2F3100C6806F /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDE989F1DCB2F3100C6806F /* Contants.swift */; };
 		BEF37DCA1DCC5858008780D8 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF37DC91DCC5858008780D8 /* SocketIOManager.swift */; };
@@ -87,6 +88,7 @@
 		BE8CF40F1DCB109000F74ECE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		BE8CF4101DCB109000F74ECE /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		BEB13E021DDB34D900445317 /* MyProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProfile.swift; sourceTree = "<group>"; };
+		BEC6615D1DE0888100B6D782 /* RoomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
 		BEDE989D1DCB2DE300C6806F /* Commands.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commands.swift; sourceTree = "<group>"; };
 		BEDE989F1DCB2F3100C6806F /* Contants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
 		BEF37DC91DCC5858008780D8 /* SocketIOManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				BE0018FC1DCCF1B50038A410 /* MenuViewController.swift */,
 				BE53A7C81DCF6C8A000A2AB8 /* ProfileViewController.swift */,
 				BE5636D41DD0DA6C00E1FEB0 /* RoomCollectionViewController.swift */,
+				BEC6615D1DE0888100B6D782 /* RoomCell.swift */,
 				BE0B02F01DD570FB006CD237 /* WaitingViewController.swift */,
 				7EF153321DDC37D500FC1F01 /* MainViewController.swift */,
 				BE7F87CD1DD46DA000C76DD3 /* ExtensionUIViewController.swift */,
@@ -360,6 +363,7 @@
 				BE2FC3D71DD7168900203354 /* NotificationCommands.swift in Sources */,
 				BEF37DF61DCC595A008780D8 /* SocketParsable.swift in Sources */,
 				BEF37DEF1DCC595A008780D8 /* SocketIOClient.swift in Sources */,
+				BEC6615E1DE0888100B6D782 /* RoomCell.swift in Sources */,
 				7E51E3A01DD4CA1300499D75 /* SCLExtensions.swift in Sources */,
 				BEF37DCA1DCC5858008780D8 /* SocketIOManager.swift in Sources */,
 				BEDE989E1DCB2DE300C6806F /* Commands.swift in Sources */,
