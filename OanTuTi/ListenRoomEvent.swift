@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 
-var isFirstLogin:Bool = true
 var rooms:Array<Array<Room>> = Array<Array<Room>>()
 var totalPage:Int = 1
 var currentPage: Int = 1

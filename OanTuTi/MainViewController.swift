@@ -174,17 +174,7 @@ class MainViewController: UIViewController {
             
             self.game_id += 1
             self.btnSubmit.isEnabled = true
-//            //MARK: - Calculate result and coin card here
-//            let win:Int = Int(self.lblUserScore.text!) ?? 0
-//            let lost:Int = Int(self.lblGuestScore.text!) ?? 0
-//            let numberGameNeeded:Int = self.best_of/2 + 1
-//            
-//            if win == numberGameNeeded {
-//                self.alertEndGame("You won!")
-//            }
-//            if lost == numberGameNeeded {
-//                self.alertEndGame("You lose!")
-//            }
+
             
         }
     }
@@ -269,7 +259,7 @@ class MainViewController: UIViewController {
         }
         self.count = 60
         self.lblTime.text = "Time \(self.count)"
-        self.btnReady.setImage(#imageLiteral(resourceName: "ready"), for: UIControlState.normal)
+        self.btnReady.setImage(UIImage(named: "ready"), for: UIControlState.normal)
     }
     //Timer calculating time when start game
     func timerCalc() {
@@ -285,7 +275,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    //Choose answer ==>
+    //MARK: - Choose answer ==>
     @IBAction func btnSelection(_ sender: UIButton) {
         
         self.selection = sender.tag
@@ -326,7 +316,7 @@ class MainViewController: UIViewController {
             print("Submit => ", jsonData)
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientSubmitSelection, jsonData)
             
-            
+            self.imgGuestChoose.image = UIImage(named: "Icon")
             self.btnSubmit.isEnabled = false
         }
         
@@ -342,7 +332,7 @@ class MainViewController: UIViewController {
                     let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: room_id, Contants.Instance.uid: uid]
                     SocketIOManager.Instance.socketEmit(Commands.Instance.ClientLeaveRoom, jsonData)
                     //Because server don't response when user is being host ==>
-                    _ = self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: false)
                     
                 }
             }
@@ -354,7 +344,7 @@ class MainViewController: UIViewController {
         let alert:UIAlertController = UIAlertController(title: "Notice!", message: result, preferredStyle: UIAlertControllerStyle.alert)
         
         let alertOk:UIAlertAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (btn) in
-            _ = self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: false)
         }
         alert.addAction(alertOk)
         self.present(alert, animated: true, completion: nil)

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60b-P3-YCp">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="60b-P3-YCp">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -253,57 +253,43 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="10"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="roomCell" id="Y3c-M2-nF0">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="roomCell" id="Y3c-M2-nF0" customClass="RoomCell" customModule="OanTuTi" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="room" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzI-Oo-TPc">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="25" id="c5J-Wa-aMJ"/>
-                                            </constraints>
+                                        <label opaque="NO" multipleTouchEnabled="YES" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="room" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzI-Oo-TPc">
+                                            <frame key="frameInset" minX="5" minY="3" width="130" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
                                             <color key="textColor" red="0.9993599057" green="0.14970120789999999" blue="0.0082355923949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1people" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-qc-fT6">
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="iHA-qc-fT6" secondAttribute="height" id="HEv-Lz-hcP"/>
-                                            </constraints>
+                                        <imageView multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="1people" translatesAutoresizingMaskIntoConstraints="NO" id="iHA-qc-fT6">
+                                            <frame key="frameInset" minX="26.5" minY="28" width="85" height="85"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
-                                        <label opaque="NO" multipleTouchEnabled="YES" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZP-ku-dpb">
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="17" id="0jw-4Z-zMa"/>
-                                            </constraints>
+                                        <label opaque="NO" multipleTouchEnabled="YES" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bet" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZP-ku-dpb">
+                                            <frame key="frameInset" minX="42" minY="115.5" width="93" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
                                             <color key="textColor" red="1" green="0.98234318620000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coins" translatesAutoresizingMaskIntoConstraints="NO" id="T2q-fR-5Dv">
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="T2q-fR-5Dv" secondAttribute="height" multiplier="1:1" id="E8h-f3-wSd"/>
-                                                <constraint firstAttribute="height" constant="17" id="Lj6-qN-JYX"/>
-                                            </constraints>
+                                        <imageView multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="coins" translatesAutoresizingMaskIntoConstraints="NO" id="T2q-fR-5Dv">
+                                            <frame key="frameInset" minX="15" minY="115.5" width="17" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.88860247461928932" green="0.88860247461928932" blue="0.88860247461928932" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstItem="yzI-Oo-TPc" firstAttribute="top" secondItem="Y3c-M2-nF0" secondAttribute="top" constant="3" id="8fp-Sf-FoU"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="top" secondItem="iHA-qc-fT6" secondAttribute="bottom" constant="2.5" id="HUk-b6-5eW"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="top" secondItem="T2q-fR-5Dv" secondAttribute="top" id="Hkc-Xs-5iL"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="height" secondItem="yzI-Oo-TPc" secondAttribute="height" constant="-8" id="NU8-B6-L2G"/>
-                                    <constraint firstItem="iHA-qc-fT6" firstAttribute="width" secondItem="yzI-Oo-TPc" secondAttribute="width" multiplier="2/3" constant="-1.6666666666666572" id="Pfd-QI-EoE"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="leading" secondItem="T2q-fR-5Dv" secondAttribute="trailing" constant="10" id="QNG-Jy-XFB"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="leading" secondItem="yzI-Oo-TPc" secondAttribute="leading" constant="37" id="Rnn-7U-cSY"/>
-                                    <constraint firstItem="yZP-ku-dpb" firstAttribute="trailing" secondItem="yzI-Oo-TPc" secondAttribute="trailing" id="WFN-Aa-acr"/>
-                                    <constraint firstItem="iHA-qc-fT6" firstAttribute="top" secondItem="yzI-Oo-TPc" secondAttribute="bottom" id="Wrk-xv-z1T"/>
-                                    <constraint firstItem="iHA-qc-fT6" firstAttribute="centerX" secondItem="yzI-Oo-TPc" secondAttribute="centerX" constant="-1" id="lsD-Qd-ZnB"/>
-                                    <constraint firstAttribute="trailing" secondItem="yzI-Oo-TPc" secondAttribute="trailing" constant="5" id="sWi-UN-Y4e"/>
-                                    <constraint firstItem="yzI-Oo-TPc" firstAttribute="leading" secondItem="Y3c-M2-nF0" secondAttribute="leading" constant="5" id="vSf-b4-wLv"/>
-                                </constraints>
+                                <connections>
+                                    <outlet property="imgAvatar" destination="iHA-qc-fT6" id="lnN-Un-qU8"/>
+                                    <outlet property="lblMoney" destination="yZP-ku-dpb" id="zva-a1-cQW"/>
+                                    <outlet property="lblRoomName" destination="yzI-Oo-TPc" id="mYJ-W1-5mV"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
