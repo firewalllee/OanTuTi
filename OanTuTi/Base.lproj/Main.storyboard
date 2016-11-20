@@ -544,7 +544,7 @@
                         <outlet property="lblRoomName" destination="DW8-hG-JHg" id="oPT-rn-zZo"/>
                         <outlet property="lblUserMoney" destination="Ehe-Di-WMF" id="mpY-5m-k5A"/>
                         <outlet property="lblUserName" destination="zIe-gO-qhV" id="8ct-W2-9ER"/>
-                        <segue destination="Eci-n1-svj" kind="show" identifier="segueMain" id="L7Q-Na-hwn"/>
+                        <segue destination="Eci-n1-svj" kind="show" identifier="segueMain" id="NNR-xL-CKu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="htN-A5-swl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -601,13 +601,13 @@
                                     <constraint firstItem="Mhi-V2-scw" firstAttribute="trailing" secondItem="Sh6-bt-v2T" secondAttribute="trailing" constant="-1" id="5a0-cQ-Ddy"/>
                                     <constraint firstItem="Mhi-V2-scw" firstAttribute="top" secondItem="Sh6-bt-v2T" secondAttribute="bottom" constant="-5" id="5hh-Sz-GN4"/>
                                     <constraint firstItem="rBc-cW-ije" firstAttribute="centerX" secondItem="TQd-Z2-oRD" secondAttribute="centerX" id="CyC-HE-q0i"/>
+                                    <constraint firstAttribute="bottom" secondItem="rBc-cW-ije" secondAttribute="bottom" constant="12" id="JQb-Pk-3CM"/>
                                     <constraint firstAttribute="trailing" secondItem="Sh6-bt-v2T" secondAttribute="trailing" constant="7" id="Jtc-na-7VI"/>
                                     <constraint firstItem="SkT-OB-s4n" firstAttribute="leading" secondItem="TQd-Z2-oRD" secondAttribute="leading" constant="8" id="U4Y-A9-YfK"/>
                                     <constraint firstItem="Sh6-bt-v2T" firstAttribute="centerY" secondItem="SkT-OB-s4n" secondAttribute="centerY" id="UeR-iy-V4D"/>
                                     <constraint firstItem="Sh6-bt-v2T" firstAttribute="leading" secondItem="SkT-OB-s4n" secondAttribute="trailing" constant="8" id="Vpg-YW-Nh7"/>
                                     <constraint firstItem="SkT-OB-s4n" firstAttribute="top" secondItem="TQd-Z2-oRD" secondAttribute="top" constant="8" id="YrS-Om-A0c"/>
                                     <constraint firstItem="Sh6-bt-v2T" firstAttribute="top" secondItem="TQd-Z2-oRD" secondAttribute="top" constant="15" id="gaJ-AW-2MW"/>
-                                    <constraint firstAttribute="bottom" secondItem="rBc-cW-ije" secondAttribute="bottom" constant="12.5" id="waA-TE-Hd4"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ahq-FX-Wg6" userLabel="User view">
@@ -785,6 +785,7 @@
                             <constraint firstItem="Hew-9r-9CR" firstAttribute="width" secondItem="rBc-cW-ije" secondAttribute="width" id="6Sg-Rz-hmT"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="leading" secondItem="IpF-70-fHo" secondAttribute="leading" id="8oi-3w-erl"/>
                             <constraint firstItem="x5x-pN-tUR" firstAttribute="top" secondItem="rna-jp-uK4" secondAttribute="bottom" id="EQz-xq-yIw"/>
+                            <constraint firstItem="IpF-70-fHo" firstAttribute="height" secondItem="TQd-Z2-oRD" secondAttribute="height" multiplier="0.35" id="Fs5-3m-sqj"/>
                             <constraint firstItem="rna-jp-uK4" firstAttribute="leading" secondItem="aQ3-Ze-eri" secondAttribute="leading" id="KFE-SU-afJ"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="top" secondItem="IpF-70-fHo" secondAttribute="bottom" constant="10" id="KRI-0I-8xK"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="trailing" secondItem="IpF-70-fHo" secondAttribute="trailing" id="KRb-4K-spN"/>
@@ -830,7 +831,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpD-zA-xVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5134" y="-397"/>
+            <point key="canvasLocation" x="5142" y="-398"/>
         </scene>
         <!--Đăng kí-->
         <scene sceneID="PyP-Tf-aRy">
