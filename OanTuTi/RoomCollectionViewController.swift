@@ -79,7 +79,7 @@ class RoomCollectionViewController: UICollectionViewController {
     //->Join Room
     func receiveJoinRoomEvent(notification: Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-
+            print(response)
             if let _:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 
                 self.dismiss(animated: true) {
@@ -194,8 +194,9 @@ class RoomCollectionViewController: UICollectionViewController {
         if let coin:Int = MyProfile.Instance.coin_card {
             let moneyBet:Int = Int(rooms[indexPath.section][indexPath.row].moneyBet ?? 0)
             if coin < moneyBet {
-                self.showNotification(title: "Notice!", message: "You don't enough coins to join this room!")
-                self.indicator.stopAnimating()
+                self.dismiss(animated: true, completion: { 
+                    self.showNotification(title: "Notice!", message: "You don't enough coins to join this room!")
+                })
                 return
             }
         }
@@ -272,7 +273,15 @@ class RoomCollectionViewController: UICollectionViewController {
                     if let uid:String = MyProfile.Instance.uid {
                         let jsonData:Dictionary<String, Any> = [Contants.Instance.room_name: roomName, Contants.Instance.money_bet: money_bet, Contants.Instance.host_uid: uid]
                         //Emit to server
-                        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
+                        if let coin:Int = MyProfile.Instance.coin_card {
+                            if Int(money_bet) > coin {
+                                self.dismiss(animated: true, completion: { 
+                                    self.showNotification(title: "Notice!", message: "Your coins did not enough for bet!")
+                                })
+                            } else {
+                                SocketIOManager.Instance.socketEmit(Commands.Instance.ClientCreateRoom, jsonData)
+                            }
+                        }
                     }
                     
                 } else {
