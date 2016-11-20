@@ -118,8 +118,8 @@ class RoomCollectionViewController: UICollectionViewController {
         cell.layer.borderWidth = 5
         cell.contentView.backgroundColor = UIColor.init(Hex: 0xd4ded7)
         
-        cell.layer.shouldRasterize = true
-        cell.layer.rasterizationScale = UIScreen.main.scale
+//        cell.layer.shouldRasterize = true
+//        cell.layer.rasterizationScale = UIScreen.main.scale
         
         if rooms.count > 0 {
             //Get room name
@@ -194,9 +194,14 @@ class RoomCollectionViewController: UICollectionViewController {
         if let coin:Int = MyProfile.Instance.coin_card {
             let moneyBet:Int = Int(rooms[indexPath.section][indexPath.row].moneyBet ?? 0)
             if coin < moneyBet {
-                self.showNotification(title: "Notice!", message: "You don't enough coins to join this room!")
-                self.indicator.stopAnimating()
-                return
+                self.dismiss(animated: true, completion: {
+                    
+                    self.indicator.stopAnimating()
+                    
+                    self.showNotification(title: "Notice!", message: "You don't enough coins to join this room!")
+                    
+                    return
+                })
             }
         }
         

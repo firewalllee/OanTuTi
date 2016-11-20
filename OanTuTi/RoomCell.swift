@@ -15,6 +15,8 @@ class RoomCell: UICollectionViewCell {
     @IBOutlet weak var lblMoney: UILabel!
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        //Hàm này chạy liên tục làm nó chậm nè anh, mà em hông biết fix
+        print(layoutAttributes)
         return layoutAttributes
     }
     
