@@ -148,34 +148,28 @@ class MainViewController: UIViewController {
                     if their == selF {
                         self.lblMatchResult.text = "Draw"
                         self.lblMatchResult.textColor = #colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)
-                        self.btnSubmit.isEnabled = true
-                        self.resetTime()
                         
-                        return
+                    } else {
+                        if let win:Bool = response[Contants.Instance.win] as? Bool {
+                            if win {
+                                self.lblMatchResult.text = "Win"
+                                self.lblMatchResult.textColor = UIColor.green
+                                self.lblUserScore.text = "\((Int(self.lblUserScore.text!) ?? 0) + 1)"
+                            } else {
+                                self.lblMatchResult.text = "Lost"
+                                self.lblMatchResult.textColor = UIColor.red
+                                self.lblGuestScore.text = "\((Int(self.lblGuestScore.text!) ?? 0) + 1)"
+                            }
+                        }
+                        
+                        
                     }
+                    //Reset timer
+                    self.resetTime()
+                    self.game_id += 1
+                    self.btnSubmit.isEnabled = true
                 }
             }
-            
-            
-            if let win:Bool = response[Contants.Instance.win] as? Bool {
-                if win {
-                    self.lblMatchResult.text = "Win"
-                    self.lblMatchResult.textColor = UIColor.green
-                    self.lblUserScore.text = "\((Int(self.lblUserScore.text!) ?? 0) + 1)"
-                } else {
-                    self.lblMatchResult.text = "Lost"
-                    self.lblMatchResult.textColor = UIColor.red
-                    self.lblGuestScore.text = "\((Int(self.lblGuestScore.text!) ?? 0) + 1)"
-                }
-            }
-            
-            //Reset timer
-            self.resetTime()
-            
-            self.game_id += 1
-            self.btnSubmit.isEnabled = true
-
-            
         }
     }
     //-> Client ready

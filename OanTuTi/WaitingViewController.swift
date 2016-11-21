@@ -33,7 +33,7 @@ class WaitingViewController: UIViewController {
     var isClientReady = true
     var matchId:String!
     let best_of:Array<String> = ["1", "3", "5", "7", "9", "11", "15"]
-    
+    var otherUserCoin: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,6 +175,7 @@ class WaitingViewController: UIViewController {
             
             self.otherUser = User(response)
             self.playerJoin(self.otherUser)
+            otherUserCoin = self.otherUser.coin_card
         }
     }
     //-> Update room info response
@@ -337,7 +338,19 @@ class WaitingViewController: UIViewController {
             if let id:String = thisRoom.id {
                 let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: id, Contants.Instance.room_name: name, Contants.Instance.money_bet: moneyBet, Contants.Instance.best_of: best_of]
                 
-                SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateRoomInfo, jsonData)
+                if let coin: Int = MyProfile.Instance.coin_card {
+                    if otherUserCoin != nil {
+                        if moneyBet > Double(coin) || moneyBet > Double(otherUserCoin) {
+                            self.showNotification(title: "Notice!", message: "Both of player did not enough coins for bet!")
+                        } else {
+                            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateRoomInfo, jsonData)
+                        }
+                    } else if moneyBet > Double(coin) {
+                        self.showNotification(title: "Notice!", message: "You did not enough coins for bet!")
+                    } else {
+                        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateRoomInfo, jsonData)
+                    }
+                }
             }
         }
     }
