@@ -29,22 +29,20 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(false)
+        
         if let myName:String = MyProfile.Instance.name {
             lblNickname.text = myName
         }
         if let myCoin_card:Int = MyProfile.Instance.coin_card {
             lblCoin.text = String(myCoin_card)
         }
-//        if let myAvatar:String = MyProfile.Instance.avatar {
-//            imgAvatar.loadAvatar(myAvatar)
-//        }
         if let imgData:Data = MyProfile.Instance.imgData {
             imgAvatar.image = UIImage(data: imgData)
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(false)
+        
         self.viewPropeties()
         self.wrapView.scaleAnimation()
     }    

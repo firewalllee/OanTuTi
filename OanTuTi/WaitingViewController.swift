@@ -58,6 +58,17 @@ class WaitingViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
+        
+        if let coin:Int = MyProfile.Instance.coin_card {
+            self.lblUserMoney.text = "$\(coin)"
+        }
+        
+        if !self.isHost {
+            if let hostCoin:Int = otherUser.coin_card {
+                self.lblGuestMoney.text = "$\(hostCoin)"
+            }
+        }
+        
         self.view.rotateYAxis()
         self.viewProperties()
     }
@@ -83,9 +94,9 @@ class WaitingViewController: UIViewController {
         if let imgData:Data = MyProfile.Instance.imgData {
             self.imgUserAvatar.image = UIImage(data: imgData)
         }
-        if let coin:Int = MyProfile.Instance.coin_card {
-            self.lblUserMoney.text = "$ \(coin)"
-        }
+//        if let coin:Int = MyProfile.Instance.coin_card {
+//            self.lblUserMoney.text = "$\(coin)"
+//        }
         if self.isHost {
             self.lblUserName.text = self.lblUserName.text! + " (Host)"
             self.nullOtherPlayer()
@@ -101,9 +112,9 @@ class WaitingViewController: UIViewController {
             if let hostAvatar:String = otherUser.avatar {
                 self.imgGuestAvatar.loadAvatar(hostAvatar)
             }
-            if let hostCoin:Int = otherUser.coin_card {
-                self.lblGuestMoney.text = "$ \(hostCoin)"
-            }
+//            if let hostCoin:Int = otherUser.coin_card {
+//                self.lblGuestMoney.text = "$\(hostCoin)"
+//            }
         }
     }
     
@@ -123,7 +134,7 @@ class WaitingViewController: UIViewController {
             self.lblGuestName.text = playerName
         }
         if let coins:Int = self.otherUser.coin_card {
-            self.lblGuestMoney.text = "$ \(coins)"
+            self.lblGuestMoney.text = "$\(coins)"
         }
         if let avatar:String = self.otherUser.avatar {
             self.imgGuestAvatar.isHidden = false
@@ -134,8 +145,8 @@ class WaitingViewController: UIViewController {
     //MARK: - Listener response
     //-> player leaver room
     func receivePlayerLeaveRoomEvent(notification: Notification) {
-        if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            print("Player leave Room =>", response)
+        if let _:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
+//            print("Player leave Room =>", response)
             if self.isHost {
                 self.nullOtherPlayer()
             } else {
@@ -150,7 +161,7 @@ class WaitingViewController: UIViewController {
     //-> User leave room
     func userLeaveRoom(notification: Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            print("Leave Room", response)
+//            print("Leave Room", response)
             if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 if isSuccess {
                     _ = self.navigationController?.popViewController(animated: true)
@@ -184,14 +195,18 @@ class WaitingViewController: UIViewController {
             if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 if isSuccess {
                     if let roomInfor:Dictionary<String, Any> = response[Contants.Instance.room_info] as? Dictionary<String, Any> {
+                        ///Update this room Instance
                         if let name:String = roomInfor[Contants.Instance.room_name] as? String {
                             self.lblRoomName.text = name
+                            self.thisRoom.roomName = name
                         }
                         if let moneyBet:Double = roomInfor[Contants.Instance.money_bet] as? Double {
-                            self.lblMoneyBet.text = "$ \(Int(moneyBet))"
+                            self.lblMoneyBet.text = "$\(Int(moneyBet))"
+                            self.thisRoom.moneyBet = moneyBet
                         }
                         if let bo:Int = roomInfor[Contants.Instance.best_of] as? Int {
                             self.lblBestOf.text = "Bo \(bo)"
+                            self.thisRoom.best_of = bo
                         }
                         if let room_id:String = roomInfor[Contants.Instance.room_id] as? String {
                             self.thisRoom.id = room_id
@@ -212,9 +227,11 @@ class WaitingViewController: UIViewController {
             //If client ready
             if isHost {
                 if ready {
+                    self.btnUpdate.isEnabled = false
                     self.btnReadyStart.isEnabled = true
                     self.lblGuestReady.isHidden = false
                 } else {
+                    self.btnUpdate.isEnabled = true
                     self.lblGuestReady.isHidden = true
                     self.btnReadyStart.isEnabled = false
                 }
@@ -232,7 +249,7 @@ class WaitingViewController: UIViewController {
     func startGame(notification: Notification) {
         
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            print(response)
+//            print(response)
             guard let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool else {
                 return
             }
@@ -390,42 +407,46 @@ class WaitingViewController: UIViewController {
                 mainVC.thisRoom = self.thisRoom
                 mainVC.match_id = self.matchId
                 mainVC.otherUser = self.otherUser
-                mainVC.delegate = self
+                //mainVC.delegate = self
             }
         }
     }
     
 }
 
-//Caculating money after match
-extension WaitingViewController:updateCoin {
-    func update(coin: Int, win:Bool) {
-        
-        //Reset ready state if user is guest in room
-        if !self.isHost {
-            self.btnReadyStart(UIButton())
-        }
-        
-        self.lblUserMoney.text = "$ \(coin)"
-        
-        let guestMoneyString:Array<String> = self.lblGuestMoney.text!.components(separatedBy: " ")
-        guard var guestMoney:Int = Int(guestMoneyString[1]) else {
-            return
-        }
-        
-        if let oldMoney:Int = self.otherUser.coin_card {
-            if win {
-                guestMoney = oldMoney - Int(thisRoom.moneyBet!)
-            } else {
-                guestMoney = oldMoney + Int(thisRoom.moneyBet!)
-            }
-            self.otherUser.coin_card = guestMoney
-        }
-
-        self.lblGuestMoney.text = "$ \(guestMoney)"
-        
-    }
-}
+////Caculating money after match
+//extension WaitingViewController:updateCoin {
+//    func update(coin: Int, win:Bool) {
+//        
+//        //Reset ready state if user is guest in room
+//        if !self.isHost {
+//            self.btnReadyStart(UIButton())
+//        }
+//        
+//        self.lblUserMoney.text = "$\(coin)"
+//        
+//        //let guestMoneyString:Array<String> = self.lblGuestMoney.text!.components(separatedBy: " ")
+//        
+//        let guestMoneyString:String = String(self.lblGuestMoney.text!.characters.removeFirst())
+//        print(guestMoneyString)
+//        guard var guestMoney:Int = Int(guestMoneyString) else {
+//            print("ABCXYZ")
+//            return
+//        }
+//        
+//        if let oldMoney:Int = self.otherUser.coin_card {
+//            if win {
+//                guestMoney = oldMoney - Int(thisRoom.moneyBet!)
+//            } else {
+//                guestMoney = oldMoney + Int(thisRoom.moneyBet!)
+//            }
+//            self.otherUser.coin_card = guestMoney
+//        }
+//
+//        self.lblGuestMoney.text = "$\(guestMoney)"
+//        
+//    }
+//}
 
 extension WaitingViewController:UIPickerViewDelegate, UIPickerViewDataSource {
     

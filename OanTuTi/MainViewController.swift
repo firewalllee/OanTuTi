@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol updateCoin:class {
-    func update(coin:Int, win:Bool)
-}
+//protocol updateCoin:class {
+//    func update(coin:Int, win:Bool)
+//}
 
 class MainViewController: UIViewController {
 
@@ -41,12 +41,12 @@ class MainViewController: UIViewController {
     //MARK: - Declarations
     var match_id:String = String()
     var selection:Int = 0
-    var ready:Bool = true
+    var ready:Bool = false
     var game_id:Int = 1
     var best_of:Int = 1
     
     //delegate
-    weak var delegate:updateCoin? = nil
+//    weak var delegate:updateCoin? = nil
     
     var thisRoom:Room = Room()
     var otherUser:User = User()
@@ -114,7 +114,7 @@ class MainViewController: UIViewController {
                 MyProfile.Instance.coin_card = restCoin
                 
                 if let win: Bool = response[Contants.Instance.win] as? Bool {
-                    delegate?.update(coin: restCoin, win: win)
+//                    delegate?.update(coin: restCoin, win: win)
                     if win {
                         self.alertEndGame("You won! Your coin: \(restCoin)")
                     } else {
@@ -161,8 +161,6 @@ class MainViewController: UIViewController {
                                 self.lblGuestScore.text = "\((Int(self.lblGuestScore.text!) ?? 0) + 1)"
                             }
                         }
-                        
-                        
                     }
                     //Reset timer
                     self.resetTime()
@@ -177,7 +175,7 @@ class MainViewController: UIViewController {
         
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             
-            print("Client - Ready => ", response)
+//            print("Client - Ready => ", response)
             guard let their:Bool = response[Contants.Instance.their] as? Bool else {
                 return
             }
@@ -198,11 +196,13 @@ class MainViewController: UIViewController {
             
             //If both ready, timer will start calculating
             if their && selF {
+                self.ready = true
                 //Timer will start
                 if timer == nil {
                     timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timerCalc), userInfo: nil, repeats: true)
                 }
             } else {
+                self.ready = false
                 self.resetTime()
             }
             
@@ -290,7 +290,7 @@ class MainViewController: UIViewController {
         
         if let uid:String = MyProfile.Instance.uid {
             let jsonData:Dictionary<String, Any> = [Contants.Instance.match_id: self.match_id, Contants.Instance.uid: uid]
-            print("Button Ready => ", jsonData)
+//            print("Button Ready => ", jsonData)
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientReady, jsonData)
         }
         
@@ -307,7 +307,7 @@ class MainViewController: UIViewController {
         if let uid:String = MyProfile.Instance.uid {
             let jsonData:Dictionary<String, Any> = [Contants.Instance.match_id: self.match_id, Contants.Instance.game_id: self.game_id, Contants.Instance.uid: uid, Contants.Instance.selection: self.selection]
             
-            print("Submit => ", jsonData)
+//            print("Submit => ", jsonData)
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientSubmitSelection, jsonData)
             
             self.imgGuestChoose.image = UIImage(named: "Icon")

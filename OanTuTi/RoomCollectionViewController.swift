@@ -79,7 +79,7 @@ class RoomCollectionViewController: UICollectionViewController {
     //->Join Room
     func receiveJoinRoomEvent(notification: Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            print(response)
+            //print(response)
             if let _:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 
                 self.dismiss(animated: true) {
