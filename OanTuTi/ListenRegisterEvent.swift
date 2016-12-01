@@ -17,7 +17,6 @@ class ListenRegisterEvent {
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientSignUpRs) { (data, ack) in
             
             if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
-                
                 //Send delegate to Register screen
                 NotificationCenter.default.post(name: NotificationCommands.Instance.signupDelegate, object: response)
             }

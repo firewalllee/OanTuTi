@@ -9,7 +9,7 @@
 import UIKit
 
 //Protocol Get user's email
-protocol ProtocolUserEmail: class {
+protocol ProtocolUserEmail:class {
     func userEmail(_ userEmail:String)
 }
 
@@ -27,7 +27,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Declarations
     var spaceTopFree: CGFloat!
     var imgData: Data!
-    var delegate:ProtocolUserEmail? = nil
+    weak var delegate:ProtocolUserEmail? = nil
     let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     //MARK: - Life cycle
@@ -53,7 +53,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(false)
         ///Remove observation when leave this screen
-        NotificationCenter.default.removeObserver(self)
+        //NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: Setting some properties of views
@@ -67,7 +67,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     //MARK: - Receive event function from class Listener
     func receiveEvent(notification: Notification) {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            
             if let isSuccess:Bool = response[Contants.Instance.isSuccess] as? Bool {
                 //Register successfully
                 if isSuccess {
@@ -78,9 +77,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                         self.txtPassword.text = Contants.Instance.null
                         self.txtNickname.text = Contants.Instance.null
                         //-------Dismiss loading alert-----------------
-                        self.dismiss(animated: true, completion: nil)
+                        //--Fix: bring this code to completion--->
+                        //self.dismiss(animated: true, completion: nil)
+                        self.dismiss(animated: true) {
                         //-----------Back to login screen--------------
-                        _ = self.navigationController?.popViewController(animated: true)
+                            _ = self.navigationController?.popViewController(animated: true)
+                        }
                     }
                     
                 } else {    //Login failed
