@@ -9,7 +9,6 @@
 import UIKit
 
 //Global variables
-//var myProfile:User = User()
 var User_mail:String = String()
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -173,8 +172,10 @@ extension LoginViewController:ProtocolUserEmail {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Contants.Instance.segueRegister {
-            let destinationVC:RegisterViewController = segue.destination as! RegisterViewController
-            destinationVC.delegate = self
+            //Remove !, avoid crash app
+            if let destinationVC:RegisterViewController = segue.destination as? RegisterViewController {
+                destinationVC.delegate = self
+            }
         }
     }
     
