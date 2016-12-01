@@ -740,7 +740,7 @@
                                         <color key="textColor" red="0.9993599057" green="0.14970120789999999" blue="0.0082355923949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time: 15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvF-0R-zM1">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EvF-0R-zM1">
                                         <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -782,10 +782,10 @@
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="leading" secondItem="IpF-70-fHo" secondAttribute="leading" id="8oi-3w-erl"/>
                             <constraint firstItem="x5x-pN-tUR" firstAttribute="top" secondItem="rna-jp-uK4" secondAttribute="bottom" id="EQz-xq-yIw"/>
                             <constraint firstItem="IpF-70-fHo" firstAttribute="height" secondItem="TQd-Z2-oRD" secondAttribute="height" multiplier="0.35" id="Fs5-3m-sqj"/>
-                            <constraint firstItem="TQd-Z2-oRD" firstAttribute="height" secondItem="aQ3-Ze-eri" secondAttribute="height" multiplier="0.31" id="ILn-KQ-CvH"/>
                             <constraint firstItem="rna-jp-uK4" firstAttribute="leading" secondItem="aQ3-Ze-eri" secondAttribute="leading" id="KFE-SU-afJ"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="top" secondItem="IpF-70-fHo" secondAttribute="bottom" constant="10" id="KRI-0I-8xK"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="trailing" secondItem="IpF-70-fHo" secondAttribute="trailing" id="KRb-4K-spN"/>
+                            <constraint firstItem="TQd-Z2-oRD" firstAttribute="height" secondItem="aQ3-Ze-eri" secondAttribute="height" multiplier="0.31" id="PXh-2f-yPZ"/>
                             <constraint firstItem="TQd-Z2-oRD" firstAttribute="leading" secondItem="aQ3-Ze-eri" secondAttribute="leading" constant="16" id="Per-jh-RUq"/>
                             <constraint firstItem="TQd-Z2-oRD" firstAttribute="centerX" secondItem="aQ3-Ze-eri" secondAttribute="centerX" id="Uve-qj-v7P"/>
                             <constraint firstAttribute="trailing" secondItem="rna-jp-uK4" secondAttribute="trailing" id="Vx1-Ib-QVs"/>
