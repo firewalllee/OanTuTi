@@ -337,7 +337,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    //MARK: - Alert end game
+    //MARK: - Alert end game.
     func alertEndGame(_ result:String) {
         let alert:UIAlertController = UIAlertController(title: "Notice!", message: result, preferredStyle: UIAlertControllerStyle.alert)
         
