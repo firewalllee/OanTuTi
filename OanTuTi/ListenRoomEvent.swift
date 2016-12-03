@@ -11,7 +11,6 @@ import UIKit
 
 var rooms:Array<Array<Room>> = Array<Array<Room>>()
 var totalPage:Int = 1
-var currentPage: Int = 1
 var pageNeedReload:Int = 1
 
 class ListenRoomEvent {
@@ -46,7 +45,7 @@ class ListenRoomEvent {
                         }
                     }
                     //Reload current screen
-                    if totalPage >= 2 && pageNeedReload <= currentPage {
+                    if totalPage >= 2 {
                         SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: pageNeedReload])
                     }
                 }
@@ -61,7 +60,7 @@ class ListenRoomEvent {
                     for room in roomList {
                         continueRooms.append(Room(room))
                     }
-                    let current:Int = currentPage - 1
+                    let current:Int = (pageNeedReload == totalPage - 1) ? pageNeedReload : pageNeedReload - 1
                     if rooms.count > current {
                         rooms[current] = continueRooms
                     } else {
