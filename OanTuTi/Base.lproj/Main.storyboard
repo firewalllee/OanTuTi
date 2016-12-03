@@ -243,7 +243,7 @@
         <scene sceneID="5UJ-OY-6Wz">
             <objects>
                 <collectionViewController id="yTf-Gx-b1E" customClass="RoomCollectionViewController" customModule="OanTuTi" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="U37-pX-fcK">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="U37-pX-fcK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -581,7 +581,7 @@
                                             <constraint firstAttribute="height" constant="21" id="qDr-sy-aRj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="15"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.9993599057" green="0.14970120789999999" blue="0.0082355923949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="rBc-cW-ije">
@@ -620,7 +620,7 @@
                                             <constraint firstAttribute="width" constant="66" id="jkh-Fb-tgY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="15"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.9993599057" green="0.14970120789999999" blue="0.0082355923949999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="Hew-9r-9CR">
@@ -745,7 +745,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Win" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5O-r7-VLB">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5O-r7-VLB">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="90" id="NYH-gP-lhK"/>
                                         </constraints>
@@ -785,7 +785,6 @@
                             <constraint firstItem="rna-jp-uK4" firstAttribute="leading" secondItem="aQ3-Ze-eri" secondAttribute="leading" id="KFE-SU-afJ"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="top" secondItem="IpF-70-fHo" secondAttribute="bottom" constant="10" id="KRI-0I-8xK"/>
                             <constraint firstItem="Ahq-FX-Wg6" firstAttribute="trailing" secondItem="IpF-70-fHo" secondAttribute="trailing" id="KRb-4K-spN"/>
-                            <constraint firstItem="TQd-Z2-oRD" firstAttribute="height" secondItem="aQ3-Ze-eri" secondAttribute="height" multiplier="0.31" id="PXh-2f-yPZ"/>
                             <constraint firstItem="TQd-Z2-oRD" firstAttribute="leading" secondItem="aQ3-Ze-eri" secondAttribute="leading" constant="16" id="Per-jh-RUq"/>
                             <constraint firstItem="TQd-Z2-oRD" firstAttribute="centerX" secondItem="aQ3-Ze-eri" secondAttribute="centerX" id="Uve-qj-v7P"/>
                             <constraint firstAttribute="trailing" secondItem="rna-jp-uK4" secondAttribute="trailing" id="Vx1-Ib-QVs"/>

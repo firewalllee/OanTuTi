@@ -112,12 +112,14 @@ class MainViewController: UIViewController {
         if let response: Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             if let restCoin: Int = response[Contants.Instance.restCoinCard] as? Int {
                 MyProfile.Instance.coin_card = restCoin
-                
+                MyProfile.Instance.statis?.wins = (MyProfile.Instance.statis?.wins)! + 1
                 if let win: Bool = response[Contants.Instance.win] as? Bool {
 //                    delegate?.update(coin: restCoin, win: win)
                     if win {
+                        self.otherUser.coin_card = self.otherUser.coin_card! - Int(self.thisRoom.moneyBet!)
                         self.alertEndGame("You won! Your coin: \(restCoin)")
                     } else {
+                        self.otherUser.coin_card = self.otherUser.coin_card! + Int(self.thisRoom.moneyBet!)
                         self.alertEndGame("You lose! Your coin: \(restCoin)")
                     }
                 }
@@ -176,17 +178,19 @@ class MainViewController: UIViewController {
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
             
 //            print("Client - Ready => ", response)
+            
             guard let their:Bool = response[Contants.Instance.their] as? Bool else {
                 return
             }
             guard let selF:Bool = response[Contants.Instance.selF] as? Bool else {
                 return
             }
+
             //->Guest ready
             self.isReady(lbl: self.lblGuestReady, their)
             //->User ready
             self.isReady(lbl: self.lblUserReady, selF)
-            
+
             //Change background image of ready button
             if selF {
                 self.btnReady.setImage(UIImage(named: "unready"), for: UIControlState.normal)
