@@ -576,7 +576,6 @@
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="rBc-cW-ije">
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="120" id="CSo-Tr-VpJ"/>
                                             <constraint firstAttribute="width" secondItem="rBc-cW-ije" secondAttribute="height" multiplier="1:1" id="qrX-07-gDV"/>
                                         </constraints>
                                     </imageView>

@@ -16,6 +16,7 @@ class RoomCollectionViewController: UICollectionViewController {
     var hostUser:User!
     var isHost:Bool = true      //Check host or guest in next screen
     var isEmit:Bool = false
+    private var isNeedReload:Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,9 +129,9 @@ class RoomCollectionViewController: UICollectionViewController {
             }
             //Get money bet
             if let money:Double = rooms[indexPath.section][indexPath.row].moneyBet {
-                cell.lblMoney.text = "$ \(Int(money))"
+                cell.lblMoney.text = "$\(Int(money))"
             } else {
-                cell.lblMoney.text = "$ 0"
+                cell.lblMoney.text = "$0"
             }
 
             //state image
@@ -151,20 +152,15 @@ class RoomCollectionViewController: UICollectionViewController {
         pageNeedReload = section + 1
         
         //Kick flag, make collectionView can reload data
-        if section + 1 == currentPage && index >= 7 && totalPage > currentPage {
+        if index >= 9 && totalPage > pageNeedReload {
             self.isEmit = false
-        }
-        //When scroll down again, collectionView will reload data
-        if pageNeedReload < currentPage {
-            self.isEmit = false
-            currentPage -= 1
         }
         
         //Get data if receive permission from code above (isEmiting)
         if !isEmit {
             
-            currentPage += 1
-            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: currentPage])
+            pageNeedReload += 1
+            SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: pageNeedReload])
             
             self.isEmit = true
         }
