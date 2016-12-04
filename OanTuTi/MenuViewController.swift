@@ -19,11 +19,7 @@ class MenuViewController: UIViewController {
     @IBOutlet weak var lblCoin: UILabel!
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var btnProfile: UIButton!
-    @IBOutlet weak var btnAbout: UIButton!
-    
-    //MARK: - Declarations
-    
-    
+    @IBOutlet weak var btnAbout: UIButton!    
     
     //MARK: - Life cycle
     override func viewDidLoad() {

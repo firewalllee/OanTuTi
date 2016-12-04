@@ -11,12 +11,11 @@ import UIKit
 class RoomCollectionViewController: UICollectionViewController {
     
     //MARK: - Declarations
-    let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    var nextRoom:Room = Room()
-    var hostUser:User!
-    var isHost:Bool = true      //Check host or guest in next screen
-    var isEmit:Bool = false
-    private var isNeedReload:Bool = true
+    private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var nextRoom:Room = Room()
+    private var hostUser:User!
+    private var isHost:Bool = true      //Check host or guest in next screen
+    private var isEmit:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,9 +118,6 @@ class RoomCollectionViewController: UICollectionViewController {
         cell.layer.borderWidth = 5
         cell.contentView.backgroundColor = UIColor.init(Hex: 0xd4ded7)
         
-//        cell.layer.shouldRasterize = true
-//        cell.layer.rasterizationScale = UIScreen.main.scale
-        
         if rooms.count > 0 {
             //Get room name
             if let room_name:String = rooms[indexPath.section][indexPath.row].roomName {
@@ -149,20 +145,27 @@ class RoomCollectionViewController: UICollectionViewController {
         
         let index:Int = indexPath.row
         let section:Int = indexPath.section
-        pageNeedReload = section + 1
         
-        //Kick flag, make collectionView can reload data
-        if index >= 9 && totalPage > pageNeedReload {
-            self.isEmit = false
+        if self.isEmit {
+            //Kick flag, make collectionView can reload data
+            if index >= 9 && pageNeedReload == section + 1 && pageNeedReload < totalPage {
+                pageNeedReload += 1
+                self.isEmit = false
+                //print(pageNeedReload, " down ===> ", self.isEmit)
+            }
         }
         
-        //Get data if receive permission from code above (isEmiting)
-        if !isEmit {
-            
-            pageNeedReload += 1
+        if index <= 0 && pageNeedReload > 0 {
+            pageNeedReload = section + 1
+            //print(pageNeedReload, " up ===> ", self.isEmit)
+        }
+        
+        //print(pageNeedReload, " ===> ", self.isEmit)
+        
+        if !isEmit { //Get data if receive permission from code above (isEmiting)
+            self.isEmit = true
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: pageNeedReload])
             
-            self.isEmit = true
         }
         
     }

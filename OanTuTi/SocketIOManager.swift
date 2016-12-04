@@ -25,7 +25,6 @@ class SocketIOManager {
         if let uid: String = MyProfile.Instance.uid {
             disconnect([Contants.Instance.uid: uid])
         }
-        //socket.disconnect()
     }
     
     //Emit an event

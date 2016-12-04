@@ -21,8 +21,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var wrapViewVerticalContraint: NSLayoutConstraint!
     
     //MARK: - Declarations
-    var spaceTopFree:CGFloat!
-    let indicator:UIActivityIndicatorView = UIActivityIndicatorView()
+    private var spaceTopFree:CGFloat!
+    private let indicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
     //MARK: - Life cycle
     override func viewDidLoad() {

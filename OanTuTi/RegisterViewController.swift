@@ -25,10 +25,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var wrapViewVerticalContraint: NSLayoutConstraint!
     
     //MARK: - Declarations
-    var spaceTopFree: CGFloat!
-    var imgData: Data!
+    private var spaceTopFree: CGFloat!
+    fileprivate var imgData: Data!
     weak var delegate:ProtocolUserEmail? = nil
-    let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     //MARK: - Life cycle
     override func viewDidLoad() {

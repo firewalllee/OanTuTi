@@ -11,7 +11,7 @@ import UIKit
 
 var rooms:Array<Array<Room>> = Array<Array<Room>>()
 var totalPage:Int = 1
-var pageNeedReload:Int = 1
+var pageNeedReload:Int = 2
 
 class ListenRoomEvent {
     
@@ -60,11 +60,13 @@ class ListenRoomEvent {
                     for room in roomList {
                         continueRooms.append(Room(room))
                     }
-                    let current:Int = (pageNeedReload == totalPage - 1) ? pageNeedReload : pageNeedReload - 1
-                    if rooms.count > current {
-                        rooms[current] = continueRooms
-                    } else {
-                        rooms.append(continueRooms)
+                    if pageNeedReload >= 2 {
+                        let current:Int = pageNeedReload - 1
+                        if rooms.count > current {
+                            rooms[current] = continueRooms
+                        } else {
+                            rooms.append(continueRooms)
+                        }
                     }
                     
                     //send delegate to RoomCollectionView

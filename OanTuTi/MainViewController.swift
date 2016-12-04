@@ -8,10 +8,6 @@
 
 import UIKit
 
-//protocol updateCoin:class {
-//    func update(coin:Int, win:Bool)
-//}
-
 class MainViewController: UIViewController {
 
     //MARK: - Mapped items
@@ -40,19 +36,16 @@ class MainViewController: UIViewController {
     
     //MARK: - Declarations
     var match_id:String = String()
-    var selection:Int = 0
-    var ready:Bool = false
-    var game_id:Int = 1
-    var best_of:Int = 1
-    
-    //delegate
-//    weak var delegate:updateCoin? = nil
+    private var selection:Int = 0
+    private var ready:Bool = false
+    private var game_id:Int = 1
+    private var best_of:Int = 1
     
     var thisRoom:Room = Room()
     var otherUser:User = User()
     
-    var timer:Timer!
-    var count:Int = 60 // Calc in 1 minutes
+    private var timer:Timer!
+    private var count:Int = 60 // Calc in 1 minutes
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -114,7 +107,6 @@ class MainViewController: UIViewController {
                 MyProfile.Instance.coin_card = restCoin
                 MyProfile.Instance.statis?.wins = (MyProfile.Instance.statis?.wins)! + 1
                 if let win: Bool = response[Contants.Instance.win] as? Bool {
-//                    delegate?.update(coin: restCoin, win: win)
                     if win {
                         self.otherUser.coin_card = self.otherUser.coin_card! - Int(self.thisRoom.moneyBet!)
                         self.alertEndGame("You won! Your coin: \(restCoin)")
@@ -176,23 +168,17 @@ class MainViewController: UIViewController {
     func clientReady(notification:Notification) {
         
         if let response:Dictionary<String, Any> = notification.object as? Dictionary<String, Any> {
-            
-//            print("Client - Ready => ", response)
-            
-            guard let their:Bool = response[Contants.Instance.their] as? Bool else {
-                return
-            }
-            guard let selF:Bool = response[Contants.Instance.selF] as? Bool else {
-                return
-            }
 
+            let their:Bool = (response[Contants.Instance.their] as? Bool) ?? false
+            let selF:Bool = (response[Contants.Instance.selF] as? Bool) ?? false
+            
             //->Guest ready
             self.isReady(lbl: self.lblGuestReady, their)
             //->User ready
             self.isReady(lbl: self.lblUserReady, selF)
 
             //Change background image of ready button
-            if selF {
+            if selF == true {
                 self.btnReady.setImage(UIImage(named: "unready"), for: UIControlState.normal)
             } else {
                 self.btnReady.setImage(UIImage(named: "ready"), for: UIControlState.normal)
@@ -294,7 +280,6 @@ class MainViewController: UIViewController {
         
         if let uid:String = MyProfile.Instance.uid {
             let jsonData:Dictionary<String, Any> = [Contants.Instance.match_id: self.match_id, Contants.Instance.uid: uid]
-//            print("Button Ready => ", jsonData)
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientReady, jsonData)
         }
         
@@ -311,7 +296,6 @@ class MainViewController: UIViewController {
         if let uid:String = MyProfile.Instance.uid {
             let jsonData:Dictionary<String, Any> = [Contants.Instance.match_id: self.match_id, Contants.Instance.game_id: self.game_id, Contants.Instance.uid: uid, Contants.Instance.selection: self.selection]
             
-//            print("Submit => ", jsonData)
             SocketIOManager.Instance.socketEmit(Commands.Instance.ClientSubmitSelection, jsonData)
             
             self.imgGuestChoose.image = UIImage(named: "Icon")

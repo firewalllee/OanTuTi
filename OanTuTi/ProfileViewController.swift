@@ -27,9 +27,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var tapImage: UITapGestureRecognizer!
     
     //MARK: - Declarations
-    var isUpdating:Bool = false
-    let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    //var imgData: Data!
+    private var isUpdating:Bool = false
+    private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -233,18 +232,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         } else if newPass == Contants.Instance.null {
             //Waiting indicator
             self.waitingIndicator(with: indicator)
-//            if self.imgData == nil {
-//                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
-//            }
             if let imgData:Data = MyProfile.Instance.imgData {
                 let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: oldPass, Contants.Instance.file: imgData, Contants.Instance.nickname: nickname]
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
             }
         } else {
             self.waitingIndicator(with: self.indicator)
-//            if self.imgData == nil {
-//                self.imgData = UIImagePNGRepresentation(imgAvatar.image!)
-//            }
             if let imgData:Data = MyProfile.Instance.imgData {
                 let jsonData: Dictionary<String, Any> = [Contants.Instance.email: email, Contants.Instance.oldPass: oldPass, Contants.Instance.newPass: newPass, Contants.Instance.file: imgData, Contants.Instance.nickname: nickname]
                 SocketIOManager.Instance.socketEmit(Commands.Instance.ClientUpdateProfile, jsonData)
