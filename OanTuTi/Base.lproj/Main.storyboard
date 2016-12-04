@@ -747,6 +747,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5O-r7-VLB">
                                         <constraints>
                                             <constraint firstAttribute="width" constant="90" id="NYH-gP-lhK"/>
+                                            <constraint firstAttribute="height" constant="21" id="VOY-3y-Fag"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="AmericanTypewriter-Bold" family="American Typewriter" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -765,6 +766,7 @@
                                     <constraint firstItem="eci-tj-FnI" firstAttribute="height" secondItem="ZP6-Br-Xwp" secondAttribute="height" id="UYY-jp-AFU"/>
                                     <constraint firstItem="eci-tj-FnI" firstAttribute="top" secondItem="X5O-r7-VLB" secondAttribute="bottom" constant="7" id="Zwi-iC-dOp"/>
                                     <constraint firstItem="eci-tj-FnI" firstAttribute="bottom" secondItem="ZP6-Br-Xwp" secondAttribute="bottom" id="dRT-mx-Khj"/>
+                                    <constraint firstItem="X5O-r7-VLB" firstAttribute="height" secondItem="EvF-0R-zM1" secondAttribute="height" id="jze-2D-rde"/>
                                     <constraint firstItem="RJB-vl-DZP" firstAttribute="trailing" secondItem="X5O-r7-VLB" secondAttribute="trailing" id="lZ9-VT-Jhr"/>
                                     <constraint firstItem="EvF-0R-zM1" firstAttribute="top" secondItem="IpF-70-fHo" secondAttribute="top" constant="8" id="lai-rg-Cls"/>
                                     <constraint firstItem="X5O-r7-VLB" firstAttribute="top" secondItem="EvF-0R-zM1" secondAttribute="top" id="oMj-ro-6B9"/>
