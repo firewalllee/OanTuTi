@@ -10,10 +10,16 @@ import Foundation
 
 class MyProfile: User {
     
-    static var Instance:MyProfile = MyProfile()
-    
     //save bytes array of image
     var imgData:Data?
+    
+    private var userEmail:String = Contants.Instance.null
+    var UserEmail:String {
+        get { return self.userEmail }
+        set (email) { self.userEmail = email }
+    }
+    
+    static var Instance:MyProfile = MyProfile()
     
     override init() {
         super.init()

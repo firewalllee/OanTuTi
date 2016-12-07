@@ -13,7 +13,7 @@ class SocketIOManager {
     
     var socket:SocketIOClient = SocketIOClient(socketURL: URL(string: "https://oan-tu-ti.herokuapp.com")!)
 
-    init() {}
+    private init() {}
     
     //Start connection
     func establishConnection() {

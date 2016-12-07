@@ -6,7 +6,6 @@
 //  Copyright © 2016 Phuc. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 //MARK: - Extension UIViewController

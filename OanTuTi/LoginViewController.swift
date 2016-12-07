@@ -9,7 +9,7 @@
 import UIKit
 
 //Global variables
-var User_mail:String = String()
+//var User_mail:String = String()
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -33,8 +33,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //MARK: - Call Listener when application start
         ListenRegisterEvent.ListenRegisterResponse()
         ListenProfileEvent.ListenProfileResponse()
-        ListenRoomEvent.ListenRoomsList()
-        ListenRoomEvent.ListenCreateRoom()
+        ListenRoomEvent.Instance.ListenRoomsList()
+        ListenRoomEvent.Instance.ListenCreateRoom()
         ListenWaitingRoomEvent.ListenWaitingRoomResponse()
         ListenPlayingEvent.ListenPlayingResponse()
         ListenMatchResultEvent.ListenMatchResultResponse()
@@ -45,15 +45,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 if let isSuccess: Bool = response[Contants.Instance.isSuccess] as? Bool {
                     //-------CheckLogin----------------------------
                     if isSuccess {
-                        //-------Get user infor-----------------------
-                        User_mail = self.txtEmail.text!
-                        //-------Textfield reset-----------------------
-                        self.txtEmail.text = Contants.Instance.null
-                        self.txtPassword.text = Contants.Instance.null
                         //---------------------------------------------
                         if let jsonUser:Dictionary<String, Any> = response[Contants.Instance.user] as? Dictionary<String, Any> {
                             MyProfile.Instance = MyProfile(jsonUser)
                         }
+                        //-------Get user infor-----------------------
+                        MyProfile.Instance.UserEmail = self.txtEmail.text!
+                        //-------Textfield reset-----------------------
+                        self.txtEmail.text = Contants.Instance.null
+                        self.txtPassword.text = Contants.Instance.null
                         //-------Dismiss loading alert-----------------
                         self.dismiss(animated: true, completion: nil)
                         self.performSegue(withIdentifier: Contants.Instance.segueMenu, sender: nil)

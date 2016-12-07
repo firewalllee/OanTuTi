@@ -6,25 +6,39 @@
 //  Copyright © 2016 Phuc. All rights reserved.
 //
 
-import Foundation
 import UIKit
-
-var rooms:Array<Array<Room>> = Array<Array<Room>>()
-var totalPage:Int = 1
-var pageNeedReload:Int = 2
 
 class ListenRoomEvent {
     
-    init() {}
+    //Declarations
+    private var rooms:Array<Array<Room>> = Array<Array<Room>>()
+    private var totalPage:Int = 1
+    private var pageNeedReload:Int = 2
     
-    static func ListenRoomsList() {
+    static let Instance:ListenRoomEvent = ListenRoomEvent()
+    
+    private init() {}
+    
+    ///Design Patterns-----------------------
+    func getRooms() -> Array<Array<Room>> {
+        return self.rooms
+    }
+    func getTotalPage() -> Int {
+        return self.totalPage
+    }
+    func setPageNeedReload(_ page: Int) {
+        self.pageNeedReload = page
+    }
+    ///--------------------------------------
+    
+    func ListenRoomsList() {
         
         //Listen event page from server
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientGetFirstRoomPage) { (data, ack) in
             if let response:Dictionary<String, Any> = data[0] as? Dictionary<String, Any> {
                 //Get total page
                 if let total:Int = response[Contants.Instance.total_page] as? Int {
-                    totalPage = total
+                    self.totalPage = total
                 }
 
                 //reset value before reload rooms list
@@ -33,10 +47,10 @@ class ListenRoomEvent {
                     for room in roomList {
                         firstRooms.append(Room(room))
                     }
-                    if rooms.count > 0 {
-                        rooms[0] = firstRooms
+                    if self.rooms.count > 0 {
+                        self.rooms[0] = firstRooms
                     } else {
-                        rooms.append(firstRooms)
+                        self.rooms.append(firstRooms)
                     }
                     //send delegate to RoomCollectionView
                     if let currentWindow = UIApplication.topViewController() {
@@ -45,8 +59,8 @@ class ListenRoomEvent {
                         }
                     }
                     //Reload current screen
-                    if totalPage >= 2 {
-                        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: pageNeedReload])
+                    if self.totalPage >= 2 {
+                        SocketIOManager.Instance.socketEmit(Commands.Instance.ClientGetRoomByPage, [Contants.Instance.page: self.pageNeedReload])
                     }
                 }
             }
@@ -60,12 +74,12 @@ class ListenRoomEvent {
                     for room in roomList {
                         continueRooms.append(Room(room))
                     }
-                    if pageNeedReload >= 2 {
-                        let current:Int = pageNeedReload - 1
-                        if rooms.count > current {
-                            rooms[current] = continueRooms
+                    if self.pageNeedReload >= 2 {
+                        let current:Int = self.pageNeedReload - 1
+                        if self.rooms.count > current {
+                            self.rooms[current] = continueRooms
                         } else {
-                            rooms.append(continueRooms)
+                            self.rooms.append(continueRooms)
                         }
                     }
                     
@@ -82,7 +96,7 @@ class ListenRoomEvent {
         
     }
     
-    static func ListenCreateRoom() {
+    func ListenCreateRoom() {
         
         SocketIOManager.Instance.socket.on(Commands.Instance.ClientCreateRoomRs) { (data, ack) in
 

@@ -160,7 +160,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         if let losts: Int = MyProfile.Instance.statis?.wins {
             self.lblLosts.text = "\(losts) Lost"
         }
-        self.lblEmail.text = User_mail
+        self.lblEmail.text = MyProfile.Instance.UserEmail
 //        if imgData != nil {
 //            self.imgAvatar.image = UIImage(data: imgData)
 //        } else if let myAvatar:String = MyProfile.Instance.avatar {
@@ -218,7 +218,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     func emitUpdate() {
         
-        let email: String = User_mail
+        let email:String = MyProfile.Instance.UserEmail
         let nickname: String = self.txtDisplayName.text!
         let oldPass: String = self.txtPassword.text!
         let newPass: String = self.txtNewPassword.text!

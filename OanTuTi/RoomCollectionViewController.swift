@@ -11,6 +11,10 @@ import UIKit
 class RoomCollectionViewController: UICollectionViewController {
     
     //MARK: - Declarations
+    private var rooms:Array<Array<Room>> = Array<Array<Room>>()
+    private var totalPage:Int = 1
+    private var pageNeedReload:Int = 2
+    
     private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var nextRoom:Room = Room()
     private var hostUser:User!
@@ -23,6 +27,9 @@ class RoomCollectionViewController: UICollectionViewController {
         ///Make spacing margin
         let spacing:CGFloat = (self.view.frame.size.width - 280) / 4
         self.collectionView?.contentInset = UIEdgeInsets(top: 10, left: spacing, bottom: 0, right: spacing)
+        
+        //get list room from Listener Instance
+        self.rooms = ListenRoomEvent.Instance.getRooms()
         
         //set collectionView background image
         let bgImage = UIImageView();
@@ -50,6 +57,10 @@ class RoomCollectionViewController: UICollectionViewController {
     func receiveEvent() {
         //Let main queue to update table view
         DispatchQueue.main.async {
+            //Edit here!
+            self.rooms = ListenRoomEvent.Instance.getRooms()
+            self.totalPage = ListenRoomEvent.Instance.getTotalPage()
+            print(self.totalPage)
             self.collectionView?.reloadData()
         }
     }
@@ -99,12 +110,12 @@ class RoomCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return rooms.count
+        return self.rooms.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return rooms[section].count
+        return self.rooms[section].count
     }
 
     //Draw room on interface (each cell)
@@ -120,18 +131,18 @@ class RoomCollectionViewController: UICollectionViewController {
         
         if rooms.count > 0 {
             //Get room name
-            if let room_name:String = rooms[indexPath.section][indexPath.row].roomName {
+            if let room_name:String = self.rooms[indexPath.section][indexPath.row].roomName {
                 cell.lblRoomName.text = room_name
             }
             //Get money bet
-            if let money:Double = rooms[indexPath.section][indexPath.row].moneyBet {
+            if let money:Double = self.rooms[indexPath.section][indexPath.row].moneyBet {
                 cell.lblMoney.text = "$\(Int(money))"
             } else {
                 cell.lblMoney.text = "$0"
             }
 
             //state image
-            if let roomState:String = rooms[indexPath.section][indexPath.row].roomState {
+            if let roomState:String = self.rooms[indexPath.section][indexPath.row].roomState {
                 bindImage(imgView: cell.imgAvatar, state: roomState)
             }
         
@@ -148,16 +159,17 @@ class RoomCollectionViewController: UICollectionViewController {
         
         if self.isEmit {
             //Kick flag, make collectionView can reload data
-            if index >= 9 && pageNeedReload == section + 1 && pageNeedReload < totalPage {
-                pageNeedReload += 1
+            if index >= 9 && self.pageNeedReload == section + 1 && self.pageNeedReload < self.totalPage {
+                self.pageNeedReload += 1
+                ListenRoomEvent.Instance.setPageNeedReload(self.pageNeedReload)
                 self.isEmit = false
-                //print(pageNeedReload, " down ===> ", self.isEmit)
+                
             }
         }
         
-        if index <= 0 && pageNeedReload > 0 {
-            pageNeedReload = section + 1
-            //print(pageNeedReload, " up ===> ", self.isEmit)
+        if index <= 0 && self.pageNeedReload > 0 {
+            self.pageNeedReload = section + 1
+            ListenRoomEvent.Instance.setPageNeedReload(self.pageNeedReload)
         }
         
         //print(pageNeedReload, " ===> ", self.isEmit)
