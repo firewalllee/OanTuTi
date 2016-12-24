@@ -35,6 +35,9 @@ class WaitingViewController: UIViewController {
     let best_of:Array<String> = ["1", "3", "5", "7", "9", "11", "15"]
     var otherUserCoin: Int!
     
+    //MARK: - Define
+    private let emptyCoinCard:Double = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -342,7 +345,7 @@ class WaitingViewController: UIViewController {
     }
     //Update room infor emit function
     func prepareForEmit(name: String, moneyBet: Double, best_of: Int) {
-        if name != Contants.Instance.null && moneyBet > 0 {
+        if name != Contants.Instance.null && moneyBet > emptyCoinCard {
             if let id:String = thisRoom.id {
                 let jsonData:Dictionary<String, Any> = [Contants.Instance.room_id: id, Contants.Instance.room_name: name, Contants.Instance.money_bet: moneyBet, Contants.Instance.best_of: best_of]
                 

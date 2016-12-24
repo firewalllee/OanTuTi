@@ -13,22 +13,31 @@ protocol ProtocolUserEmail:class {
     func userEmail(_ userEmail:String)
 }
 
-class RegisterViewController: UIViewController, UITextFieldDelegate {
+class RegisterViewController: UIViewController {
 
     //MARK: - Mapped items
     @IBOutlet weak var wrapView: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     @IBOutlet weak var txtNickname: UITextField!
     @IBOutlet weak var btnRegister: UIButton!
     @IBOutlet weak var wrapViewVerticalContraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomContainerContraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     //MARK: - Declarations
     private var spaceTopFree: CGFloat!
     fileprivate var imgData: Data!
     weak var delegate:ProtocolUserEmail? = nil
     private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var sum:CGFloat!
+    
+    //MARK: - Define.
+    private let textFieldHeight:CGFloat = 30
+    private let defaultBottomUIViewContraint:CGFloat = 0
+    private let limitationDistanceKeyboardAndTextField:CGFloat = 20
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -38,6 +47,10 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         //Add observation from Class ListenRegisterEvent
         NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: NotificationCommands.Instance.signupDelegate, object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.showKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(RegisterViewController.hideKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -113,22 +126,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    //Begin edit
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    
+    // Begin edit.
+    @IBAction func txt_EditingBeign(_ sender: AnyObject) {
         
-        self.wrapViewVerticalContraint.constant = -(self.spaceTopFree + 35)
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutSubviews()
-        }
+        let txt:UITextField = sender as! UITextField
+        sum = wrapView.frame.origin.y + txt.frame.origin.y + textFieldHeight
     }
-    //End edit
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        self.wrapViewVerticalContraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutSubviews()
-        }
-    }
+    
     
     //MARK: - Register tasks
     @IBAction func btnRegister(_ sender: AnyObject) {
@@ -156,6 +161,12 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    //MARK: - Register tasks
+    @IBAction func btnBack(_ sender: AnyObject) {
+        self.dismiss(animated: true) {
+        }
+    }
+    
     //MARK: - Select Image tasks
     @IBAction func tapToSelectImage(_ sender: UITapGestureRecognizer) {
         
@@ -169,7 +180,44 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         present(alert, animated: true, completion: nil)
     }
     
+    // Scroll view up when keyboard popup.
+    func showKeyboard(_ notification:Notification) {
+        
+        let keyboard:NSValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as! NSValue
+        let heightKeyboard:CGFloat = keyboard.cgRectValue.height
+        
+        let distance = containerView.frame.height - (sum + heightKeyboard)
+
+        
+        if distance < limitationDistanceKeyboardAndTextField {
+            
+            bottomContainerContraint.constant = abs(distance) + 30
+            let point:CGPoint = CGPoint(x: 0, y: bottomContainerContraint.constant)
+            scrollView.setContentOffset(point, animated: true)
+        }
+    }
     
+    // Scroll view down when keyboard popdown.
+    func hideKeyboard(_ notification:Notification) {
+        bottomContainerContraint.constant = defaultBottomUIViewContraint
+    }
+    
+    //    //Begin edit
+    //    func textFieldDidBeginEditing(_ textField: UITextField) {
+    //
+    //        self.wrapViewVerticalContraint.constant = -(self.spaceTopFree + 35)
+    //        UIView.animate(withDuration: 0.3) {
+    //            self.view.layoutSubviews()
+    //        }
+    //    }
+    //    //End edit
+    //    func textFieldDidEndEditing(_ textField: UITextField) {
+    //
+    //        self.wrapViewVerticalContraint.constant = 0
+    //        UIView.animate(withDuration: 0.3) {
+    //            self.view.layoutSubviews()
+    //        }
+    //    }
     
 }
 

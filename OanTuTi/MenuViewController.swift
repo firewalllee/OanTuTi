@@ -65,7 +65,8 @@ class MenuViewController: UIViewController {
         if let uid:String = MyProfile.Instance.uid {
             let jsonUID:Dictionary<String, Any> = [Contants.Instance.uid: uid]
             SocketIOManager.Instance.disconnect(jsonUID)
-            _ = self.navigationController?.popViewController(animated: true)
+
+            self.dismiss(animated: true, completion: nil)
         }
     }
 

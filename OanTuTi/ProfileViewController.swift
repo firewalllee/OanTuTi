@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITextFieldDelegate {
+class ProfileViewController: UIViewController {
 
     //MARK:- Mapped items
     @IBOutlet weak var wrapView: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var imgAvatar: UIImageView!
     @IBOutlet weak var lblDisplayName: UILabel!
     @IBOutlet weak var lblCoins: UILabel!
@@ -25,10 +26,23 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var btnEdit: UIButton!
     @IBOutlet weak var wrapTextfieldHeightConstraint: NSLayoutConstraint!
     @IBOutlet var tapImage: UITapGestureRecognizer!
+    @IBOutlet weak var bottomContainerContraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     //MARK: - Declarations
     private var isUpdating:Bool = false
     private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    private var sum:CGFloat!
+    
+    //MARK: - Define 
+    private let textFieldHeight:CGFloat = 30
+    private let defaultHeightUIViewContraint:CGFloat = 0
+    private let limitationDistanceKeyboardAndTextField:CGFloat = 10
+    private let wrapTextfieldHeight:CGFloat = 130
+    private let durationUIViewAnimate:TimeInterval = 0.3
+    private let emptyCharacters:Int = 0
+    private let minimumCharacters:Int = 6
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +52,8 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         //Add observation from Listener class
         NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent), name: NotificationCommands.Instance.profileDelegate, object: nil)
 
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.showKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ProfileViewController.hideKeyboard(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +62,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         //Init 3 textfield will hide and scale to 0.1 belong y coordinate
 
         if !self.isUpdating {
-            self.wrapTextfieldHeightConstraint.constant = 0
+            self.wrapTextfieldHeightConstraint.constant = defaultHeightUIViewContraint
             self.wrapTextfield.isHidden = true
             self.tapImage.isEnabled = false
             self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
@@ -128,22 +143,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         }
         return true
     }
-    //Begin edit
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField.tag == 1 {
-            moveTextField(moveDistance: -35, up: true)
-        } else if textField.tag == 2 {
-            moveTextField(moveDistance: -85, up: true)
-        }
+
+    @IBAction func txt_EditingBeign(_ sender: AnyObject) {
+        
+        let txt:UITextField = sender as! UITextField
+        sum = wrapView.frame.origin.y + wrapTextfield.frame.origin.y + txt.frame.origin.y + textFieldHeight
     }
-    //End edit
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField.tag == 1 {
-            moveTextField(moveDistance: -35, up: false)
-        } else if textField.tag == 2 {
-            moveTextField(moveDistance: -85, up: false)
-        }
-    }
+    
 
     //Load information of user when view have loaded
     func loadInfo() {
@@ -179,13 +185,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         
         //isUpdating:true =
         if self.isUpdating {
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: self.durationUIViewAnimate, animations: {
                 self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 0.1, 1)
                 
                 }, completion: { (true) in
-                    UIView.animate(withDuration: 0.3, animations: {
+                    UIView.animate(withDuration: self.durationUIViewAnimate, animations: {
                         //height of 3 textfield will be 0
-                        self.wrapTextfieldHeightConstraint.constant = 0
+                        self.wrapTextfieldHeightConstraint.constant = self.defaultHeightUIViewContraint
                         self.view.layoutIfNeeded()
                         self.wrapTextfield.isHidden = true
                         self.wrapTextfield.isUserInteractionEnabled = false
@@ -200,12 +206,12 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
             self.wrapTextfield.isHidden = false
             self.wrapTextfield.isUserInteractionEnabled = true
             self.tapImage.isEnabled = true
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: self.durationUIViewAnimate, animations: {
                 self.wrapTextfield.layer.transform = CATransform3DMakeScale(1, 1, 1)
                 }, completion: { (true) in
                     //height of 3 textfield will be defaults
-                    self.wrapTextfieldHeightConstraint.constant = 130
-                    UIView.animate(withDuration: 0.3) {
+                    self.wrapTextfieldHeightConstraint.constant = self.wrapTextfieldHeight
+                    UIView.animate(withDuration: self.durationUIViewAnimate) {
                         self.view.layoutIfNeeded()
                         self.btnEdit.setTitle("Update", for: .normal)
                     }
@@ -225,7 +231,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         
         if oldPass == Contants.Instance.null {
             self.isUpdating = false
-        } else if newPass.characters.count != 0 && newPass.characters.count < 6 {
+        } else if newPass.characters.count != emptyCharacters && newPass.characters.count < minimumCharacters {
             self.showNotification(title: "Password!", message: "Your new password must be at least 6 characters")
         } else if nickname == Contants.Instance.null {
             self.showNotification(title: "Nickname!", message: "Please fill out your Nickname")
@@ -256,6 +262,26 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let alert:UIAlertController = self.selectImageFromDevice(imgPicker)
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    // Scroll view up when keyboard popup.
+    func showKeyboard(_ notification:Notification) {
+        
+        let keyboard:NSValue = notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as! NSValue
+        let heightKeyboard:CGFloat = keyboard.cgRectValue.height
+        
+        let distance = containerView.frame.height - (sum + heightKeyboard)
+        
+        if distance < limitationDistanceKeyboardAndTextField {
+            
+            bottomContainerContraint.constant = abs(distance) + 20
+            let point:CGPoint = CGPoint(x: 0, y: bottomContainerContraint.constant)
+            scrollView.setContentOffset(point, animated: true)
+        }
+    }
+    // Scroll view down when keyboard popdown.
+    func hideKeyboard(_ notification:Notification) {
+        bottomContainerContraint.constant = defaultHeightUIViewContraint
     }
     
 }

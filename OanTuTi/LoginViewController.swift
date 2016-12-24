@@ -11,7 +11,7 @@ import UIKit
 //Global variables
 //var User_mail:String = String()
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController {
 
     //MARK: - Mapped items
     @IBOutlet weak var wrapView: UIView!
@@ -24,6 +24,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var spaceTopFree:CGFloat!
     private let indicator:UIActivityIndicatorView = UIActivityIndicatorView()
     
+    //MARK: - Define
+
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +57,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.txtEmail.text = Contants.Instance.null
                         self.txtPassword.text = Contants.Instance.null
                         //-------Dismiss loading alert-----------------
-                        self.dismiss(animated: true, completion: nil)
-                        self.performSegue(withIdentifier: Contants.Instance.segueMenu, sender: nil)
+                        self.dismiss(animated: true, completion: { 
+                            self.performSegue(withIdentifier: Contants.Instance.segueMenu, sender: nil)
+                        })
+
                     } else {
                         
                         //-------Dismiss loading alert-----------------
@@ -90,25 +94,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func ViewsProperties() {
         
         self.btnSignUp.lightBorder(with: 8)
-    }
-    
-    //MARK: - Delegate keyboard
-    //Show keyboard
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        self.wrapViewVerticalContraint.constant = -self.spaceTopFree
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutSubviews()
-        }
-        
-    }
-    //Hide keyboard
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        self.wrapViewVerticalContraint.constant = 0
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutSubviews()
-        }
     }
     
     //Return button press

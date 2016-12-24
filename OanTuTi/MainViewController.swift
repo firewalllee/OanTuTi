@@ -45,7 +45,10 @@ class MainViewController: UIViewController {
     var otherUser:User = User()
     
     private var timer:Timer!
-    private var count:Int = 60 // Calc in 1 minutes
+    private var count:Int = 60
+    
+    //MARK: - Define
+    private let timeToBegin:Int = 60
     
     //MARK: - Life cycle
     override func viewDidLoad() {
@@ -241,7 +244,7 @@ class MainViewController: UIViewController {
             self.timer.invalidate()
             self.timer = nil
         }
-        self.count = 60
+        self.count = self.timeToBegin
         self.lblTime.text = "Time \(self.count)"
         self.btnReady.setImage(UIImage(named: "ready"), for: UIControlState.normal)
     }
@@ -275,7 +278,7 @@ class MainViewController: UIViewController {
         if timer != nil {
             timer.invalidate()
             timer = nil
-            self.count = 60
+            self.count = self.timeToBegin
         }
         
         if let uid:String = MyProfile.Instance.uid {

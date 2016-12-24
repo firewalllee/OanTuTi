@@ -18,8 +18,10 @@ class RoomCollectionViewController: UICollectionViewController {
     private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
     private var nextRoom:Room = Room()
     private var hostUser:User!
-    private var isHost:Bool = true      //Check host or guest in next screen
+    private var isHost:Bool = true
     private var isEmit:Bool = false
+    
+    //MARK: - Define 
     
     override func viewDidLoad() {
         super.viewDidLoad()
